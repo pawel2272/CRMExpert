@@ -4,4 +4,10 @@
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\HRBN.Thesis.CRMExpert.Application.Core\HRBN.Thesis.CRMExpert.Application.Core.csproj" />
+      <ProjectReference Include="..\HRBN.Thesis.CRMExpert.Application\HRBN.Thesis.CRMExpert.Application.csproj" />
+      <ProjectReference Include="..\HRBN.Thesis.CRMExpert.Infrastructure\HRBN.Thesis.CRMExpert.Infrastructure.csproj" />
+    </ItemGroup>
+
 </Project>
