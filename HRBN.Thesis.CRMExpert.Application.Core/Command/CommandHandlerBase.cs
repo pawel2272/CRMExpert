@@ -1,10 +1,16 @@
 namespace HRBN.Thesis.CRMExpert.Application.Core.Command
 {
-    public class CommandHandlerBase : ICommandHandler<BaseCommand>
+    public abstract class CommandHandlerBase : ICommandHandler<BaseCommand>
     {
-        public Result Handle(BaseCommand command)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+
+        public CommandHandlerBase(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            throw new System.NotImplementedException();
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
+
+        public abstract Result Handle(BaseCommand command);
     }
 }
