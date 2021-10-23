@@ -11,4 +11,8 @@
       <Folder Include="Mappers\Profiles" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\HRBN.Thesis.CRMExpert.Application.Core\HRBN.Thesis.CRMExpert.Application.Core.csproj" />
+    </ItemGroup>
+
 </Project>
