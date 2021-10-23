@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using Microsoft.Extensions.Logging;
 
 namespace HRBN.Thesis.CRMExpert.Application.Core.Metrics
 {
