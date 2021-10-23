@@ -32,7 +32,5 @@ namespace HRBN.Thesis.CRMExpert.Application.Core.Cache
         /// </summary>
         public void Remove(string key)
             => _memoryCache.Remove(key);
-
-
     }
 }
