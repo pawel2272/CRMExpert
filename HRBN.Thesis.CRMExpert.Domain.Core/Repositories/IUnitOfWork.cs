@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace HRBN.Thesis.CRMExpert.Domain.Core.Repositories
 {
@@ -10,6 +11,6 @@ namespace HRBN.Thesis.CRMExpert.Domain.Core.Repositories
         ITodosRepository TodosRepository { get; }
         IUsersRepository UsersRepository { get; }
         ITokenRepository TokenRepository { get; }
-        void CommitAsync();
+        Task CommitAsync();
     }
 }
