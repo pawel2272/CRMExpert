@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Primitives;
 
-namespace MyCrm.Infrastructure.Repositories
+namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
 {
     public sealed class TokenRepository : ITokenRepository
     {

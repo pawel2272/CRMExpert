@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Caching.Distributed;
 
-namespace MyCrm.Infrastructure.Repositories
+namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
 {
     public sealed class UnitOfWork : IUnitOfWork
     {

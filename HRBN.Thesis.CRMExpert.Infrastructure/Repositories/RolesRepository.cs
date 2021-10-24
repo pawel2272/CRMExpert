@@ -11,7 +11,7 @@ using HRBN.Thesis.CRMExpert.Domain.Core.Repositories;
 using HRBN.Thesis.CRMExpert.Infrastructure.Dto;
 using Microsoft.EntityFrameworkCore;
 
-namespace MyCrm.Infrastructure.Repositories
+namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
 {
     public sealed class RolesRepository : IRolesRepository
     {

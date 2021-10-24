@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
-namespace MyCrm.Infrastructure.Repositories
+namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
 {
     public sealed class UsersRepository : IUsersRepository
     {
