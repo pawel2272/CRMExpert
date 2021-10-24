@@ -1,10 +1,12 @@
-﻿namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
+﻿using HRBN.Thesis.CRMExpert.Domain;
+
+namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
 {
     public sealed class UnitOfWork : IUnitOfWork
     {
-        private readonly DatabaseContext _context;
+        private readonly CRMContext _context;
 
-        public UnitOfWork(DatabaseContext context)
+        public UnitOfWork(CRMContext context)
         {
             _context = context;
             SampleRepository = new SampleRepository(context);
@@ -17,7 +19,7 @@
 
         public ISampleRepository SampleRepository { get; }
         
-        public async Commit()
+        public void Commit()
         {
             _context.SaveChanges();
         }
