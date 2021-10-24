@@ -1,3 +1,7 @@
+using System.Threading.Tasks;
+using AutoMapper;
+using HRBN.Thesis.CRMExpert.Domain.Core.Repositories;
+
 namespace HRBN.Thesis.CRMExpert.Application.Core.Command
 {
     public abstract class CommandHandlerBase : ICommandHandler<BaseCommand>
@@ -11,6 +15,6 @@ namespace HRBN.Thesis.CRMExpert.Application.Core.Command
             _unitOfWork = unitOfWork;
         }
 
-        public abstract Result Handle(BaseCommand command);
+        public abstract Task<Result> HandleAsync(BaseCommand command);
     }
 }

@@ -1,7 +1,9 @@
-﻿namespace HRBN.Thesis.CRMExpert.Application.Core.Query
+﻿using System.Threading.Tasks;
+
+namespace HRBN.Thesis.CRMExpert.Application.Core.Query
 {
     public interface IQueryHandler<in TQuery, TResult> where TQuery : IQuery<TResult>
     {
-        TResult Handle(TQuery query);
+        Task<TResult> HandleAsync(TQuery query);
     }
 }

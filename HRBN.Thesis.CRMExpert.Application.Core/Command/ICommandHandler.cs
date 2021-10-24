@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace HRBN.Thesis.CRMExpert.Application.Core.Command
 {
     /// <summary>
@@ -7,6 +9,6 @@ namespace HRBN.Thesis.CRMExpert.Application.Core.Command
     public interface ICommandHandler<in TCommand>
         where TCommand : ICommand
     {
-        Result Handle(TCommand command);
+        Task<Result> HandleAsync(TCommand command);
     }
 }

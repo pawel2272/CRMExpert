@@ -1,5 +1,9 @@
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 using HRBN.Thesis.CRMExpert.Application.Core.Command;
+using HRBN.Thesis.CRMExpert.Application.Core.Event;
+using HRBN.Thesis.CRMExpert.Application.Core.Query;
 
 namespace HRBN.Thesis.CRMExpert.Application.Core.Mediator
 {
@@ -12,26 +16,37 @@ namespace HRBN.Thesis.CRMExpert.Application.Core.Mediator
             _dependencyResolver = dependencyResolver;
         }
         
-        public Result Command<TCommand>(TCommand command) where TCommand : ICommand
+        public async Task<Result> CommandAsync<TCommand>(TCommand command) where TCommand : ICommand
         {
             var handler = _dependencyResolver.ResolveOrDefault<ICommandHandler<TCommand>>();
+
             if (handler == null)
             {
-                throw new InvalidOperationException(
-                    $"Command of type '{command.GetType()}' has not registered handler.");
+                throw new InvalidOperationException($"Command of type '{command.GetType()}' has not registered handler.");
             }
 
-            return handler.Handle(command);
+            return await handler.HandleAsync(command);
         }
 
-        public Result<TResult> Query<TResult>(IQuery<TResult> query)
+        public async Task<TResponse> QueryAsync<TResponse>(IQuery<TResponse> query)
         {
-            throw new System.NotImplementedException();
+            return await (Task<TResponse>)GetType()
+                .GetMethods()
+                .First(x => x.Name.Equals("QueryAsync") && x.GetGenericArguments().Length == 2)
+                .MakeGenericMethod(query.GetType(), typeof(TResponse))
+                .Invoke(this, new object[] { query });
         }
 
-        public Result<TResult> Query<TQuery, TResult>(TQuery query) where TQuery : IQuery<TResult>
+        public async Task<TResponse> QueryAsync<TQuery, TResponse>(TQuery query) where TQuery : IQuery<TResponse>
         {
-            throw new System.NotImplementedException();
+            var handler = _dependencyResolver.ResolveOrDefault<IQueryHandler<TQuery, TResponse>>();
+
+            if (handler == null)
+            {
+                throw new InvalidOperationException($"Query of type '{query.GetType()}' has not registered handler.");
+            }
+
+            return await handler.HandleAsync(query);
         }
 
         public void Publish<TEvent>(TEvent @event) where TEvent : IEvent
