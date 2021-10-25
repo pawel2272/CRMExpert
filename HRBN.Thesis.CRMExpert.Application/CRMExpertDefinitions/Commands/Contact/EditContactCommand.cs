@@ -1,8 +1,9 @@
 ﻿using System;
+using HRBN.Thesis.CRMExpert.Application.Core.Command;
 
-namespace HRBN.Thesis.CRMExpert.Application.Dto
+namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Contact
 {
-    public class ContactDto
+    public sealed class EditContactCommand : ICommand
     {
         public Guid Id { get; set; }
         public string FirstName { get; set; }
@@ -13,8 +14,7 @@ namespace HRBN.Thesis.CRMExpert.Application.Dto
         public string PostalCode { get; set; }
         public string City { get; set; }
         public string ContactComment { get; set; }
-        public DateTime CreDate { get; set; }
-        public DateTime ModDate { get; set; }
         public Guid UserId { get; set; }
+        public Guid CommandKey { get; }
     }
 }

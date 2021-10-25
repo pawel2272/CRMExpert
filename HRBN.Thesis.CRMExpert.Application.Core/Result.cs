@@ -7,7 +7,7 @@ namespace HRBN.Thesis.CRMExpert.Application.Core
     public class Result
     {
 
-        internal Result(bool isSuccess, string message, IEnumerable<Error> errors)
+        public Result(bool isSuccess, string message, IEnumerable<Error> errors)
         {
             IsSuccess = isSuccess;
             IsFailure = !isSuccess;

@@ -9,7 +9,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\HRBN.Thesis.CRMExpert.Domain\HRBN.Thesis.CRMExpert.Domain.csproj" />
+      <ProjectReference Include="..\HRBN.Thesis.CRMExpert.Infrastructure\HRBN.Thesis.CRMExpert.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
