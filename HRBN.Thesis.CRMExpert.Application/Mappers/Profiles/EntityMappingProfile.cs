@@ -1,4 +1,11 @@
 ﻿using AutoMapper;
+using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Contact;
+using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Order;
+using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Role;
+using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Todo;
+using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.User;
+using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Dto;
+using HRBN.Thesis.CRMExpert.Domain.Core.Entities;
 
 namespace HRBN.Thesis.CRMExpert.Application.Mappers.Profiles
 {
