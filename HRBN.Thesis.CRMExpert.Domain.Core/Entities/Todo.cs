@@ -10,10 +10,12 @@ namespace HRBN.Thesis.CRMExpert.Domain.Core.Entities
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public Guid ContactId { get; set; }
+        public Guid? ContactId { get; set; }
+        public Guid? UserId { get; set; }
         public DateTime CreDate { get; set; }
         public DateTime ModDate { get; set; }
 
         public virtual Contact Contact { get; set; }
+        public virtual User User { get; set; }
     }
 }

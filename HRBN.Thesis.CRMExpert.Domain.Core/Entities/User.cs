@@ -10,6 +10,8 @@ namespace HRBN.Thesis.CRMExpert.Domain.Core.Entities
         public User()
         {
             Contacts = new HashSet<Contact>();
+            Permissions = new HashSet<Permission>();
+            Todos = new HashSet<Todo>();
         }
 
         public Guid Id { get; set; }
@@ -25,9 +27,9 @@ namespace HRBN.Thesis.CRMExpert.Domain.Core.Entities
         public string City { get; set; }
         public DateTime CreDate { get; set; }
         public DateTime ModDate { get; set; }
-        public Guid RoleId { get; set; }
 
-        public virtual Role Role { get; set; }
         public virtual ICollection<Contact> Contacts { get; set; }
+        public virtual ICollection<Permission> Permissions { get; set; }
+        public virtual ICollection<Todo> Todos { get; set; }
     }
 }

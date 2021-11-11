@@ -19,7 +19,11 @@ namespace HRBN.Thesis.CRMExpert.Domain
         }
 
         public virtual DbSet<Contact> Contacts { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<Discount> Discounts { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<Permission> Permissions { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Todo> Todos { get; set; }
         public virtual DbSet<User> Users { get; set; }
@@ -46,8 +50,6 @@ namespace HRBN.Thesis.CRMExpert.Domain
 
                 entity.Property(e => e.ContactComment).HasMaxLength(2048);
 
-                entity.Property(e => e.CreDate).HasColumnType("datetime");
-
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasMaxLength(64);
@@ -60,6 +62,8 @@ namespace HRBN.Thesis.CRMExpert.Domain
                     .IsRequired()
                     .HasMaxLength(30);
 
+                entity.Property(e => e.CreDate).HasColumnType("datetime");
+                
                 entity.Property(e => e.ModDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Phone)
@@ -79,6 +83,68 @@ namespace HRBN.Thesis.CRMExpert.Domain
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Contacts_Users");
+
+                entity.HasOne(d => d.Customer)
+                    .WithMany(p => p.Contacts)
+                    .HasForeignKey(d => d.CustomerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Contacts_Customers");
+            });
+
+            modelBuilder.Entity<Customer>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+                
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(128);
+                
+                entity.Property(e => e.City)
+                    .IsRequired()
+                    .HasMaxLength(128);
+                
+                entity.Property(e => e.Street)
+                    .IsRequired()
+                    .HasMaxLength(128);
+                
+                entity.Property(e => e.PostalCode)
+                    .IsRequired()
+                    .HasMaxLength(128);
+                
+                entity.Property(e => e.TaxNo)
+                    .IsRequired()
+                    .HasMaxLength(128);
+                
+                entity.Property(e => e.Regon).HasMaxLength(128);
+                
+                entity.Property(e => e.CreDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<Discount>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+                
+                entity.Property(e => e.DiscountVaule)
+                    .HasColumnType("money")
+                    .IsRequired();
+                
+                entity.Property(e => e.CreDate).HasColumnType("datetime");
+                
+                entity.Property(e => e.ModDate).HasColumnType("datetime");
+                
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.Discounts)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Discounts_Products");
+                
+                entity.HasOne(d => d.Customer)
+                    .WithMany(p => p.Discounts)
+                    .HasForeignKey(d => d.CustomerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Discounts_Customers");
             });
 
             modelBuilder.Entity<Order>(entity =>
@@ -102,6 +168,52 @@ namespace HRBN.Thesis.CRMExpert.Domain
                     .HasForeignKey(d => d.ContactId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Orders_Contacts");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Orders_Products");
+            });
+
+            modelBuilder.Entity<Permission>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+                
+                entity.Property(e => e.CreDate).HasColumnType("datetime");
+                
+                entity.Property(e => e.ModDate).HasColumnType("datetime");
+                
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Permissions)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Permissions_Users");
+                
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.Permissions)
+                    .HasForeignKey(d => d.RoleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Permissions_Roles");
+            });
+
+            modelBuilder.Entity<Product>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+                
+                entity.Property(e => e.Name).HasMaxLength(128);
+                
+                entity.Property(e => e.Price).HasColumnType("money");
+                
+                entity.Property(e => e.Description).HasMaxLength(2048);
+                
+                entity.Property(e => e.Type).HasMaxLength(128);
+                
+                entity.Property(e => e.Count).HasColumnType("money");
+                
+                entity.Property(e => e.CreDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<Role>(entity =>
@@ -111,6 +223,10 @@ namespace HRBN.Thesis.CRMExpert.Domain
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
+                
+                entity.Property(e => e.CreDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<Todo>(entity =>
@@ -132,6 +248,12 @@ namespace HRBN.Thesis.CRMExpert.Domain
                     .HasForeignKey(d => d.ContactId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Todos_Contacts");
+                
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Todos)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Todos_Users");
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -181,12 +303,6 @@ namespace HRBN.Thesis.CRMExpert.Domain
                 entity.Property(e => e.Username)
                     .IsRequired()
                     .HasMaxLength(64);
-
-                entity.HasOne(d => d.Role)
-                    .WithMany(p => p.Users)
-                    .HasForeignKey(d => d.RoleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Users_Roles");
             });
 
             OnModelCreatingPartial(modelBuilder);

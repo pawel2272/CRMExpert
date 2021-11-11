@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 
 #nullable disable
 
 namespace HRBN.Thesis.CRMExpert.Domain.Core.Entities
 {
-    public partial class Order
+    public partial class Discount
     {
         public Guid Id { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
-        public decimal Price { get; set; }
-        public Guid ContactId { get; set; }
+        public decimal DiscountVaule { get; set; }
         public Guid ProductId { get; set; }
+        public Guid CustomerId { get; set; }
         public DateTime CreDate { get; set; }
         public DateTime ModDate { get; set; }
 
-        public virtual Contact Contact { get; set; }
         public virtual Product Product { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }

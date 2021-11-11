@@ -9,12 +9,14 @@ namespace HRBN.Thesis.CRMExpert.Domain.Core.Entities
     {
         public Role()
         {
-            Users = new HashSet<User>();
+            Permissions = new HashSet<Permission>();
         }
 
         public Guid Id { get; set; }
         public string Name { get; set; }
-
-        public virtual ICollection<User> Users { get; set; }
+        public DateTime CreDate { get; set; }
+        public DateTime ModDate { get; set; }
+        
+        public virtual ICollection<Permission> Permissions { get; set; }
     }
 }

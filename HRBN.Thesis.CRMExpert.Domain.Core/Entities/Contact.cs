@@ -24,9 +24,11 @@ namespace HRBN.Thesis.CRMExpert.Domain.Core.Entities
         public string ContactComment { get; set; }
         public DateTime CreDate { get; set; }
         public DateTime ModDate { get; set; }
-        public Guid UserId { get; set; }
-
+        public Guid? UserId { get; set; }
+        public Guid? CustomerId { get; set; }
+        
         public virtual User User { get; set; }
+        public virtual Customer Customer { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<Todo> Todos { get; set; }
     }
