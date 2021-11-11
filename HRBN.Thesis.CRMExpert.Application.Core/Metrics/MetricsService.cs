@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using HRBN.Thesis.CRMExpert.Application.Core.Cache;
 using Microsoft.Extensions.Logging;
 
 namespace HRBN.Thesis.CRMExpert.Application.Core.Metrics
@@ -79,7 +80,7 @@ namespace HRBN.Thesis.CRMExpert.Application.Core.Metrics
         private void SaveRecord(MetricsRequest request) =>
             _cache.Set($"metrics-{request.CorrelationId}", request, TimeSpan.FromMinutes(5));
 
-        private MetricsService GetRecord(Guid correlationId) => _cache.Get<MetricsRequest>($"metrics-{correlationId}");
+        private MetricsRequest GetRecord(Guid correlationId) => _cache.Get<MetricsRequest>($"metrics-{correlationId}");
 
         private void DeleteRecord(Guid correlationId) => _cache.Remove($"metrics-{correlationId}");
 
