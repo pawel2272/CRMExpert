@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using HRBN.Thesis.CRMExpert.UI.Models;
 
-namespace HRBN.Thesis.CRMExpert.UI.Controllers
+namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
 {
+    [Area("User")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

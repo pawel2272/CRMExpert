@@ -3,30 +3,70 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
     <title>@ViewData["Title"] - HRBN.Thesis.CRMExpert.UI</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css"/>
+    <link rel="stylesheet" href="~/css/style.css"/>
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">HRBN.Thesis.CRMExpert.UI</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+    <nav class="navbar navbar-dark bg-primary navbar-expand-xl">
+
+        <div class="container-fluid">
+            <a class="navbar-brand align-bottom" asp-area="User" asp-controller="Home" asp-action="Index">
+                <img src="~/img/logo.svg" class="d-inline-block" alt="Home">
+            </a>
+            <button class="navbar-toggler order-first" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Menu toggler">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
+
+            <div class="collapse navbar-collapse" id="mainMenu">
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="nav-link" asp-area="User" asp-controller="Home" asp-action="Index"> Home </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <a class="nav-link" asp-area="User" asp-controller="Product" asp-action="Index"> Products </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"> Services </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-target="#customerDropdown" role="button" aria-expanded="false" aria-controls="customerDropdown" aria-label="Customer menu toggler" id="customerSubmenu" aria-haspopup="true"> Customers </a>
+                        
+                        <div class="dropdown-menu" id="customerDropdown" aria-labelledby="customerSubmenu">
+                            <a class="dropdown-item" href="#"> Customer list </a>
+                            <a class="dropdown-item" href="#"> Receivables </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#"> Customer cases </a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"> Calendar </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"> Your account </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-target="#adminDropdown" role="button" aria-expanded="false" aria-controls="customerDropdown" aria-label="Admin menu toggler" id="customerSubmenu" aria-haspopup="true"> Admin </a>
+
+                        <div class="dropdown-menu" id="adminDropdown" aria-labelledby="adminSubmenu">
+                            <a class="dropdown-item" href="#"> Admin panel </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#"> Manage products </a>
+                            <a class="dropdown-item" href="#"> Manage services </a>
+                            <a class="dropdown-item" href="#"> Manage customers </a>
+                        </div>
                     </li>
                 </ul>
+                <form class="d-flex ms-auto">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-light" type="submit">Search</button>
+                </form>
             </div>
         </div>
+
     </nav>
 </header>
 <div class="container">

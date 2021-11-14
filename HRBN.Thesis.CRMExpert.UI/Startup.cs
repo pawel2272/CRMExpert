@@ -62,8 +62,10 @@ namespace HRBN.Thesis.CRMExpert.UI
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    //pattern: "{area=Identity}/{controller=Account}/{action=Login}/{id?}");
+                    pattern: "{area=User}/{controller=Home}/{action=Index}/{id?}");
             });
+            //pattern: "{area=identity}/{controller=Account}/{action=Login}/{id?}");
         }
     }
 }
