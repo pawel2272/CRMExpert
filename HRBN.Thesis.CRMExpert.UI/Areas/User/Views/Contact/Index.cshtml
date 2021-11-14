@@ -1,0 +1,139 @@
+<div class="container my-2">
+    <div class="row">
+        <form>
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-xl-3">
+                        <div class="form-group row srch-frm">
+                            <label for="orderBy" class="col-sm-4 col-form-label">
+                                Order by
+                            </label
+                            >
+                            <div class="col-sm-8">
+                                <select id="orderBy" class="form-select">
+                                    <option value="FirstName" selected>First name</option>
+                                    <option value="LastName">Last name</option>
+                                    <option value="Phone">Phone</option>
+                                    <option value="Email">Email</option>
+                                    <option value="Street">Street</option>
+                                    <option value="PostalCode">Postal code</option>
+                                    <option value="City">City</option>
+                                    <option value="CreationDate">Creation date</option>
+                                    <option value="ModificationDane">
+                                        Modification date
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3">
+                        <div class="form-group row srch-frm">
+                            <label for="sortDirection" class="col-sm-4 col-form-label">
+                                Direction
+                            </label
+                            >
+                            <div class="col-sm-8">
+                                <select id="sortDirection" class="form-select">
+                                    <option value="ASC" selected>Ascending</option>
+                                    <option value="DESC">Descending</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="form-group row srch-frm">
+                            <label for="searchPhrase" class="col-sm-4 col-form-label">
+                                Phrase
+                            </label
+                            >
+                            <div class="col-sm-8">
+                                <input
+                                    id="searchPhrase"
+                                    placeholder="Phrase..."
+                                    class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2">
+                        <div class="form-group row srch-frm">
+                            <label for="pageSize" class="col-sm-4 col-form-label">
+                                Size
+                            </label
+                            >
+                            <div class="col-sm-8">
+                                <select id="pageSize" class="form-select">
+                                    <option value="5">5</option>
+                                    <option value="10" selected>10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-1">
+                        <input
+                            id="searchFormButton"
+                            type="submit"
+                            value="Search"
+                            class="btn btn-primary"/>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="col-12">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col" class="d-none">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Address</th>
+                    <th scope="col" class="d-none d-md-table-cell">Comment</th>
+                    <th scope="col" class="d-none d-md-table-cell">
+                        Creation date
+                    </th>
+                    <th scope="col" class="d-none d-md-table-cell">
+                        Modification date
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row" class="d-none">1</th>
+                    <td>Jan Kowalski</td>
+                    <td>+48793154795</td>
+                    <td>jan.kowalski@crm.pl</td>
+                    <td>Kwiatowa 11, 21-370 Farszawa</td>
+                    <td class="d-none d-md-table-cell">Sample comment</td>
+                    <td class="d-none d-md-table-cell">01.01.2021 21:37</td>
+                    <td class="d-none d-md-table-cell">02.01.2021 21:37</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-12">
+            <nav>
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="#">Previous</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
