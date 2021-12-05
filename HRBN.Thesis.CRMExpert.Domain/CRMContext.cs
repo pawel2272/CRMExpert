@@ -32,7 +32,7 @@ namespace HRBN.Thesis.CRMExpert.Domain
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=localhost;Database=CRM;User Id=SA;Password=hAsElKo123@;");
+                optionsBuilder.UseSqlServer("Server=20.79.200.129;Database=CRM;User Id=SA;Password=Hrbn123QAZ;");
             }
         }
 
