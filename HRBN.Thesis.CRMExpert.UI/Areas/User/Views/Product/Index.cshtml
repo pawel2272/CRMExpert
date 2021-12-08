@@ -1,6 +1,23 @@
 <div class="container my-2">
-    <div class="row">
-        <form>
+    <div class="row g-5">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-xl-10 col-sm-8">
+                    
+                </div>
+                <div class="col-xl-1 col-sm-2">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
+                        Add
+                    </button>
+                </div>
+                <div class="col-xl-1 col-sm-2">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#filterForm">
+                        Filter
+                    </button>
+                </div>
+            </div>
+        </div>
+        <form class="collapse" id="filterForm">
             <div class="col-12">
                 <div class="row">
                     <div class="col-xl-3">
@@ -19,7 +36,7 @@
                             </div>
                         </div>
                     </div>
-
+        
                     <div class="col-xl-3">
                         <div class="form-group row srch-frm">
                             <label for="sortDirection" class="col-sm-4 col-form-label">Direction</label>
@@ -65,11 +82,11 @@
                     <th scope="col" class="d-none">Id</th>
                     <th scope="col">Name</th>
                     <th scope="col">Price</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Type</th>
+                    <th scope="col" class="d-none d-md-table-cell">Description</th>
+                    <th scope="col" class="d-none d-md-table-cell">Type</th>
                     <th scope="col">Count</th>
-                    <th scope="col" class="d-none d-md-table-cell">Creation date</th>
-                    <th scope="col" class="d-none d-md-table-cell">Modification date</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -77,17 +94,25 @@
                     <th scope="row" class="d-none">1</th>
                     <td>Computer</td>
                     <td>21.37 PLN</td>
-                    <td>The best computer on the world!</td>
-                    <td>Electronics</td>
+                    <td class="d-none d-md-table-cell">The best computer on the world!</td>
+                    <td class="d-none d-md-table-cell">Electronics</td>
                     <td>2137</td>
-                    <td class="d-none d-md-table-cell">01.01.2021 21:37</td>
-                    <td class="d-none d-md-table-cell">02.01.2021 21:37</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Edit
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Delete
+                        </button>
+                    </td>
                 </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="col-12">
+        <div class="col-11">
             <nav>
                 <ul class="pagination justify-content-center">
                     <li class="page-item">
@@ -110,3 +135,6 @@
         </div>
     </div>
 </div>
+@{
+    await Html.RenderPartialAsync("AddProductModal");
+}
