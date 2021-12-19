@@ -30,7 +30,11 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
         }
 
         public IContactsRepository ContactsRepository { get; }
+        public ICustomersRepository CustomersRepository { get; }
+        public IDiscountsRepository DiscountsRepository { get; }
         public IOrdersRepository OrdersRepository { get; }
+        public IPermissionsRepository PermissionsRepository { get; }
+        public IProductsRepository ProductsRepository { get; }
         public IRolesRepository RolesRepository { get; }
         public ITodosRepository TodosRepository { get; }
         public IUsersRepository UsersRepository { get; }

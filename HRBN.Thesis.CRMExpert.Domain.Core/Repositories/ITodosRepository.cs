@@ -6,12 +6,8 @@ using HRBN.Thesis.CRMExpert.Domain.Core.Pagination;
 
 namespace HRBN.Thesis.CRMExpert.Domain.Core.Repositories
 {
-    public interface ITodosRepository
+    public interface ITodosRepository : IRepository<Todo>
     {
-        Task<Todo> GetAsync(Guid id);
-        Task DeleteAsync(Todo todo);
         Task<IPageResult<Todo>> SearchAsync(Guid contactId, string searchPhrase, int pageNumber, int pageSize, string orderBy, SortDirection sortDirection);
-        Task AddAsync(Todo todo);
-        Task UpdateAsync(Todo todo);
     }
 }

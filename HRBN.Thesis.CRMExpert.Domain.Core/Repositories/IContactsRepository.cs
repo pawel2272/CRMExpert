@@ -6,12 +6,9 @@ using HRBN.Thesis.CRMExpert.Domain.Core.Pagination;
 
 namespace HRBN.Thesis.CRMExpert.Domain.Core.Repositories
 {
-    public interface IContactsRepository
+    public interface IContactsRepository : IRepository<Contact>
     {
-        Task<Contact> GetAsync(Guid id);
-        Task DeleteAsync(Contact contact);
-        Task<IPageResult<Contact>> SearchAsync(Guid userId, string searchPhrase, int pageNumber, int pageSize, string orderBy, SortDirection sortDirection);
-        Task AddAsync(Contact contact);
-        Task UpdateAsync(Contact contact);
+        Task<IPageResult<Contact>> SearchAsync(Guid userId, string searchPhrase, int pageNumber, int pageSize,
+            string orderBy, SortDirection sortDirection);
     }
 }

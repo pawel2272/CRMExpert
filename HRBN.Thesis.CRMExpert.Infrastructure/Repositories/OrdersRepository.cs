@@ -22,6 +22,11 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
+        public Task<IPageResult<Order>> SearchAsync(string searchPhrase, int pageNumber, int pageSize, string orderBy, SortDirection sortDirection)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task AddAsync(Order order)
         {
             await _dbContext.Orders.AddAsync(order);

@@ -22,6 +22,11 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
+        public Task<IPageResult<Todo>> SearchAsync(string searchPhrase, int pageNumber, int pageSize, string orderBy, SortDirection sortDirection)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task AddAsync(Todo todo)
         {
             await _dbContext.Todos.AddAsync(todo);
