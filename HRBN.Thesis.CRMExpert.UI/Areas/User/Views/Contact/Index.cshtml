@@ -1,6 +1,23 @@
 <div class="container my-2">
     <div class="row">
-        <form>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-xl-10 col-sm-8">
+                            
+                </div>
+                <div class="col-xl-1 col-sm-2">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addContactModal">
+                        Add
+                    </button>
+                </div>
+                <div class="col-xl-1 col-sm-2">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#filterForm">
+                        Filter
+                    </button>
+                </div>
+            </div>
+        </div>
+        <form class="collapse border" id="filterForm">
             <div class="col-12">
                 <div class="row">
                     <div class="col-xl-3">
@@ -87,16 +104,12 @@
                 <tr>
                     <th scope="col" class="d-none">Id</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Phone</th>
+                    <th scope="col" class="d-none d-md-table-cell">Phone</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Address</th>
+                    <th scope="col" class="d-none d-md-table-cell">Address</th>
                     <th scope="col" class="d-none d-md-table-cell">Comment</th>
-                    <th scope="col" class="d-none d-md-table-cell">
-                        Creation date
-                    </th>
-                    <th scope="col" class="d-none d-md-table-cell">
-                        Modification date
-                    </th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -104,11 +117,19 @@
                     <th scope="row" class="d-none">1</th>
                     <td>Jan Kowalski</td>
                     <td>+48793154795</td>
-                    <td>jan.kowalski@crm.pl</td>
-                    <td>Kwiatowa 11, 21-370 Farszawa</td>
+                    <td class="d-none d-md-table-cell">jan.kowalski@crm.pl</td>
+                    <td class="d-none d-md-table-cell">Kwiatowa 11, 21-370 Farszawa</td>
                     <td class="d-none d-md-table-cell">Sample comment</td>
-                    <td class="d-none d-md-table-cell">01.01.2021 21:37</td>
-                    <td class="d-none d-md-table-cell">02.01.2021 21:37</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Edit
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Delete
+                        </button>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -137,3 +158,6 @@
         </div>
     </div>
 </div>
+@{
+    await Html.RenderPartialAsync("_AddContactModal");
+}

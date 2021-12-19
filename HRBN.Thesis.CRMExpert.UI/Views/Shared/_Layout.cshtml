@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css"/>
     <link rel="stylesheet" href="~/css/style.css"/>
+    @await RenderSectionAsync("Styles", false)
+    @await RenderSectionAsync("UpperScripts", false)
 </head>
 <body>
 <header>
@@ -39,25 +41,17 @@
                             <a class="dropdown-item" asp-area="User" asp-controller="Customer" asp-action="Index"> Customer list </a>
                             <a class="dropdown-item" asp-area="User" asp-controller="Customer" asp-action="Orders"> Orders </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"> Customer cases </a>
+                            <a class="dropdown-item" asp-area="User" asp-controller="Task" asp-action="Index"> Tasks </a>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"> Tasks </a>
+                        <a class="nav-link" asp-area="User" asp-controller="Task" asp-action="Index"> Tasks </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"> Your account </a>
+                        <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Manage"> Your account </a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-target="#adminDropdown" role="button" aria-expanded="false" aria-controls="customerDropdown" aria-label="Admin menu toggler" id="customerSubmenu" aria-haspopup="true"> Admin </a>
-
-                        <div class="dropdown-menu" id="adminDropdown" aria-labelledby="adminSubmenu">
-                            <a class="dropdown-item" href="#"> Admin panel </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"> Manage products </a>
-                            <a class="dropdown-item" href="#"> Manage services </a>
-                            <a class="dropdown-item" href="#"> Manage customers </a>
-                        </div>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="Administrator" asp-controller="Management" asp-action="Index"> Admin </a>
                     </li>
                 </ul>
                 <form class="d-flex ms-auto">

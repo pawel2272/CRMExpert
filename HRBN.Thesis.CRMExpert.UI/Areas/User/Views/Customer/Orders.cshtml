@@ -1,1 +1,134 @@
-<div>Orders</div>
+<div class="container my-2">
+    <div class="row">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-xl-10 col-sm-8">
+                                    
+                </div>
+                <div class="col-xl-1 col-sm-2">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCustomerModal">
+                        Add
+                    </button>
+                </div>
+                <div class="col-xl-1 col-sm-2">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#filterForm">
+                        Filter
+                    </button>
+                </div>
+            </div>
+        </div>
+        <form class="collapse border" id="filterForm">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-xl-3">
+                        <div class="form-group row srch-frm">
+                            <label for="orderBy" class="col-sm-4 col-form-label">Order by</label>
+                            <div class="col-sm-8">
+                                <select id="orderBy" class="form-select">
+                                    <option value="Title" selected>Title</option>
+                                    <option value="Content">Content</option>
+                                    <option value="Price">Price</option>
+                                    <option value="CreDate">Creation date</option>
+                                    <option value="ModDate">Modification date</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3">
+                        <div class="form-group row srch-frm">
+                            <label for="sortDirection" class="col-sm-4 col-form-label">Direction</label>
+                            <div class="col-sm-8">
+                                <select id="sortDirection" class="form-select">
+                                    <option value="ASC" selected>Ascending</option>
+                                    <option value="DESC">Descending</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="form-group row srch-frm">
+                            <label for="searchPhrase" class="col-sm-4 col-form-label">Phrase</label>
+                            <div class="col-sm-8">
+                                <input id="searchPhrase" placeholder="Phrase..." class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2">
+                        <div class="form-group row srch-frm">
+                            <label for="pageSize" class="col-sm-4 col-form-label">Size</label>
+                            <div class="col-sm-8">
+                                <select id="pageSize" class="form-select">
+                                    <option value="5">5</option>
+                                    <option value="10" selected>10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-1">
+                        <input id="searchFormButton" type="submit" value="Search" class="btn btn-primary">
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="col-12">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col" class="d-none">Id</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Content</th>
+                    <th scope="col">Price</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row" class="d-none">1</th>
+                    <td>Okuratne zamówienie</td>
+                    <td>Kontent zawartość</td>
+                    <td>21,37 PLN</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Edit
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-12">
+            <nav>
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="#">Previous</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+@{
+    await Html.RenderPartialAsync("_AddOrderModal");
+}

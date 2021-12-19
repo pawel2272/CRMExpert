@@ -10,5 +10,11 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.Identity.Controllers
         {
             return View();
         }
+        
+        // GET
+        public IActionResult Manage()
+        {
+            return View();
+        }
     }
 }
