@@ -1,0 +1,84 @@
+<div class="modal fade" id="addOrEditUserModal" tabindex="-1" aria-labelledby="addOrEditUserModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add a new contact</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <label for="firstName" class="col-sm-3 col-form-label">First name</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="firstName">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="lastName" class="col-sm-3 col-form-label">Last name</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="lastName">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="phone" class="col-sm-3 col-form-label">Phone</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="phone">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="email" class="col-sm-3 col-form-label">Email</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="email">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="street" class="col-sm-3 col-form-label">Street</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="street">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="postalCode" class="col-sm-3 col-form-label">Postal code</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="postalCode">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="city" class="col-sm-3 col-form-label">City</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="city">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="contactComment" class="col-sm-3 col-form-label">Comment</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" id="contactComment" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="user" class="col-sm-3 col-form-label">User</label>
+                        <div class="col-sm-9">
+                            <select id="user" class="form-select">
+                                <option value="Electronics" selected>Admin</option>
+                                <option value="Services">Admin1</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="customer" class="col-sm-3 col-form-label">Customer</label>
+                        <div class="col-sm-9">
+                            <select id="customer" class="form-select">
+                                <option value="Electronics" selected>Customer</option>
+                                <option value="Services">Customer1</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
