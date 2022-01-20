@@ -9,5 +9,10 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
         {
             return View();
         }
+        
+        public IActionResult Edit()
+        {
+            return View();
+        }
     }
 }

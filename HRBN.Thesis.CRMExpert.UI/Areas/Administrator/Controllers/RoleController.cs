@@ -10,4 +10,9 @@ public class RoleController : Controller
     {
         return View();
     }
+    
+    public IActionResult Edit()
+    {
+        return View();
+    }
 }

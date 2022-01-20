@@ -10,4 +10,9 @@ public class UserController : Controller
     {
         return View();
     }
+    
+    public IActionResult Edit()
+    {
+        return View();
+    }
 }

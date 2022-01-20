@@ -1,0 +1,56 @@
+<div class="container my-2">
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    Edit product
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="modal-body">
+                            <div class="row mb-3">
+                                <label for="name" class="col-md-3 col-form-label">Name</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" id="name">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="price" class="col-md-3 col-form-label">Price</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" id="price">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="description" class="col-xl-3 col-form-label">Description</label>
+                                <div class="col-xl-9">
+                                    <textarea class="form-control" id="description" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="type" class="col-md-3 col-form-label">Type</label>
+                                <div class="col-md-9">
+                                    <select id="type" class="form-select">
+                                        <option value="Electronics" selected>Electronics</option>
+                                        <option value="Services">Services</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="count" class="col-md-3 col-form-label">Count</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" id="count">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a asp-area="User" asp-controller="Product" asp-action="Index" class="btn btn-secondary">Back</a>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+</div>

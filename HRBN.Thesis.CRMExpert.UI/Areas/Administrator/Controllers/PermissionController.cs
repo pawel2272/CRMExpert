@@ -10,4 +10,9 @@ public class PermissionController : Controller
     {
         return View();
     }
+    
+    public IActionResult Edit()
+    {
+        return View();
+    }
 }
