@@ -1,0 +1,36 @@
+<div class="modal fade" id="addPermissionModal" tabindex="-1" aria-labelledby="addPermissionModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addPermissionModalLabel">Add a new permission</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <label for="user" class="col-sm-3 col-form-label">User</label>
+                        <div class="col-sm-9">
+                            <select id="user" class="form-select">
+                                <option value="Electronics" selected>Admin</option>
+                                <option value="Services">Admin1</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="role" class="col-sm-3 col-form-label">Role</label>
+                        <div class="col-sm-9">
+                            <select id="role" class="form-select">
+                                <option value="Mod" selected>Mod</option>
+                                <option value="Adm">Adm</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -61,13 +61,17 @@
                         <input type="date" class="form-control" id="modDate" value="1998-05-28" readonly>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-6 my-2 text-center d-grid gap-2">
-                        <button type="submit" class="btn btn-primary">Change password</button>
+                        <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Change password</button>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-6 my-2 text-center d-grid gap-2">
-                        <button type="submit" class="btn btn-primary">Change address</button>
+                        <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modifyAddressModal">Change address</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@{
+    await Html.RenderPartialAsync("_ChangePasswordModal");
+    await Html.RenderPartialAsync("_ModifyAddressModal");
+}

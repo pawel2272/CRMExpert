@@ -1,8 +1,8 @@
-<div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="addCustomerModal" aria-hidden="true">
+<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addCustomerModalLabel">Add a new customer</h5>
+                <h5 class="modal-title" id="addProductModalLabel">Add a new product</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form>
@@ -14,33 +14,30 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="city" class="col-sm-3 col-form-label">City</label>
+                        <label for="price" class="col-sm-3 col-form-label">Price</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="city">
+                            <input type="text" class="form-control" id="price">
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="street" class="col-sm-3 col-form-label">Street</label>
+                        <label for="description" class="col-sm-3 col-form-label">Description</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="street">
+                            <textarea class="form-control" id="description" rows="3"></textarea>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="postalCode" class="col-sm-3 col-form-label">Postal code</label>
+                        <label for="type" class="col-sm-3 col-form-label">Type</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="postalCode">
+                            <select id="type" class="form-select">
+                                <option value="Electronics" selected>Electronics</option>
+                                <option value="Services">Services</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="taxNo" class="col-sm-3 col-form-label">Tax number</label>
+                        <label for="count" class="col-sm-3 col-form-label">Count</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="taxNo">
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="regon" class="col-sm-3 col-form-label">Regon</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="regon">
+                            <input type="text" class="form-control" id="count">
                         </div>
                     </div>
                 </div>
