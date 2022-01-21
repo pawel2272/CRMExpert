@@ -22,11 +22,6 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        public Task<IPageResult<Contact>> SearchAsync(string searchPhrase, int pageNumber, int pageSize, string orderBy, SortDirection sortDirection)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task AddAsync(Contact contact)
         {
             await _dbContext.Contacts.AddAsync(contact);
@@ -34,7 +29,10 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
 
         public async Task DeleteAsync(Contact contact)
         {
-            _dbContext.Contacts.Remove(contact);
+            await Task.Factory.StartNew(() =>
+            {
+                _dbContext.Contacts.Remove(contact);
+            });
         }
 
         public async Task<Contact> GetAsync(Guid id)
@@ -43,7 +41,60 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             return contact;
         }
 
-        public async Task<IPageResult<Contact>> SearchAsync(Guid userId, string searchPhrase, int pageNumber, int pageSize, string orderBy, SortDirection sortDirection)
+        public async Task<IPageResult<Contact>> SearchAsync(string searchPhrase, int pageNumber, int pageSize, string orderBy,
+            SortDirection sortDirection)
+        {
+            var baseQuery = _dbContext.Contacts
+                .Where(c => (searchPhrase == null ||
+                             c.Id.ToString().Contains(searchPhrase)
+                             || c.FirstName.ToLower().Contains(searchPhrase.ToLower())
+                             || c.LastName.ToLower().Contains(searchPhrase.ToLower())
+                             || c.Phone.ToLower().Contains(searchPhrase.ToLower())
+                             || c.Email.ToLower().Contains(searchPhrase.ToLower())
+                             || c.Street.ToLower().Contains(searchPhrase.ToLower())
+                             || c.PostalCode.ToLower().Contains(searchPhrase.ToLower())
+                             || c.City.ToLower().Contains(searchPhrase.ToLower())
+                             || c.ContactComment.ToLower().Contains(searchPhrase.ToLower())
+                    ));
+            if (!string.IsNullOrEmpty(orderBy))
+            {
+                var columnSelectors = new Dictionary<string, Expression<Func<Contact, object>>>()
+                {
+                    {nameof(Contact.FirstName), c => c.FirstName},
+                    {nameof(Contact.LastName), c => c.LastName},
+                    {nameof(Contact.Phone), c => c.Phone},
+                    {nameof(Contact.Email), c => c.Email},
+                    {nameof(Contact.Street), c => c.Street},
+                    {nameof(Contact.PostalCode), c => c.PostalCode},
+                    {nameof(Contact.City), c => c.City},
+                    {nameof(Contact.ContactComment), c => c.ContactComment}
+                };
+
+                Expression<Func<Contact, object>> selectedColumn;
+
+                if (columnSelectors.Keys.Contains(orderBy))
+                {
+                    selectedColumn = columnSelectors[orderBy];
+                }
+                else
+                {
+                    selectedColumn = columnSelectors["FirstName"];
+                }
+
+                baseQuery = sortDirection == SortDirection.ASC
+                    ? baseQuery.OrderBy(selectedColumn)
+                    : baseQuery.OrderByDescending(selectedColumn);
+            }
+
+            var contacts = await baseQuery.Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
+                .ToListAsync();
+
+            return new PageResult<Contact>(contacts, baseQuery.Count(), pageSize, pageNumber);
+        }
+
+        public async Task<IPageResult<Contact>> SearchAsync(Guid userId, string searchPhrase, int pageNumber,
+            int pageSize, string orderBy, SortDirection sortDirection)
         {
             var baseQuery = _dbContext.Contacts
                 .Where(c => (searchPhrase == null ||
@@ -61,14 +112,14 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             {
                 var columnSelectors = new Dictionary<string, Expression<Func<Contact, object>>>()
                 {
-                    { nameof(Contact.FirstName), c => c.FirstName },
-                    { nameof(Contact.LastName), c => c.LastName },
-                    { nameof(Contact.Phone), c => c.Phone },
-                    { nameof(Contact.Email), c => c.Email },
-                    { nameof(Contact.Street), c => c.Street },
-                    { nameof(Contact.PostalCode), c => c.PostalCode },
-                    { nameof(Contact.City), c => c.City },
-                    { nameof(Contact.ContactComment), c => c.ContactComment }
+                    {nameof(Contact.FirstName), c => c.FirstName},
+                    {nameof(Contact.LastName), c => c.LastName},
+                    {nameof(Contact.Phone), c => c.Phone},
+                    {nameof(Contact.Email), c => c.Email},
+                    {nameof(Contact.Street), c => c.Street},
+                    {nameof(Contact.PostalCode), c => c.PostalCode},
+                    {nameof(Contact.City), c => c.City},
+                    {nameof(Contact.ContactComment), c => c.ContactComment}
                 };
 
                 Expression<Func<Contact, object>> selectedColumn;
@@ -82,8 +133,11 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
                     selectedColumn = columnSelectors["FirstName"];
                 }
 
-                baseQuery = sortDirection == SortDirection.ASC ? baseQuery.OrderBy(selectedColumn) : baseQuery.OrderByDescending(selectedColumn);
+                baseQuery = sortDirection == SortDirection.ASC
+                    ? baseQuery.OrderBy(selectedColumn)
+                    : baseQuery.OrderByDescending(selectedColumn);
             }
+
             var contacts = await baseQuery.Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
                 .ToListAsync();
@@ -93,7 +147,10 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
 
         public async Task UpdateAsync(Contact contact)
         {
-            _dbContext.Contacts.Update(contact);
+            await Task.Factory.StartNew(() =>
+            {
+                _dbContext.Contacts.Update(contact);
+            });
         }
     }
 }

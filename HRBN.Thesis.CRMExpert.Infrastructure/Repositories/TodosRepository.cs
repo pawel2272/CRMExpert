@@ -22,7 +22,8 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        public Task<IPageResult<Todo>> SearchAsync(string searchPhrase, int pageNumber, int pageSize, string orderBy, SortDirection sortDirection)
+        public Task<IPageResult<Todo>> SearchAsync(string searchPhrase, int pageNumber, int pageSize, string orderBy,
+            SortDirection sortDirection)
         {
             throw new NotImplementedException();
         }
@@ -34,7 +35,7 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
 
         public async Task DeleteAsync(Todo todo)
         {
-            _dbContext.Todos.Remove(todo);
+            await Task.Factory.StartNew(() => { _dbContext.Todos.Remove(todo); });
         }
 
         public async Task<Todo> GetAsync(Guid id)
@@ -43,7 +44,8 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             return todo;
         }
 
-        public async Task<IPageResult<Todo>> SearchAsync(Guid contactId, string searchPhrase, int pageNumber, int pageSize, string orderBy, SortDirection sortDirection)
+        public async Task<IPageResult<Todo>> SearchAsync(Guid contactId, string searchPhrase, int pageNumber,
+            int pageSize, string orderBy, SortDirection sortDirection)
         {
             var baseQuery = _dbContext.Todos
                 .Where(t => t.ContactId == contactId &&
@@ -54,14 +56,17 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             {
                 var columnSelectors = new Dictionary<string, Expression<Func<Todo, object>>>()
                 {
-                    { nameof(Todo.Title), o => o.Title },
-                    { nameof(Todo.Content), o => o.Content }
+                    {nameof(Todo.Title), o => o.Title},
+                    {nameof(Todo.Content), o => o.Content}
                 };
 
                 var selectedColumn = columnSelectors[orderBy];
 
-                baseQuery = sortDirection == SortDirection.ASC ? baseQuery.OrderBy(selectedColumn) : baseQuery.OrderByDescending(selectedColumn);
+                baseQuery = sortDirection == SortDirection.ASC
+                    ? baseQuery.OrderBy(selectedColumn)
+                    : baseQuery.OrderByDescending(selectedColumn);
             }
+
             var todos = await baseQuery.Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
                 .ToListAsync();
@@ -71,7 +76,7 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
 
         public async Task UpdateAsync(Todo todo)
         {
-            _dbContext.Todos.Update(todo);
+            await Task.Factory.StartNew(() => { _dbContext.Todos.Update(todo); });
         }
     }
 }

@@ -38,6 +38,7 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             {
                 return false;
             }
+
             return await _cache.GetStringAsync(GetKey(token)) == null;
         }
 

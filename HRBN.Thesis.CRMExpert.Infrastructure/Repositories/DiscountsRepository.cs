@@ -5,6 +5,7 @@ using HRBN.Thesis.CRMExpert.Domain.Core.Entities;
 using HRBN.Thesis.CRMExpert.Domain.Core.Enums;
 using HRBN.Thesis.CRMExpert.Domain.Core.Pagination;
 using HRBN.Thesis.CRMExpert.Domain.Core.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories;
 
@@ -17,29 +18,30 @@ public class DiscountsRepository : IDiscountsRepository
         _dbContext = dbContext;
     }
 
-    public Task<Discount> GetAsync(Guid id)
+    public async Task<Discount> GetAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await _dbContext.Discounts.FirstOrDefaultAsync(e => e.Id == id);
     }
 
-    public Task DeleteAsync(Discount entity)
+    public async Task DeleteAsync(Discount entity)
     {
-        throw new NotImplementedException();
+        await Task.Factory.StartNew(() => { _dbContext.Discounts.Remove(entity); });
     }
 
-    public Task<IPageResult<Discount>> SearchAsync(string searchPhrase, int pageNumber, int pageSize, string orderBy,
+    public async Task<IPageResult<Discount>> SearchAsync(string searchPhrase, int pageNumber, int pageSize,
+        string orderBy,
         SortDirection sortDirection)
     {
         throw new NotImplementedException();
     }
 
-    public Task AddAsync(Discount entity)
+    public async Task AddAsync(Discount entity)
     {
-        throw new NotImplementedException();
+        await _dbContext.Discounts.AddAsync(entity);
     }
 
-    public Task UpdateAsync(Discount entity)
+    public async Task UpdateAsync(Discount entity)
     {
-        throw new NotImplementedException();
+        await Task.Factory.StartNew(() => { _dbContext.Discounts.Update(entity); });
     }
 }

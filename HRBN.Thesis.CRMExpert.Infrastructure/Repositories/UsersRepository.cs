@@ -27,7 +27,8 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly ITokenRepository _tokenRepository;
 
-        public UsersRepository(CRMContext dbContext, IPasswordHasher<User> hasher, JwtOptions jwtOptions, IHttpContextAccessor contextAccessor, ITokenRepository tokenRepository)
+        public UsersRepository(CRMContext dbContext, IPasswordHasher<User> hasher, JwtOptions jwtOptions,
+            IHttpContextAccessor contextAccessor, ITokenRepository tokenRepository)
         {
             _tokenRepository = tokenRepository;
             _contextAccessor = contextAccessor;
@@ -44,36 +45,37 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
 
         public async Task DeleteAsync(User user)
         {
-            _dbContext.Users.Remove(user);
+            await Task.Factory.StartNew(() => { _dbContext.Users.Remove(user); });
         }
 
-        public async Task<IPageResult<User>> SearchAsync(string searchPhrase, int pageNumber, int pageSize, string orderBy, SortDirection sortDirection)
+        public async Task<IPageResult<User>> SearchAsync(string searchPhrase, int pageNumber, int pageSize,
+            string orderBy, SortDirection sortDirection)
         {
             var baseQuery = _dbContext.Users
                 .Where(u => searchPhrase == null ||
-                             (u.Id.ToString().Contains(searchPhrase)
-                              || u.Username.ToLower().Contains(searchPhrase.ToLower())
-                              || u.Gender.ToLower().Contains(searchPhrase.ToLower())
-                              || u.FirstName.ToLower().Contains(searchPhrase.ToLower())
-                              || u.LastName.ToLower().Contains(searchPhrase.ToLower())
-                              || u.Phone.ToLower().Contains(searchPhrase.ToLower())
-                              || u.Email.ToLower().Contains(searchPhrase.ToLower())
-                              || u.Street.ToLower().Contains(searchPhrase.ToLower())
-                              || u.PostalCode.ToLower().Contains(searchPhrase.ToLower())
-                              || u.City.ToLower().Contains(searchPhrase.ToLower())
-                             ));
+                            (u.Id.ToString().Contains(searchPhrase)
+                             || u.Username.ToLower().Contains(searchPhrase.ToLower())
+                             || u.Gender.ToLower().Contains(searchPhrase.ToLower())
+                             || u.FirstName.ToLower().Contains(searchPhrase.ToLower())
+                             || u.LastName.ToLower().Contains(searchPhrase.ToLower())
+                             || u.Phone.ToLower().Contains(searchPhrase.ToLower())
+                             || u.Email.ToLower().Contains(searchPhrase.ToLower())
+                             || u.Street.ToLower().Contains(searchPhrase.ToLower())
+                             || u.PostalCode.ToLower().Contains(searchPhrase.ToLower())
+                             || u.City.ToLower().Contains(searchPhrase.ToLower())
+                            ));
             if (!string.IsNullOrEmpty(orderBy))
             {
                 var columnSelectors = new Dictionary<string, Expression<Func<User, object>>>()
                 {
-                    { nameof(User.Username), u => u.Username },
-                    { nameof(User.FirstName), u => u.FirstName },
-                    { nameof(User.LastName), u => u.LastName },
-                    { nameof(User.Phone), u => u.Phone },
-                    { nameof(User.Email), u => u.Email },
-                    { nameof(User.Street), u => u.Street },
-                    { nameof(User.PostalCode), u => u.PostalCode },
-                    { nameof(User.City), u => u.City }
+                    {nameof(User.Username), u => u.Username},
+                    {nameof(User.FirstName), u => u.FirstName},
+                    {nameof(User.LastName), u => u.LastName},
+                    {nameof(User.Phone), u => u.Phone},
+                    {nameof(User.Email), u => u.Email},
+                    {nameof(User.Street), u => u.Street},
+                    {nameof(User.PostalCode), u => u.PostalCode},
+                    {nameof(User.City), u => u.City}
                 };
 
                 Expression<Func<User, object>> selectedColumn;
@@ -87,8 +89,11 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
                     selectedColumn = columnSelectors["Username"];
                 }
 
-                baseQuery = sortDirection == SortDirection.ASC ? baseQuery.OrderBy(selectedColumn) : baseQuery.OrderByDescending(selectedColumn);
+                baseQuery = sortDirection == SortDirection.ASC
+                    ? baseQuery.OrderBy(selectedColumn)
+                    : baseQuery.OrderByDescending(selectedColumn);
             }
+
             var users = await baseQuery.Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
                 .ToListAsync();
@@ -104,8 +109,11 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
 
         public async Task UpdateAsync(User user)
         {
-            user.Password = _hasher.HashPassword(user, user.Password);
-            _dbContext.Users.Update(user);
+            await Task.Factory.StartNew(() =>
+            {
+                user.Password = _hasher.HashPassword(user, user.Password);
+                _dbContext.Users.Update(user);
+            });
         }
 
         private CookieBuilder CreateAuthorizationCookie(double time)
@@ -138,7 +146,7 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
             string tokenString = handler.WriteToken(token);
             var centuryBegin = new DateTime(1970, 1, 1).ToUniversalTime();
-            var exp = (long)(new TimeSpan(expires.ToUniversalTime().Ticks - centuryBegin.Ticks).TotalSeconds);
+            var exp = (long) (new TimeSpan(expires.ToUniversalTime().Ticks - centuryBegin.Ticks).TotalSeconds);
             return new JsonWebToken()
             {
                 AccessToken = tokenString,
@@ -153,14 +161,19 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             {
                 return null;
             }
+
             var result = _hasher.VerifyHashedPassword(userToBeVerified, userToBeVerified.Password, password);
             if (result == PasswordVerificationResult.Failed)
             {
                 return null;
             }
-            var cookie = rememberMe ? CreateAuthorizationCookie(_jwtOptions.JwtExpireMinutes * 10) : CreateAuthorizationCookie(_jwtOptions.JwtExpireMinutes);
+
+            var cookie = rememberMe
+                ? CreateAuthorizationCookie(_jwtOptions.JwtExpireMinutes * 10)
+                : CreateAuthorizationCookie(_jwtOptions.JwtExpireMinutes);
             var token = CreateToken(userToBeVerified);
-            _contextAccessor.HttpContext.Response.Cookies.Append("Authorization", token.AccessToken, cookie.Build(_contextAccessor.HttpContext));
+            _contextAccessor.HttpContext.Response.Cookies.Append("Authorization", token.AccessToken,
+                cookie.Build(_contextAccessor.HttpContext));
             return token.AccessToken;
         }
 
@@ -169,7 +182,8 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             await _tokenRepository.DeactivateCurrentAsync();
             _contextAccessor.HttpContext.Response.Cookies.Delete("Authorization");
             CookieBuilder cookie = CreateAuthorizationCookie(-60);
-            _contextAccessor.HttpContext.Response.Cookies.Append("Authorization", "", cookie.Build(_contextAccessor.HttpContext));
+            _contextAccessor.HttpContext.Response.Cookies.Append("Authorization", "",
+                cookie.Build(_contextAccessor.HttpContext));
         }
     }
 }

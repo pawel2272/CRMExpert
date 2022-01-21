@@ -5,6 +5,7 @@ using HRBN.Thesis.CRMExpert.Domain.Core.Entities;
 using HRBN.Thesis.CRMExpert.Domain.Core.Enums;
 using HRBN.Thesis.CRMExpert.Domain.Core.Pagination;
 using HRBN.Thesis.CRMExpert.Domain.Core.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories;
 
@@ -16,29 +17,30 @@ public class ProductsRepository : IProductsRepository
     {
         _dbContext = dbContext;
     }
-    
-    public Task<Product> GetAsync(Guid id)
+
+    public async Task<Product> GetAsync(Guid id)
+    {
+        return await _dbContext.Products.FirstOrDefaultAsync(e => e.Id == id);
+    }
+
+    public async Task DeleteAsync(Product entity)
+    {
+        await Task.Factory.StartNew(() => { _dbContext.Products.Remove(entity); });
+    }
+
+    public async Task<IPageResult<Product>> SearchAsync(string searchPhrase, int pageNumber, int pageSize,
+        string orderBy, SortDirection sortDirection)
     {
         throw new NotImplementedException();
     }
 
-    public Task DeleteAsync(Product entity)
+    public async Task AddAsync(Product entity)
     {
-        throw new NotImplementedException();
+        await _dbContext.Products.AddAsync(entity);
     }
 
-    public Task<IPageResult<Product>> SearchAsync(string searchPhrase, int pageNumber, int pageSize, string orderBy, SortDirection sortDirection)
+    public async Task UpdateAsync(Product entity)
     {
-        throw new NotImplementedException();
-    }
-
-    public Task AddAsync(Product entity)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task UpdateAsync(Product entity)
-    {
-        throw new NotImplementedException();
+        await Task.Factory.StartNew(() => { _dbContext.Update(entity); });
     }
 }

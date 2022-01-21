@@ -29,7 +29,7 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
 
         public async Task DeleteAsync(Role role)
         {
-            _dbContext.Roles.Remove(role);
+            await Task.Factory.StartNew(() => { _dbContext.Roles.Remove(role); });
         }
 
         public async Task<Role> GetAsync(Guid id)
@@ -38,22 +38,26 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             return role;
         }
 
-        public async Task<IPageResult<Role>> SearchAsync(string searchPhrase, int pageNumber, int pageSize, string orderBy, SortDirection sortDirection)
+        public async Task<IPageResult<Role>> SearchAsync(string searchPhrase, int pageNumber, int pageSize,
+            string orderBy, SortDirection sortDirection)
         {
             var baseQuery = _dbContext.Roles
                 .Where(r => searchPhrase == null ||
-                                r.Name.ToLower().Contains(searchPhrase.ToLower()));
+                            r.Name.ToLower().Contains(searchPhrase.ToLower()));
             if (!string.IsNullOrEmpty(orderBy))
             {
                 var columnSelectors = new Dictionary<string, Expression<Func<Role, object>>>()
                 {
-                    { nameof(Role.Name), r => r.Name },
+                    {nameof(Role.Name), r => r.Name},
                 };
 
                 var selectedColumn = columnSelectors[orderBy];
 
-                baseQuery = sortDirection == SortDirection.ASC ? baseQuery.OrderBy(selectedColumn) : baseQuery.OrderByDescending(selectedColumn);
+                baseQuery = sortDirection == SortDirection.ASC
+                    ? baseQuery.OrderBy(selectedColumn)
+                    : baseQuery.OrderByDescending(selectedColumn);
             }
+
             var orders = await baseQuery.Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
                 .ToListAsync();
@@ -62,7 +66,7 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
 
         public async Task UpdateAsync(Role role)
         {
-            _dbContext.Roles.Update(role);
+            await Task.Factory.StartNew(() => { _dbContext.Roles.Update(role); });
         }
     }
 }

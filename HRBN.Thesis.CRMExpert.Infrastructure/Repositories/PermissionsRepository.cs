@@ -5,6 +5,7 @@ using HRBN.Thesis.CRMExpert.Domain.Core.Entities;
 using HRBN.Thesis.CRMExpert.Domain.Core.Enums;
 using HRBN.Thesis.CRMExpert.Domain.Core.Pagination;
 using HRBN.Thesis.CRMExpert.Domain.Core.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories;
 
@@ -17,28 +18,35 @@ public class PermissionsRepository : IPermissionsRepository
         _dbContext = dbContext;
     }
     
-    public Task<Permission> GetAsync(Guid id)
+    public async Task<Permission> GetAsync(Guid id)
+    {
+        return await _dbContext.Permissions.FirstOrDefaultAsync(e => e.Id == id);
+    }
+
+    public async Task DeleteAsync(Permission entity)
+    {
+        await Task.Factory.StartNew(() =>
+        {
+            _dbContext.Permissions.Remove(entity);
+        });
+    }
+
+    public async Task<IPageResult<Permission>> SearchAsync(string searchPhrase, int pageNumber, int pageSize, string orderBy, SortDirection sortDirection)
     {
         throw new NotImplementedException();
     }
 
-    public Task DeleteAsync(Permission entity)
+    public async Task AddAsync(Permission entity)
     {
-        throw new NotImplementedException();
+        await _dbContext.Permissions.AddAsync(entity);
     }
 
-    public Task<IPageResult<Permission>> SearchAsync(string searchPhrase, int pageNumber, int pageSize, string orderBy, SortDirection sortDirection)
+    public async Task UpdateAsync(Permission entity)
     {
-        throw new NotImplementedException();
-    }
-
-    public Task AddAsync(Permission entity)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task UpdateAsync(Permission entity)
-    {
-        throw new NotImplementedException();
+        await Task.Factory.StartNew(() =>
+        {
+            _dbContext.Permissions.Update(entity);
+        });
+        
     }
 }
