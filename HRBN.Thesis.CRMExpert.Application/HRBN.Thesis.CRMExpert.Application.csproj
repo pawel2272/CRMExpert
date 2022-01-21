@@ -6,10 +6,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="CRMExpertDefinitions\Queries\Customer" />
-      <Folder Include="CRMExpertDefinitions\Queries\Discount" />
-      <Folder Include="CRMExpertDefinitions\Queries\Permission" />
-      <Folder Include="CRMExpertDefinitions\Queries\Product" />
       <Folder Include="Exceptions" />
     </ItemGroup>
 
