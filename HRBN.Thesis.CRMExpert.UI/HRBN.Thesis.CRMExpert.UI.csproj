@@ -15,4 +15,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.12" />
   </ItemGroup>
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootlint\bootlint.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootlint\bootlint.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\bootlint\bootlint.min.js.map" />
+  </ItemGroup>
 </Project>
