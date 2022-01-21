@@ -1,23 +1,35 @@
 <div class="container my-2">
     <div class="row">
-        <form>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-xl-8 col-sm-8 col-md-8 col-xs-8 d-grid gap-2">
+
+                </div>
+                <div class="col-xs-2 col-xl-2 col-md-2 col-sm-2 d-grid gap-2">
+                    <button type="button" class="btn btn-primary my-2" data-bs-toggle="modal" data-bs-target="#addOrderModal">
+                        Add
+                    </button>
+                </div>
+                <div class="col-xs-2 col-xl-2 col-md-2 col-sm-2 d-grid gap-2">
+                    <button type="button" class="btn btn-primary my-2" data-bs-toggle="collapse" data-bs-target="#filterForm">
+                        Filter
+                    </button>
+                </div>
+            </div>
+        </div>
+        <form class="collapse border" id="filterForm">
             <div class="col-12">
                 <div class="row">
                     <div class="col-xl-3">
                         <div class="form-group row srch-frm">
-                            <label for="orderBy" class="col-sm-4 col-form-label">
-                                Order by
-                            </label
-                            >
+                            <label for="orderBy" class="col-sm-4 col-form-label">Order by</label>
                             <div class="col-sm-8">
                                 <select id="orderBy" class="form-select">
                                     <option value="Title" selected>Title</option>
                                     <option value="Content">Content</option>
                                     <option value="Price">Price</option>
-                                    <option value="CreationDate">Creation date</option>
-                                    <option value="ModificationDane">
-                                        Modification date
-                                    </option>
+                                    <option value="CreDate">Creation date</option>
+                                    <option value="ModDate">Modification date</option>
                                 </select>
                             </div>
                         </div>
@@ -25,10 +37,7 @@
 
                     <div class="col-xl-3">
                         <div class="form-group row srch-frm">
-                            <label for="sortDirection" class="col-sm-4 col-form-label">
-                                Direction
-                            </label
-                            >
+                            <label for="sortDirection" class="col-sm-4 col-form-label">Direction</label>
                             <div class="col-sm-8">
                                 <select id="sortDirection" class="form-select">
                                     <option value="ASC" selected>Ascending</option>
@@ -39,24 +48,15 @@
                     </div>
                     <div class="col-xl-3">
                         <div class="form-group row srch-frm">
-                            <label for="searchPhrase" class="col-sm-4 col-form-label">
-                                Phrase
-                            </label
-                            >
+                            <label for="searchPhrase" class="col-sm-4 col-form-label">Phrase</label>
                             <div class="col-sm-8">
-                                <input
-                                    id="searchPhrase"
-                                    placeholder="Phrase..."
-                                    class="form-control"/>
+                                <input id="searchPhrase" placeholder="Phrase..." class="form-control"/>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-2">
                         <div class="form-group row srch-frm">
-                            <label for="pageSize" class="col-sm-4 col-form-label">
-                                Size
-                            </label
-                            >
+                            <label for="pageSize" class="col-sm-4 col-form-label">Size</label>
                             <div class="col-sm-8">
                                 <select id="pageSize" class="form-select">
                                     <option value="5">5</option>
@@ -68,11 +68,7 @@
                         </div>
                     </div>
                     <div class="col-xl-1">
-                        <input
-                            id="searchFormButton"
-                            type="submit"
-                            value="Search"
-                            class="btn btn-primary"/>
+                        <input id="searchFormButton" type="submit" value="Search" class="btn btn-primary">
                     </div>
                 </div>
             </div>
@@ -85,22 +81,26 @@
                     <th scope="col">Title</th>
                     <th scope="col">Content</th>
                     <th scope="col">Price</th>
-                    <th scope="col" class="d-none d-md-table-cell">
-                        Creation date
-                    </th>
-                    <th scope="col" class="d-none d-md-table-cell">
-                        Modification date
-                    </th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
                     <th scope="row" class="d-none">1</th>
-                    <td>First order</td>
-                    <td>Content of the first order</td>
-                    <td>21.37 PLN</td>
-                    <td class="d-none d-md-table-cell">01.01.2021 21:37</td>
-                    <td class="d-none d-md-table-cell">02.01.2021 21:37</td>
+                    <td>Okuratne zamówienie</td>
+                    <td>Kontent zawartość</td>
+                    <td>21,37 PLN</td>
+                    <td>
+                        <a asp-area="User" asp-controller="Order" asp-action="Edit" type="button" class="btn btn-primary">
+                            Edit
+                        </a>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal">
+                            Delete
+                        </button>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -129,3 +129,6 @@
         </div>
     </div>
 </div>
+@{
+    await Html.RenderPartialAsync("_AddOrderModal");
+}

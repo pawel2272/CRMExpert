@@ -5,6 +5,7 @@ using HRBN.Thesis.CRMExpert.Domain.Core.Entities;
 using HRBN.Thesis.CRMExpert.Domain.Core.Enums;
 using HRBN.Thesis.CRMExpert.Domain.Core.Pagination;
 using HRBN.Thesis.CRMExpert.Domain.Core.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories;
 
@@ -17,14 +18,17 @@ public class CustomersRepository : ICustomersRepository
         _dbContext = dbContext;
     }
     
-    public Task<Customer> GetAsync(Guid id)
+    public async Task<Customer> GetAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await _dbContext.Customers.FirstOrDefaultAsync(e => e.Id.Equals(id));
     }
 
-    public Task DeleteAsync(Customer entity)
+    public async Task DeleteAsync(Customer entity)
     {
-        throw new NotImplementedException();
+        await Task.Factory.StartNew(() =>
+        {
+            _dbContext.Customers.Remove(entity);
+        });
     }
 
     public Task<IPageResult<Customer>> SearchAsync(string searchPhrase, int pageNumber, int pageSize, string orderBy, SortDirection sortDirection)
@@ -32,13 +36,16 @@ public class CustomersRepository : ICustomersRepository
         throw new NotImplementedException();
     }
 
-    public Task AddAsync(Customer entity)
+    public async Task AddAsync(Customer entity)
     {
-        throw new NotImplementedException();
+        await _dbContext.Customers.AddAsync(entity);
     }
 
-    public Task UpdateAsync(Customer entity)
+    public async Task UpdateAsync(Customer entity)
     {
-        throw new NotImplementedException();
+        await Task.Factory.StartNew(() =>
+        {
+            _dbContext.Customers.Update(entity);
+        });
     }
 }
