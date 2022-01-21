@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
@@ -10,12 +11,7 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
         {
             return View();
         }
-        
-        public IActionResult Orders()
-        {
-            return View();
-        }
-        
+
         public IActionResult Edit()
         {
             return View();
