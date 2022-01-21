@@ -22,33 +22,39 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task AddAsync(Role role)
+        public async Task AddAsync(Role entity)
         {
-            await _dbContext.Roles.AddAsync(role);
+            await _dbContext.Roles.AddAsync(entity);
         }
 
-        public async Task DeleteAsync(Role role)
+        public async Task DeleteAsync(Role entity)
         {
-            await Task.Factory.StartNew(() => { _dbContext.Roles.Remove(role); });
+            await Task.Factory.StartNew(() => { _dbContext.Roles.Remove(entity); });
         }
 
         public async Task<Role> GetAsync(Guid id)
         {
-            var role = await _dbContext.Roles.FirstOrDefaultAsync(r => r.Id == id);
+            var role = await _dbContext.Roles.FirstOrDefaultAsync(e => e.Id == id);
             return role;
         }
 
         public async Task<IPageResult<Role>> SearchAsync(string searchPhrase, int pageNumber, int pageSize,
             string orderBy, SortDirection sortDirection)
         {
+            string lowerCaseSearchPhrase = searchPhrase?.ToLower();
+
             var baseQuery = _dbContext.Roles
-                .Where(r => searchPhrase == null ||
-                            r.Name.ToLower().Contains(searchPhrase.ToLower()));
+                .Where(e => searchPhrase == null ||
+                            e.Id.ToString().ToLower().Contains(lowerCaseSearchPhrase)
+                            || e.Name.ToLower().Contains(lowerCaseSearchPhrase)
+                );
             if (!string.IsNullOrEmpty(orderBy))
             {
                 var columnSelectors = new Dictionary<string, Expression<Func<Role, object>>>()
                 {
-                    {nameof(Role.Name), r => r.Name},
+                    {nameof(Role.Name), e => e.Name},
+                    {nameof(Role.CreDate), e => e.CreDate},
+                    {nameof(Role.ModDate), e => e.ModDate}
                 };
 
                 var selectedColumn = columnSelectors[orderBy];
@@ -58,15 +64,15 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
                     : baseQuery.OrderByDescending(selectedColumn);
             }
 
-            var orders = await baseQuery.Skip(pageSize * (pageNumber - 1))
+            var entities = await baseQuery.Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
                 .ToListAsync();
-            return new PageResult<Role>(orders, baseQuery.Count(), pageSize, pageNumber);
+            return new PageResult<Role>(entities, baseQuery.Count(), pageSize, pageNumber);
         }
 
-        public async Task UpdateAsync(Role role)
+        public async Task UpdateAsync(Role entity)
         {
-            await Task.Factory.StartNew(() => { _dbContext.Roles.Update(role); });
+            await Task.Factory.StartNew(() => { _dbContext.Roles.Update(entity); });
         }
     }
 }

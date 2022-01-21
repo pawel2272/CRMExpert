@@ -36,15 +36,17 @@ public class CustomersRepository : ICustomersRepository
         string orderBy,
         SortDirection sortDirection)
     {
+        string lowerCaseSearchPhrase = searchPhrase?.ToLower();
+        
         var baseQuery = _dbContext.Customers
             .Where(c => (searchPhrase == null ||
-                         c.Id.ToString().Contains(searchPhrase)
-                         || c.Name.ToLower().Contains(searchPhrase.ToLower())
-                         || c.City.ToLower().Contains(searchPhrase.ToLower())
-                         || c.Street.ToLower().Contains(searchPhrase.ToLower())
-                         || c.PostalCode.ToLower().Contains(searchPhrase.ToLower())
-                         || c.TaxNo.ToLower().Contains(searchPhrase.ToLower())
-                         || c.Regon.ToLower().Contains(searchPhrase.ToLower()))
+                         c.Id.ToString().ToLower().Contains(lowerCaseSearchPhrase)
+                         || c.Name.ToLower().Contains(lowerCaseSearchPhrase)
+                         || c.City.ToLower().Contains(lowerCaseSearchPhrase)
+                         || c.Street.ToLower().Contains(lowerCaseSearchPhrase)
+                         || c.PostalCode.ToLower().Contains(lowerCaseSearchPhrase)
+                         || c.TaxNo.ToLower().Contains(lowerCaseSearchPhrase)
+                         || c.Regon.ToLower().Contains(lowerCaseSearchPhrase))
             );
         if (!string.IsNullOrEmpty(orderBy))
         {
@@ -55,7 +57,9 @@ public class CustomersRepository : ICustomersRepository
                 {nameof(Customer.Street), c => c.Street},
                 {nameof(Customer.PostalCode), c => c.PostalCode},
                 {nameof(Customer.TaxNo), c => c.TaxNo},
-                {nameof(Customer.Regon), c => c.Regon}
+                {nameof(Customer.Regon), c => c.Regon},
+                {nameof(Customer.CreDate), c => c.CreDate},
+                {nameof(Customer.ModDate), c => c.ModDate}
             };
 
             Expression<Func<Customer, object>> selectedColumn;

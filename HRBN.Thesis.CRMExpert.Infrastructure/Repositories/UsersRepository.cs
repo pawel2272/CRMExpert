@@ -43,39 +43,41 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             return user;
         }
 
-        public async Task DeleteAsync(User user)
+        public async Task DeleteAsync(User entity)
         {
-            await Task.Factory.StartNew(() => { _dbContext.Users.Remove(user); });
+            await Task.Factory.StartNew(() => { _dbContext.Users.Remove(entity); });
         }
 
         public async Task<IPageResult<User>> SearchAsync(string searchPhrase, int pageNumber, int pageSize,
             string orderBy, SortDirection sortDirection)
         {
+            string lowerCaseSearchPhrase = searchPhrase?.ToLower();
+            
             var baseQuery = _dbContext.Users
-                .Where(u => searchPhrase == null ||
-                            (u.Id.ToString().Contains(searchPhrase)
-                             || u.Username.ToLower().Contains(searchPhrase.ToLower())
-                             || u.Gender.ToLower().Contains(searchPhrase.ToLower())
-                             || u.FirstName.ToLower().Contains(searchPhrase.ToLower())
-                             || u.LastName.ToLower().Contains(searchPhrase.ToLower())
-                             || u.Phone.ToLower().Contains(searchPhrase.ToLower())
-                             || u.Email.ToLower().Contains(searchPhrase.ToLower())
-                             || u.Street.ToLower().Contains(searchPhrase.ToLower())
-                             || u.PostalCode.ToLower().Contains(searchPhrase.ToLower())
-                             || u.City.ToLower().Contains(searchPhrase.ToLower())
+                .Where(e => searchPhrase == null ||
+                            (e.Id.ToString().Contains(lowerCaseSearchPhrase)
+                             || e.Username.ToLower().Contains(lowerCaseSearchPhrase)
+                             || e.Gender.ToLower().Contains(lowerCaseSearchPhrase)
+                             || e.FirstName.ToLower().Contains(lowerCaseSearchPhrase)
+                             || e.LastName.ToLower().Contains(lowerCaseSearchPhrase)
+                             || e.Phone.ToLower().Contains(lowerCaseSearchPhrase)
+                             || e.Email.ToLower().Contains(lowerCaseSearchPhrase)
+                             || e.Street.ToLower().Contains(lowerCaseSearchPhrase)
+                             || e.PostalCode.ToLower().Contains(lowerCaseSearchPhrase)
+                             || e.City.ToLower().Contains(lowerCaseSearchPhrase)
                             ));
             if (!string.IsNullOrEmpty(orderBy))
             {
                 var columnSelectors = new Dictionary<string, Expression<Func<User, object>>>()
                 {
-                    {nameof(User.Username), u => u.Username},
-                    {nameof(User.FirstName), u => u.FirstName},
-                    {nameof(User.LastName), u => u.LastName},
-                    {nameof(User.Phone), u => u.Phone},
-                    {nameof(User.Email), u => u.Email},
-                    {nameof(User.Street), u => u.Street},
-                    {nameof(User.PostalCode), u => u.PostalCode},
-                    {nameof(User.City), u => u.City}
+                    {nameof(User.Username), e => e.Username},
+                    {nameof(User.FirstName), e => e.FirstName},
+                    {nameof(User.LastName), e => e.LastName},
+                    {nameof(User.Phone), e => e.Phone},
+                    {nameof(User.Email), e => e.Email},
+                    {nameof(User.Street), e => e.Street},
+                    {nameof(User.PostalCode), e => e.PostalCode},
+                    {nameof(User.City), e => e.City}
                 };
 
                 Expression<Func<User, object>> selectedColumn;
@@ -94,25 +96,25 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
                     : baseQuery.OrderByDescending(selectedColumn);
             }
 
-            var users = await baseQuery.Skip(pageSize * (pageNumber - 1))
+            var entities = await baseQuery.Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
                 .ToListAsync();
 
-            return new PageResult<User>(users, baseQuery.Count(), pageSize, pageNumber);
+            return new PageResult<User>(entities, baseQuery.Count(), pageSize, pageNumber);
         }
 
-        public async Task AddAsync(User user)
+        public async Task AddAsync(User entity)
         {
-            user.Password = _hasher.HashPassword(user, user.Password);
-            await _dbContext.Users.AddAsync(user);
+            entity.Password = _hasher.HashPassword(entity, entity.Password);
+            await _dbContext.Users.AddAsync(entity);
         }
 
-        public async Task UpdateAsync(User user)
+        public async Task UpdateAsync(User entity)
         {
             await Task.Factory.StartNew(() =>
             {
-                user.Password = _hasher.HashPassword(user, user.Password);
-                _dbContext.Users.Update(user);
+                entity.Password = _hasher.HashPassword(entity, entity.Password);
+                _dbContext.Users.Update(entity);
             });
         }
 
@@ -127,13 +129,13 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             return cookie;
         }
 
-        private JsonWebToken CreateToken(User user)
+        private JsonWebToken CreateToken(User entity)
         {
             List<Claim> claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+                new Claim(ClaimTypes.Name, entity.Username),
+                new Claim(ClaimTypes.Email, entity.Email),
+                new Claim(ClaimTypes.NameIdentifier, entity.Id.ToString())
             };
             SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.JwtKey));
             SigningCredentials signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

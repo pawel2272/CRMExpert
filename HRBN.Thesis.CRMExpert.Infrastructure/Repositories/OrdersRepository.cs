@@ -22,42 +22,33 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        public Task<IPageResult<Order>> SearchAsync(string searchPhrase, int pageNumber, int pageSize, string orderBy,
-            SortDirection sortDirection)
+        public async Task AddAsync(Order entity)
         {
-            throw new NotImplementedException();
+            await _dbContext.Orders.AddAsync(entity);
         }
 
-        public async Task AddAsync(Order order)
+        public async Task DeleteAsync(Order entity)
         {
-            await _dbContext.Orders.AddAsync(order);
-        }
-
-        public async Task DeleteAsync(Order order)
-        {
-            await Task.Factory.StartNew(() => { _dbContext.Orders.Remove(order); });
+            await Task.Factory.StartNew(() => { _dbContext.Orders.Remove(entity); });
         }
 
         public async Task<Order> GetAsync(Guid id)
         {
-            var order = await _dbContext.Orders.FirstOrDefaultAsync(o => o.Id == id);
+            var order = await _dbContext.Orders.FirstOrDefaultAsync(e => e.Id == id);
             return order;
         }
 
-        public async Task<IPageResult<Order>> SearchAsync(Guid contactId, string searchPhrase, int pageNumber,
+        private async Task<IPageResult<Order>> ProcessSearchQueryAsync(IQueryable<Order> baseQuery, int pageNumber,
             int pageSize, string orderBy, SortDirection sortDirection)
         {
-            var baseQuery = _dbContext.Orders
-                .Where(o => o.ContactId == contactId
-                            && (searchPhrase == null ||
-                                o.Title.ToLower().Contains(searchPhrase.ToLower())
-                                || o.Content.ToLower().Contains(searchPhrase.ToLower())));
             if (!string.IsNullOrEmpty(orderBy))
             {
                 var columnSelectors = new Dictionary<string, Expression<Func<Order, object>>>()
                 {
-                    {nameof(Order.Title), o => o.Title},
-                    {nameof(Order.Content), o => o.Content}
+                    {nameof(Order.Title), e => e.Title},
+                    {nameof(Order.Content), e => e.Content},
+                    {nameof(Order.CreDate), e => e.CreDate},
+                    {nameof(Order.ModDate), e => e.ModDate}
                 };
 
                 var selectedColumn = columnSelectors[orderBy];
@@ -67,15 +58,50 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
                     : baseQuery.OrderByDescending(selectedColumn);
             }
 
-            var orders = await baseQuery.Skip(pageSize * (pageNumber - 1))
+            var entities = await baseQuery.Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
                 .ToListAsync();
-            return new PageResult<Order>(orders, baseQuery.Count(), pageSize, pageNumber);
+            return new PageResult<Order>(entities, baseQuery.Count(), pageSize, pageNumber);
         }
 
-        public async Task UpdateAsync(Order order)
+        public async Task<IPageResult<Order>> SearchAsync(Guid contactId, string searchPhrase, int pageNumber,
+            int pageSize, string orderBy, SortDirection sortDirection)
         {
-            await Task.Factory.StartNew(() => { _dbContext.Orders.Update(order); });
+            string lowerCaseSearchPhrase = searchPhrase?.ToLower();
+
+            var baseQuery = _dbContext.Orders
+                .Where(e => e.ContactId == contactId
+                            && (searchPhrase == null ||
+                                e.Id.ToString().ToLower().Contains(lowerCaseSearchPhrase)
+                                || e.Title.ToLower().Contains(lowerCaseSearchPhrase)
+                                || e.Content.ToLower().Contains(lowerCaseSearchPhrase)
+                                || e.ContactId.ToString().ToLower().Contains(lowerCaseSearchPhrase)
+                                || e.ProductId.ToString().ToLower().Contains(lowerCaseSearchPhrase)
+                            ));
+
+            return await ProcessSearchQueryAsync(baseQuery, pageNumber, pageSize, orderBy, sortDirection);
+        }
+
+        public async Task<IPageResult<Order>> SearchAsync(string searchPhrase, int pageNumber, int pageSize, string orderBy,
+            SortDirection sortDirection)
+        {
+            string lowerCaseSearchPhrase = searchPhrase?.ToLower();
+
+            var baseQuery = _dbContext.Orders
+                .Where(e => searchPhrase == null ||
+                            e.Id.ToString().ToLower().Contains(lowerCaseSearchPhrase)
+                            || e.Title.ToLower().Contains(lowerCaseSearchPhrase)
+                            || e.Content.ToLower().Contains(lowerCaseSearchPhrase)
+                            || e.ContactId.ToString().ToLower().Contains(lowerCaseSearchPhrase)
+                            || e.ProductId.ToString().ToLower().Contains(lowerCaseSearchPhrase)
+                );
+
+            return await ProcessSearchQueryAsync(baseQuery, pageNumber, pageSize, orderBy, sortDirection);
+        }
+
+        public async Task UpdateAsync(Order entity)
+        {
+            await Task.Factory.StartNew(() => { _dbContext.Orders.Update(entity); });
         }
     }
 }

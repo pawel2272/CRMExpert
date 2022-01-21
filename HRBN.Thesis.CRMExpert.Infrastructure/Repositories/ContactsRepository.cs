@@ -22,17 +22,14 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task AddAsync(Contact contact)
+        public async Task AddAsync(Contact entity)
         {
-            await _dbContext.Contacts.AddAsync(contact);
+            await _dbContext.Contacts.AddAsync(entity);
         }
 
-        public async Task DeleteAsync(Contact contact)
+        public async Task DeleteAsync(Contact entity)
         {
-            await Task.Factory.StartNew(() =>
-            {
-                _dbContext.Contacts.Remove(contact);
-            });
+            await Task.Factory.StartNew(() => { _dbContext.Contacts.Remove(entity); });
         }
 
         public async Task<Contact> GetAsync(Guid id)
@@ -41,33 +38,25 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             return contact;
         }
 
-        public async Task<IPageResult<Contact>> SearchAsync(string searchPhrase, int pageNumber, int pageSize, string orderBy,
+        private async Task<IPageResult<Contact>> ProcessSearchQueryAsync(IQueryable<Contact> baseQuery, int pageNumber,
+            int pageSize,
+            string orderBy,
             SortDirection sortDirection)
         {
-            var baseQuery = _dbContext.Contacts
-                .Where(c => (searchPhrase == null ||
-                             c.Id.ToString().Contains(searchPhrase)
-                             || c.FirstName.ToLower().Contains(searchPhrase.ToLower())
-                             || c.LastName.ToLower().Contains(searchPhrase.ToLower())
-                             || c.Phone.ToLower().Contains(searchPhrase.ToLower())
-                             || c.Email.ToLower().Contains(searchPhrase.ToLower())
-                             || c.Street.ToLower().Contains(searchPhrase.ToLower())
-                             || c.PostalCode.ToLower().Contains(searchPhrase.ToLower())
-                             || c.City.ToLower().Contains(searchPhrase.ToLower())
-                             || c.ContactComment.ToLower().Contains(searchPhrase.ToLower())
-                    ));
             if (!string.IsNullOrEmpty(orderBy))
             {
                 var columnSelectors = new Dictionary<string, Expression<Func<Contact, object>>>()
                 {
-                    {nameof(Contact.FirstName), c => c.FirstName},
-                    {nameof(Contact.LastName), c => c.LastName},
-                    {nameof(Contact.Phone), c => c.Phone},
-                    {nameof(Contact.Email), c => c.Email},
-                    {nameof(Contact.Street), c => c.Street},
-                    {nameof(Contact.PostalCode), c => c.PostalCode},
-                    {nameof(Contact.City), c => c.City},
-                    {nameof(Contact.ContactComment), c => c.ContactComment}
+                    {nameof(Contact.FirstName), e => e.FirstName},
+                    {nameof(Contact.LastName), e => e.LastName},
+                    {nameof(Contact.Phone), e => e.Phone},
+                    {nameof(Contact.Email), e => e.Email},
+                    {nameof(Contact.Street), e => e.Street},
+                    {nameof(Contact.PostalCode), e => e.PostalCode},
+                    {nameof(Contact.City), e => e.City},
+                    {nameof(Contact.ContactComment), e => e.ContactComment},
+                    {nameof(Contact.CreDate), e => e.CreDate},
+                    {nameof(Contact.ModDate), e => e.ModDate}
                 };
 
                 Expression<Func<Contact, object>> selectedColumn;
@@ -86,71 +75,63 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
                     : baseQuery.OrderByDescending(selectedColumn);
             }
 
-            var contacts = await baseQuery.Skip(pageSize * (pageNumber - 1))
+            var entities = await baseQuery.Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
                 .ToListAsync();
 
-            return new PageResult<Contact>(contacts, baseQuery.Count(), pageSize, pageNumber);
+            return new PageResult<Contact>(entities, baseQuery.Count(), pageSize, pageNumber);
+        }
+
+        public async Task<IPageResult<Contact>> SearchAsync(string searchPhrase, int pageNumber, int pageSize,
+            string orderBy,
+            SortDirection sortDirection)
+        {
+            string lowerCaseSearchPhrase = searchPhrase?.ToLower();
+
+            var baseQuery = _dbContext.Contacts
+                .Where(e => (searchPhrase == null ||
+                             e.Id.ToString().ToLower().Contains(lowerCaseSearchPhrase)
+                             || e.FirstName.ToLower().Contains(lowerCaseSearchPhrase)
+                             || e.LastName.ToLower().Contains(lowerCaseSearchPhrase)
+                             || e.Phone.ToLower().Contains(lowerCaseSearchPhrase)
+                             || e.Email.ToLower().Contains(lowerCaseSearchPhrase)
+                             || e.Street.ToLower().Contains(lowerCaseSearchPhrase)
+                             || e.PostalCode.ToLower().Contains(lowerCaseSearchPhrase)
+                             || e.City.ToLower().Contains(lowerCaseSearchPhrase)
+                             || e.ContactComment.ToLower().Contains(lowerCaseSearchPhrase)
+                             || e.CustomerId.ToString().ToLower().Contains(lowerCaseSearchPhrase)
+                             || e.UserId.ToString().ToLower().Contains(lowerCaseSearchPhrase)
+                    ));
+
+            return await ProcessSearchQueryAsync(baseQuery, pageNumber, pageSize, orderBy, sortDirection);
         }
 
         public async Task<IPageResult<Contact>> SearchAsync(Guid userId, string searchPhrase, int pageNumber,
             int pageSize, string orderBy, SortDirection sortDirection)
         {
+            string lowerCaseSearchPhrase = searchPhrase?.ToLower();
+
             var baseQuery = _dbContext.Contacts
-                .Where(c => (searchPhrase == null ||
-                             (c.Id.ToString().Contains(searchPhrase)
-                              || c.FirstName.ToLower().Contains(searchPhrase.ToLower())
-                              || c.LastName.ToLower().Contains(searchPhrase.ToLower())
-                              || c.Phone.ToLower().Contains(searchPhrase.ToLower())
-                              || c.Email.ToLower().Contains(searchPhrase.ToLower())
-                              || c.Street.ToLower().Contains(searchPhrase.ToLower())
-                              || c.PostalCode.ToLower().Contains(searchPhrase.ToLower())
-                              || c.City.ToLower().Contains(searchPhrase.ToLower())
-                              || c.ContactComment.ToLower().Contains(searchPhrase.ToLower())
-                             )) && c.UserId == userId);
-            if (!string.IsNullOrEmpty(orderBy))
-            {
-                var columnSelectors = new Dictionary<string, Expression<Func<Contact, object>>>()
-                {
-                    {nameof(Contact.FirstName), c => c.FirstName},
-                    {nameof(Contact.LastName), c => c.LastName},
-                    {nameof(Contact.Phone), c => c.Phone},
-                    {nameof(Contact.Email), c => c.Email},
-                    {nameof(Contact.Street), c => c.Street},
-                    {nameof(Contact.PostalCode), c => c.PostalCode},
-                    {nameof(Contact.City), c => c.City},
-                    {nameof(Contact.ContactComment), c => c.ContactComment}
-                };
-
-                Expression<Func<Contact, object>> selectedColumn;
-
-                if (columnSelectors.Keys.Contains(orderBy))
-                {
-                    selectedColumn = columnSelectors[orderBy];
-                }
-                else
-                {
-                    selectedColumn = columnSelectors["FirstName"];
-                }
-
-                baseQuery = sortDirection == SortDirection.ASC
-                    ? baseQuery.OrderBy(selectedColumn)
-                    : baseQuery.OrderByDescending(selectedColumn);
-            }
-
-            var contacts = await baseQuery.Skip(pageSize * (pageNumber - 1))
-                .Take(pageSize)
-                .ToListAsync();
-
-            return new PageResult<Contact>(contacts, baseQuery.Count(), pageSize, pageNumber);
+                .Where(e => (searchPhrase == null ||
+                             (e.Id.ToString().ToLower().Contains(lowerCaseSearchPhrase)
+                              || e.FirstName.ToLower().Contains(lowerCaseSearchPhrase)
+                              || e.LastName.ToLower().Contains(lowerCaseSearchPhrase)
+                              || e.Phone.ToLower().Contains(lowerCaseSearchPhrase)
+                              || e.Email.ToLower().Contains(lowerCaseSearchPhrase)
+                              || e.Street.ToLower().Contains(lowerCaseSearchPhrase)
+                              || e.PostalCode.ToLower().Contains(lowerCaseSearchPhrase)
+                              || e.City.ToLower().Contains(lowerCaseSearchPhrase)
+                              || e.ContactComment.ToLower().Contains(lowerCaseSearchPhrase)
+                              || e.UserId.ToString().ToLower().Contains(lowerCaseSearchPhrase)
+                              || e.CustomerId.ToString().ToLower().Contains(lowerCaseSearchPhrase)
+                             )) && e.UserId == userId);
+            
+            return await ProcessSearchQueryAsync(baseQuery, pageNumber, pageSize, orderBy, sortDirection);
         }
 
-        public async Task UpdateAsync(Contact contact)
+        public async Task UpdateAsync(Contact entity)
         {
-            await Task.Factory.StartNew(() =>
-            {
-                _dbContext.Contacts.Update(contact);
-            });
+            await Task.Factory.StartNew(() => { _dbContext.Contacts.Update(entity); });
         }
     }
 }

@@ -1,10 +1,14 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using HRBN.Thesis.CRMExpert.Domain;
 using HRBN.Thesis.CRMExpert.Domain.Core.Entities;
 using HRBN.Thesis.CRMExpert.Domain.Core.Enums;
 using HRBN.Thesis.CRMExpert.Domain.Core.Pagination;
 using HRBN.Thesis.CRMExpert.Domain.Core.Repositories;
+using HRBN.Thesis.CRMExpert.Infrastructure.Dto;
 using Microsoft.EntityFrameworkCore;
 
 namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories;
@@ -17,7 +21,7 @@ public class PermissionsRepository : IPermissionsRepository
     {
         _dbContext = dbContext;
     }
-    
+
     public async Task<Permission> GetAsync(Guid id)
     {
         return await _dbContext.Permissions.FirstOrDefaultAsync(e => e.Id == id);
@@ -25,15 +29,48 @@ public class PermissionsRepository : IPermissionsRepository
 
     public async Task DeleteAsync(Permission entity)
     {
-        await Task.Factory.StartNew(() =>
-        {
-            _dbContext.Permissions.Remove(entity);
-        });
+        await Task.Factory.StartNew(() => { _dbContext.Permissions.Remove(entity); });
     }
 
-    public async Task<IPageResult<Permission>> SearchAsync(string searchPhrase, int pageNumber, int pageSize, string orderBy, SortDirection sortDirection)
+    public async Task<IPageResult<Permission>> SearchAsync(string searchPhrase, int pageNumber, int pageSize,
+        string orderBy, SortDirection sortDirection)
     {
-        throw new NotImplementedException();
+        string lowerCaseSearchPhrase = searchPhrase?.ToLower();
+
+        var baseQuery = _dbContext.Permissions
+            .Where(e => (searchPhrase == null ||
+                         (e.Id.ToString().ToLower().Contains(lowerCaseSearchPhrase)
+                          || e.UserId.ToString().ToLower().Contains(lowerCaseSearchPhrase)
+                          || e.RoleId.ToString().ToLower().Contains(lowerCaseSearchPhrase))));
+        if (!string.IsNullOrEmpty(orderBy))
+        {
+            var columnSelectors = new Dictionary<string, Expression<Func<Permission, object>>>()
+            {
+                {nameof(Permission.CreDate), e => e.CreDate},
+                {nameof(Permission.ModDate), e => e.ModDate}
+            };
+
+            Expression<Func<Permission, object>> selectedColumn;
+
+            if (columnSelectors.Keys.Contains(orderBy))
+            {
+                selectedColumn = columnSelectors[orderBy];
+            }
+            else
+            {
+                selectedColumn = columnSelectors["CreDate"];
+            }
+
+            baseQuery = sortDirection == SortDirection.ASC
+                ? baseQuery.OrderBy(selectedColumn)
+                : baseQuery.OrderByDescending(selectedColumn);
+        }
+
+        var entities = await baseQuery.Skip(pageSize * (pageNumber - 1))
+            .Take(pageSize)
+            .ToListAsync();
+
+        return new PageResult<Permission>(entities, baseQuery.Count(), pageSize, pageNumber);
     }
 
     public async Task AddAsync(Permission entity)
@@ -43,10 +80,6 @@ public class PermissionsRepository : IPermissionsRepository
 
     public async Task UpdateAsync(Permission entity)
     {
-        await Task.Factory.StartNew(() =>
-        {
-            _dbContext.Permissions.Update(entity);
-        });
-        
+        await Task.Factory.StartNew(() => { _dbContext.Permissions.Update(entity); });
     }
 }
