@@ -7,18 +7,13 @@ using HRBN.Thesis.CRMExpert.Domain.Core.Repositories;
 
 namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Contact
 {
-    public sealed class AddContactCommandHandler : ICommandHandler<AddContactCommand>
+    public sealed class AddContactCommandHandler : CommandHandlerBase<AddContactCommand>
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-
-        public AddContactCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public AddContactCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
-            _mapper = mapper;
-            _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result> HandleAsync(AddContactCommand command)
+        public override async Task<Result> HandleAsync(AddContactCommand command)
         {
             var validationResult = await new AddContactCommandValidator().ValidateAsync(command);
 
