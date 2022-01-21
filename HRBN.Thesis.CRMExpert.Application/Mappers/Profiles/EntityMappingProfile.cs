@@ -1,6 +1,10 @@
 ﻿using AutoMapper;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Contact;
+using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Customer;
+using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Discount;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Order;
+using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Permission;
+using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Product;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Role;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Todo;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.User;
@@ -21,6 +25,28 @@ namespace HRBN.Thesis.CRMExpert.Application.Mappers.Profiles
             CreateMap<Contact, EditContactCommand>().ReverseMap();
             CreateMap<ContactDto, EditContactCommand>().ReverseMap();
         }
+        
+        public void CreateMapForCustomer()
+        {
+            CreateMap<Customer, CustomerDto>().ReverseMap();
+
+            CreateMap<Customer, AddCustomerCommand>().ReverseMap();
+            CreateMap<CustomerDto, AddCustomerCommand>().ReverseMap();
+
+            CreateMap<Customer, EditCustomerCommand>().ReverseMap();
+            CreateMap<CustomerDto, EditCustomerCommand>().ReverseMap();
+        }
+        
+        public void CreateMapForDiscount()
+        {
+            CreateMap<Discount, DiscountDto>().ReverseMap();
+
+            CreateMap<Discount, AddDiscountCommand>().ReverseMap();
+            CreateMap<DiscountDto, AddDiscountCommand>().ReverseMap();
+
+            CreateMap<Discount, EditDiscountCommand>().ReverseMap();
+            CreateMap<DiscountDto, EditDiscountCommand>().ReverseMap();
+        }
 
         public void CreateMapForOrder()
         {
@@ -31,6 +57,28 @@ namespace HRBN.Thesis.CRMExpert.Application.Mappers.Profiles
 
             CreateMap<Order, EditOrderCommand>().ReverseMap();
             CreateMap<OrderDto, EditOrderCommand>().ReverseMap();
+        }
+        
+        public void CreateMapForPermission()
+        {
+            CreateMap<Permission, PermissionDto>().ReverseMap();
+
+            CreateMap<Permission, AddPermissionCommand>().ReverseMap();
+            CreateMap<PermissionDto, AddPermissionCommand>().ReverseMap();
+
+            CreateMap<Permission, EditPermissionCommand>().ReverseMap();
+            CreateMap<PermissionDto, EditPermissionCommand>().ReverseMap();
+        }
+        
+        public void CreateMapForProduct()
+        {
+            CreateMap<Product, ProductDto>().ReverseMap();
+
+            CreateMap<Product, AddProductCommand>().ReverseMap();
+            CreateMap<ProductDto, AddProductCommand>().ReverseMap();
+
+            CreateMap<Product, EditProductCommand>().ReverseMap();
+            CreateMap<ProductDto, EditProductCommand>().ReverseMap();
         }
 
         public void CreateMapForRole()
@@ -69,7 +117,11 @@ namespace HRBN.Thesis.CRMExpert.Application.Mappers.Profiles
         public EntityMappingProfile()
         {
             CreateMapForContact();
+            CreateMapForCustomer();
+            CreateMapForDiscount();
             CreateMapForOrder();
+            CreateMapForPermission();
+            CreateMapForProduct();
             CreateMapForRole();
             CreateMapForTodo();
             CreateMapForUser();
