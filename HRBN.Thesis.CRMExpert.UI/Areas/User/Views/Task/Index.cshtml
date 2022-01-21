@@ -1,5 +1,12 @@
 @section Styles{
+    <link rel="stylesheet" href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker.min.css"/>
     <link rel="stylesheet" href="~/css/todos.css"/>
+}
+
+@section UpperScripts{
+    <script type="text/javascript" src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="~/lib/bootlint/bootlint.min.js"></script>
+    <script type="text/javascript" src="~/js/todos.js"></script>
 }
 
 <section>
@@ -16,17 +23,18 @@
 
                         <div class="pb-2">
                             <div class="card">
-                                <div class="card-body">
+                                <form class="card-body">
                                     <div class="d-flex flex-row align-items-center">
-                                        <input type="text" class="form-control form-control-lg" id="exampleFormControlInput1" placeholder="Add new...">
-                                        <a href="#!" data-mdb-toggle="tooltip" title="Set due date">
+                                        <input type="text" class="form-control form-control-lg border-secondary mx-2" id="exampleFormControlInput1" placeholder="Title">
+                                        <input type="text" class="form-control form-control-lg border-secondary mx-2" id="exampleFormControlInput2" placeholder="Content">
+                                        <a class="btn-secondary" href="#!" data-mdb-toggle="tooltip" title="Set due date">
                                             <i class="fas fa-calendar-alt fa-lg me-3"></i>
                                         </a>
                                         <div>
                                             <button type="button" class="btn btn-primary">Add</button>
                                         </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
 
