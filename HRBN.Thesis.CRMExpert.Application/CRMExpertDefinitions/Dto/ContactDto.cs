@@ -15,6 +15,7 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Dto
         public string ContactComment { get; set; }
         public DateTime CreDate { get; set; }
         public DateTime ModDate { get; set; }
-        public Guid UserId { get; set; }
+        public Guid? UserId { get; set; }
+        public Guid? CustomerId { get; set; }
     }
 }
