@@ -7,18 +7,13 @@ using HRBN.Thesis.CRMExpert.Domain.Core.Repositories;
 
 namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Todo
 {
-    public sealed class EditTodoCommandHandler : ICommandHandler<EditTodoCommand>
+    public sealed class EditTodoCommandHandler : CommandHandlerBase<EditTodoCommand>
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-
-        public EditTodoCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public EditTodoCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
-            _mapper = mapper;
-            _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result> HandleAsync(EditTodoCommand command)
+        public override async Task<Result> HandleAsync(EditTodoCommand command)
         {
             var validationResult = await new EditTodoCommandValidator().ValidateAsync(command);
             if (!validationResult.IsValid)

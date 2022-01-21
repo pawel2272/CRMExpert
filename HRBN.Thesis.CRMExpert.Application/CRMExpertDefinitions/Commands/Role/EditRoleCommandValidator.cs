@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using System;
+using FluentValidation;
 
 namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Role
 {
@@ -7,8 +8,11 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Role
         public EditRoleCommandValidator()
         {
             RuleFor(x => x.Id)
-                .NotEmpty();
+                .NotNull()
+                .NotEmpty()
+                .NotEqual(Guid.Empty);
             RuleFor(x => x.Name)
+                .NotNull()
                 .NotEmpty()
                 .MaximumLength(50);
         }

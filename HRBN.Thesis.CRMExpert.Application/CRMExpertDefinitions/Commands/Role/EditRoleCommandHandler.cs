@@ -6,18 +6,13 @@ using HRBN.Thesis.CRMExpert.Domain.Core.Repositories;
 
 namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Role
 {
-    public sealed class EditRoleCommandHandler : ICommandHandler<EditRoleCommand>
+    public sealed class EditRoleCommandHandler : CommandHandlerBase<EditRoleCommand>
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-
-        public EditRoleCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public EditRoleCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
-            _mapper = mapper;
-            _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result> HandleAsync(EditRoleCommand command)
+        public override async Task<Result> HandleAsync(EditRoleCommand command)
         {
             var validationResult = await new EditRoleCommandValidator().ValidateAsync(command);
             if (!validationResult.IsValid)

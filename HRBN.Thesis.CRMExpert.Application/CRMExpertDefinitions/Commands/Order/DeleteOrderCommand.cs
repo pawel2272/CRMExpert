@@ -3,7 +3,7 @@ using HRBN.Thesis.CRMExpert.Application.Core.Command;
 
 namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Order
 {
-    public class DeleteOrderCommand : ICommand
+    public class DeleteOrderCommand : BaseCommand
     {
         public DeleteOrderCommand()
         {
@@ -18,6 +18,5 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Order
 
         public Guid ContactId { get; set; }
         public Guid Id { get; set; }
-        public Guid CommandKey { get; }
     }
 }

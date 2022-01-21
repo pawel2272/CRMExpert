@@ -3,13 +3,8 @@ using HRBN.Thesis.CRMExpert.Application.Core.Command;
 
 namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Todo
 {
-    public sealed class DeleteTodoCommand : ICommand
+    public sealed class DeleteTodoCommand : BaseCommand
     {
-        public DeleteTodoCommand()
-        {
-            
-        }
-
         public DeleteTodoCommand(Guid id, Guid contactId)
         {
             ContactId = contactId;
@@ -18,6 +13,5 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Todo
 
         public Guid ContactId { get; set; }
         public Guid Id { get; set; }
-        public Guid CommandKey { get; }
     }
 }

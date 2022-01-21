@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using System;
+using FluentValidation;
 
 namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Contact
 {
@@ -30,8 +31,6 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Contac
                 .MaximumLength(50);
             RuleFor(x => x.ContactComment)
                 .MaximumLength(2048);
-            RuleFor(x => x.UserId)
-                .NotEmpty();
         }
     }
 }

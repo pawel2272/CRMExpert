@@ -7,8 +7,10 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.User
         public LoginCommandValidator()
         {
             RuleFor(x => x.Username)
+                .NotNull()
                 .NotEmpty();
             RuleFor(x => x.Password)
+                .NotNull()
                 .NotEmpty();
         }
     }

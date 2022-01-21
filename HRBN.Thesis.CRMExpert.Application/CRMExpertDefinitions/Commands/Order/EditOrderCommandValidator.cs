@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using System;
+using FluentValidation;
 
 namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Order
 {
@@ -7,16 +8,26 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Order
         public EditOrderCommandValidator()
         {
             RuleFor(x => x.Id)
-                .NotEmpty();
+                .NotNull()
+                .NotEmpty()
+                .NotEqual(Guid.Empty);
             RuleFor(x => x.Title)
+                .NotNull()
                 .NotEmpty()
                 .MaximumLength(30);
             RuleFor(x => x.Content)
                 .MaximumLength(2048);
             RuleFor(x => x.Price)
+                .NotNull()
                 .NotEmpty();
             RuleFor(x => x.ContactId)
-                .NotEmpty();
+                .NotNull()
+                .NotEmpty()
+                .NotEqual(Guid.Empty);
+            RuleFor(x => x.ProductId)
+                .NotNull()
+                .NotEmpty()
+                .NotEqual(Guid.Empty);
         }
     }
 }

@@ -7,6 +7,7 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Role
         public AddRoleCommandValidator()
         {
             RuleFor(x => x.Name)
+                .NotNull()
                 .NotEmpty()
                 .MaximumLength(50);
         }

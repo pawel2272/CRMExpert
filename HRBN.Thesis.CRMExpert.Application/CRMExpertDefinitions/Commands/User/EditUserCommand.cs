@@ -3,7 +3,7 @@ using HRBN.Thesis.CRMExpert.Application.Core.Command;
 
 namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.User
 {
-    public sealed class EditUserCommand : ICommand
+    public sealed class EditUserCommand : BaseCommand
     {
         public Guid Id { get; set; }
         public string Username { get; set; }
@@ -16,7 +16,5 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.User
         public string Street { get; set; }
         public string PostalCode { get; set; }
         public string City { get; set; }
-        public Guid RoleId { get; set; }
-        public Guid CommandKey { get; }
     }
 }

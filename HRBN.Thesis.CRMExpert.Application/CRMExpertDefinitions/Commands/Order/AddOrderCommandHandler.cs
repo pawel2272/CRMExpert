@@ -7,18 +7,13 @@ using HRBN.Thesis.CRMExpert.Domain.Core.Repositories;
 
 namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Order
 {
-    public sealed class AddOrderCommandHandler : ICommandHandler<AddOrderCommand>
+    public sealed class AddOrderCommandHandler : CommandHandlerBase<AddOrderCommand>
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-
-        public AddOrderCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public AddOrderCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
-            _mapper = mapper;
-            _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result> HandleAsync(AddOrderCommand command)
+        public override async Task<Result> HandleAsync(AddOrderCommand command)
         {
             var validationResult = await new AddOrderCommandValidator().ValidateAsync(command);
 

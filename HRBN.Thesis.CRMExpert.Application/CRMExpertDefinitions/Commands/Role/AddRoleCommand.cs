@@ -3,9 +3,8 @@ using HRBN.Thesis.CRMExpert.Application.Core.Command;
 
 namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Role
 {
-    public sealed class AddRoleCommand : ICommand
+    public sealed class AddRoleCommand : BaseCommand
     {
         public string Name { get; set; }
-        public Guid CommandKey { get; }
     }
 }

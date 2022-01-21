@@ -1,20 +1,18 @@
 ﻿using System.Threading.Tasks;
+using AutoMapper;
 using HRBN.Thesis.CRMExpert.Application.Core;
 using HRBN.Thesis.CRMExpert.Application.Core.Command;
 using HRBN.Thesis.CRMExpert.Domain.Core.Repositories;
 
 namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Contact
 {
-    public sealed class DeleteContactCommandHandler : ICommandHandler<DeleteContactCommand>
+    public sealed class DeleteContactCommandHandler : CommandHandlerBase<DeleteContactCommand>
     {
-        private readonly IUnitOfWork _unitOfWork;
-
-        public DeleteContactCommandHandler(IUnitOfWork unitOfWork)
+        public DeleteContactCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
-            _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result> HandleAsync(DeleteContactCommand command)
+        public override async Task<Result> HandleAsync(DeleteContactCommand command)
         {
             var contact = await _unitOfWork.ContactsRepository.GetAsync(command.Id);
             if (contact == null)

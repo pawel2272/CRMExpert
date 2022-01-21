@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using System;
+using FluentValidation;
 
 namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Contact
 {
@@ -7,7 +8,9 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Contac
         public EditContactCommandValidator()
         {
             RuleFor(x => x.Id)
-                .NotEmpty();
+                .NotNull()
+                .NotEmpty()
+                .NotEqual(Guid.Empty);
             RuleFor(x => x.FirstName)
                 .NotEmpty()
                 .MaximumLength(30);
@@ -32,8 +35,6 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Contac
                 .MaximumLength(50);
             RuleFor(x => x.ContactComment)
                 .MaximumLength(2048);
-            RuleFor(x => x.UserId)
-                .NotEmpty();
         }
     }
 }

@@ -7,18 +7,13 @@ using HRBN.Thesis.CRMExpert.Domain.Core.Repositories;
 
 namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Todo
 {
-    public sealed class AddTodoCommandHandler : ICommandHandler<AddTodoCommand>
+    public sealed class AddTodoCommandHandler : CommandHandlerBase<AddTodoCommand>
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-
-        public AddTodoCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public AddTodoCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
-            _mapper = mapper;
-            _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result> HandleAsync(AddTodoCommand command)
+        public override async Task<Result> HandleAsync(AddTodoCommand command)
         {
             var validationResult = await new AddTodoCommandValidator().ValidateAsync(command);
 

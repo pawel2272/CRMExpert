@@ -3,7 +3,7 @@ using HRBN.Thesis.CRMExpert.Application.Core.Command;
 
 namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Contact
 {
-    public sealed class EditContactCommand : ICommand
+    public sealed class EditContactCommand : BaseCommand
     {
         public Guid Id { get; set; }
         public string FirstName { get; set; }
@@ -14,7 +14,7 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Contac
         public string PostalCode { get; set; }
         public string City { get; set; }
         public string ContactComment { get; set; }
-        public Guid UserId { get; set; }
-        public Guid CommandKey { get; }
+        public Guid? UserId { get; set; }
+        public Guid? CustomerId { get; set; }
     }
 }

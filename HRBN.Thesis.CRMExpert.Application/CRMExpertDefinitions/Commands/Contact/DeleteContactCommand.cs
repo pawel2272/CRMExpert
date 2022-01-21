@@ -11,6 +11,5 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Contac
         }
 
         public Guid Id { get; }
-        public Guid CommandKey { get; }
     }
 }

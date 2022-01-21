@@ -3,7 +3,7 @@ using HRBN.Thesis.CRMExpert.Application.Core.Command;
 
 namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.User
 {
-    public sealed class DeleteUserCommand : ICommand
+    public sealed class DeleteUserCommand : BaseCommand
     {
         public DeleteUserCommand(Guid id)
         {
@@ -11,6 +11,5 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.User
         }
 
         public Guid Id { get; }
-        public Guid CommandKey { get; }
     }
 }
