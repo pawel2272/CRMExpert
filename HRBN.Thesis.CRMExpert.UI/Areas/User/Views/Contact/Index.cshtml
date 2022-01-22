@@ -1,3 +1,5 @@
+@model PageResult<ContactDto>
+
 <div class="container my-2">
     <div class="row">
         <div class="col-12">
@@ -131,6 +133,27 @@
                         </button>
                     </td>
                 </tr>
+                @foreach (var contact in Model.Items)
+                {
+                    <tr>
+                        <th scope="row" class="d-none">@contact.Id</th>
+                        <td>@contact.FirstName @contact.LastName</td>
+                        <td>@contact.Phone</td>
+                        <td class="d-none d-md-table-cell">@contact.Email</td>
+                        <td class="d-none d-md-table-cell">@contact.Street, @contact.PostalCode @contact.City</td>
+                        <td class="d-none d-md-table-cell">@contact.ContactComment</td>
+                        <td>
+                            <a asp-area="User" asp-controller="Contact" asp-action="Edit" type="button" class="btn btn-primary">
+                                Edit
+                            </a>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                }
                 </tbody>
             </table>
         </div>

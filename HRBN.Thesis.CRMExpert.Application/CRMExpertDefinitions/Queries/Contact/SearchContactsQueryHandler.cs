@@ -30,7 +30,7 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Contact
             }
 
             var result = await _unitOfWork.ContactsRepository.SearchAsync(
-                query.UserId,
+                //query.UserId,
                 query.SearchPhrase,
                 query.PageNumber,
                 query.PageSize,
