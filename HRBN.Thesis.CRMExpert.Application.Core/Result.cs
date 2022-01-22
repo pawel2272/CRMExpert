@@ -6,7 +6,6 @@ namespace HRBN.Thesis.CRMExpert.Application.Core
 {
     public class Result
     {
-
         public Result(bool isSuccess, string message, IEnumerable<Error> errors)
         {
             IsSuccess = isSuccess;
@@ -26,6 +25,14 @@ namespace HRBN.Thesis.CRMExpert.Application.Core
         public static Result Fail(string message)
         {
             return new Result(false, message, Enumerable.Empty<Error>());
+        }
+
+        public static Result Fail(string message, string propertyName)
+        {
+            return new Result(false, message, new List<Error>()
+            {
+                new Error(propertyName, message)
+            });
         }
 
         public static Result Fail(ValidationResult validationResult)

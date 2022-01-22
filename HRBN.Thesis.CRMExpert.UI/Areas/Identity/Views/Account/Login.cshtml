@@ -1,23 +1,46 @@
-<div class="wrapper fadeInDown">
-    <div id="formContent">
-        <!-- Tabs Titles -->
-      
-        <!-- Icon -->
-        <div class="fadeIn first">
-            <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />
+@using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.User
+@{
+    Layout = "";
+}
+
+@model LoginCommand
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CRMExpert - sign in</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <meta name="theme-color" content="#7952b3">
+    <link rel="stylesheet" href="~/css/login.css"/>
+</head>
+<body class="text-center">
+
+<main class="form-signin">
+    <form method="post" asp-area="Identity" asp-controller="Account" asp-action="Login">
+        <img class="mb-4" src="~/img/contacts-image.svg" alt="" width="72" height="57">
+        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+        <div class="form-floating">
+            <input type="text" class="form-control" id="username" asp-for="Username" placeholder="username">
+            <label for="username">Username</label>
+            <span asp-validation-for="Username" class="text-danger"></span>
         </div>
-      
-        <!-- Login Form -->
-        <form>
-            <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-            <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
-            <input type="submit" class="fadeIn fourth" value="Log In">
-        </form>
-      
-        <!-- Remind Passowrd -->
-        <div id="formFooter">
-            <a class="underlineHover" href="#">Forgot Password?</a>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="password" asp-for="Password" placeholder="Password">
+            <label for="password">Password</label>
+            <span asp-validation-for="Password" class="text-danger"></span>
         </div>
-      
-    </div>
-</div>
+
+        <div class="checkbox mb-3">
+            <label>
+                <input id="rememberMe" type="checkbox" value="Y"> Remember me
+            </label>
+        </div>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+        <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
+    </form>
+</main>
+</body>
+</html>

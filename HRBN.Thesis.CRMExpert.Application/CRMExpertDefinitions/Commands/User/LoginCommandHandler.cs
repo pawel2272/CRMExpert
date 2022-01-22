@@ -25,7 +25,7 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.User
                 command.RememberMe);
             if (string.IsNullOrEmpty(token))
             {
-                return Result.Fail("Invalid username or password.");
+                return Result.Fail("Invalid username or password.", "Password");
             }
 
             return new Result(true, token, Enumerable.Empty<Result.Error>());
