@@ -5,11 +5,15 @@ using System.Threading.Tasks;
 using HRBN.Thesis.CRMExpert.Application.Core.Mediator;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Contact;
 using HRBN.Thesis.CRMExpert.Domain.Core.Enums;
+using HRBN.Thesis.CRMExpert.UI.Filters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
 {
     [Area("User")]
+    [ServiceFilter(typeof(JwtAuthFilter))]
+    [Authorize]
     public class ContactController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly IMediator _mediator;
@@ -18,7 +22,7 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
         {
             _mediator = mediator;
         }
-
+        
         public async Task<IActionResult> Index(SearchContactsQuery? query)
         {
             if (query.UserId.Equals(Guid.Empty))

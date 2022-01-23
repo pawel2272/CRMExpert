@@ -3,6 +3,7 @@ using HRBN.Thesis.CRMExpert.Application;
 using HRBN.Thesis.CRMExpert.Application.Core.Mediator;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.User;
 using HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers;
+using HRBN.Thesis.CRMExpert.UI.Filters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HRBN.Thesis.CRMExpert.UI.Areas.Identity.Controllers
@@ -18,6 +19,7 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.Identity.Controllers
         }
         
         [HttpGet]
+        [ServiceFilter(typeof(JwtAuthFilter))]
         public IActionResult Login()
         {
             return View();

@@ -25,17 +25,26 @@ public class JwtAuthFilter : IAsyncActionFilter
         };
         return cookie;
     }
-
+    
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
         await next();
+        
+        bool isAuthenticated = context.HttpContext.User.Identity.IsAuthenticated;
+        bool isTokenActive = await _unitOfWork.TokenRepository.IsCurrentActiveToken();
+        bool isLoginPage = context.HttpContext.Request.Path.Equals("/Identity/Account/Login");
 
-        if (!context.HttpContext.User.Identity.IsAuthenticated && !await _unitOfWork.TokenRepository.IsCurrentActiveToken())
+        if (/*!isAuthenticated &&*/ !isTokenActive && !isLoginPage)
         {
             context.HttpContext.Response.Cookies.Delete("Authorization");
             CookieBuilder cookie = CreateAuthorizationCookie(-60);
             context.HttpContext.Response.Cookies.Append("Authorization", "", cookie.Build(context.HttpContext));
-            context.HttpContext.Response.Redirect("/User/Login");
+            context.HttpContext.Response.Redirect("/Identity/Account/Login");
+        }
+        
+        if(/*isAuthenticated &&*/ isTokenActive && isLoginPage)
+        {
+            context.HttpContext.Response.Redirect("/User/Home");
         }
 
     }
