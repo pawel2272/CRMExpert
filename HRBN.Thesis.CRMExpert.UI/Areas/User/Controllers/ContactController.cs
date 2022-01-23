@@ -54,8 +54,10 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(GetContactQuery query)
+        public async Task<IActionResult> Edit(Guid id)
         {
+            var query = new GetContactQuery(id);
+            
             var result = await _mediator.QueryAsync(query);
             
             return View(result);
