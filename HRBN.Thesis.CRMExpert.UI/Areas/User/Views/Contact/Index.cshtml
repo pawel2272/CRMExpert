@@ -115,24 +115,6 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row" class="d-none">1</th>
-                    <td>Jan Kowalski</td>
-                    <td>+48793154795</td>
-                    <td class="d-none d-md-table-cell">jan.kowalski@crm.pl</td>
-                    <td class="d-none d-md-table-cell">Kwiatowa 11, 21-370 Farszawa</td>
-                    <td class="d-none d-md-table-cell">Sample comment</td>
-                    <td>
-                        <a asp-area="User" asp-controller="Contact" asp-action="Edit" type="button" class="btn btn-primary">
-                            Edit
-                        </a>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            Delete
-                        </button>
-                    </td>
-                </tr>
                 @foreach (var contact in Model.Items)
                 {
                     <tr>
@@ -143,7 +125,7 @@
                         <td class="d-none d-md-table-cell">@contact.Street, @contact.PostalCode @contact.City</td>
                         <td class="d-none d-md-table-cell">@contact.ContactComment</td>
                         <td>
-                            <a asp-area="User" asp-controller="Contact" asp-action="Edit" type="button" class="btn btn-primary">
+                            <a asp-area="User" asp-controller="Contact" asp-action="Edit" asp-route-id="@contact.Id" type="button" class="btn btn-primary">
                                 Edit
                             </a>
                         </td>
