@@ -6,6 +6,6 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Contact
 {
     public sealed class GetContactQuery : IQuery<ContactDto>
     {
-        public Guid Id { get; }
+        public Guid Id { get; set; }
     }
 }
