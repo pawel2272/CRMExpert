@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using HRBN.Thesis.CRMExpert.Domain;
+using HRBN.Thesis.CRMExpert.Domain.Core.Dto;
 using HRBN.Thesis.CRMExpert.Domain.Core.Entities;
 using HRBN.Thesis.CRMExpert.Domain.Core.Enums;
 using HRBN.Thesis.CRMExpert.Domain.Core.Pagination;
@@ -37,7 +38,7 @@ public class CustomersRepository : ICustomersRepository
         SortDirection sortDirection)
     {
         string lowerCaseSearchPhrase = searchPhrase?.ToLower();
-        
+
         var baseQuery = _dbContext.Customers
             .Where(c => (searchPhrase == null ||
                          c.Id.ToString().ToLower().Contains(lowerCaseSearchPhrase)
@@ -93,5 +94,14 @@ public class CustomersRepository : ICustomersRepository
     public async Task UpdateAsync(Customer entity)
     {
         await Task.Factory.StartNew(() => { _dbContext.Customers.Update(entity); });
+    }
+
+    public async Task<List<CustomerDataDto>> GetCustomerDataAsync()
+    {
+        return await Task.Factory.StartNew(() =>
+        {
+            var results = _dbContext.Customers.Select(e => new CustomerDataDto() {Id = e.Id, Name = e.Name}).ToList();
+            return results;
+        });
     }
 }

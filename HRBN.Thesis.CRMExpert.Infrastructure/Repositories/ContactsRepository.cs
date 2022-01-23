@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using HRBN.Thesis.CRMExpert.Domain;
+using HRBN.Thesis.CRMExpert.Domain.Core.Dto;
 using HRBN.Thesis.CRMExpert.Domain.Core.Entities;
 using HRBN.Thesis.CRMExpert.Domain.Core.Enums;
 using HRBN.Thesis.CRMExpert.Domain.Core.Pagination;
@@ -125,8 +126,41 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
                               || e.UserId.ToString().ToLower().Contains(lowerCaseSearchPhrase)
                               || e.CustomerId.ToString().ToLower().Contains(lowerCaseSearchPhrase)
                              )) && e.UserId == userId);
-            
+
             return await ProcessSearchQueryAsync(baseQuery, pageNumber, pageSize, orderBy, sortDirection);
+        }
+
+        public async Task<List<ContactDataDto>> GetContactDataAsync()
+        {
+            return await Task.Factory.StartNew(() =>
+            {
+                var results = _dbContext.Contacts.Select(e => new ContactDataDto()
+                        {Id = e.Id, Name = $"{e.FirstName} {e.LastName}"})
+                    .ToList();
+                return results;
+            });
+        }
+
+        public async Task<List<ContactDataDto>> GetContactDataAsyncByCustomer(Guid customerId)
+        {
+            return await Task.Factory.StartNew(() =>
+            {
+                var results = _dbContext.Contacts.Where(e => e.CustomerId == customerId).Select(e =>
+                        new ContactDataDto() {Id = e.Id, Name = $"{e.FirstName} {e.LastName}"})
+                    .ToList();
+                return results;
+            });
+        }
+
+        public async Task<List<ContactDataDto>> GetContactDataAsyncByUser(Guid userId)
+        {
+            return await Task.Factory.StartNew(() =>
+            {
+                var results = _dbContext.Contacts.Where(e => e.UserId == userId).Select(e =>
+                        new ContactDataDto() {Id = e.Id, Name = $"{e.FirstName} {e.LastName}"})
+                    .ToList();
+                return results;
+            });
         }
 
         public async Task UpdateAsync(Contact entity)

@@ -2,10 +2,10 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using HRBN.Thesis.CRMExpert.Application;
 using HRBN.Thesis.CRMExpert.Application.Core.Mediator;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Contact;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Contact;
-using HRBN.Thesis.CRMExpert.Domain.Core.Enums;
 using HRBN.Thesis.CRMExpert.UI.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +23,7 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
         {
             _mediator = mediator;
         }
-        
+
         public async Task<IActionResult> Index(SearchContactsQuery query)
         {
             var queryToBeProcessed = query;
@@ -39,7 +39,7 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
                     SortDirection = query.SortDirection
                 };
             }
-            
+
             if (queryToBeProcessed.UserId.Equals(Guid.Empty))
             {
                 var userId = Guid.Parse(HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)
@@ -57,16 +57,38 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
         public async Task<IActionResult> Edit(Guid id)
         {
             var query = new GetContactQuery(id);
-            
+
             var result = await _mediator.QueryAsync(query);
-            
+
             return View(result);
         }
-        
+
         [HttpPost]
-        public IActionResult Edit(EditContactCommand command)
+        public async Task<IActionResult> Edit(EditContactCommand command)
         {
-            return View();
+            var result = await _mediator.CommandAsync(command);
+
+            if (result.IsFailure)
+            {
+                ModelState.PopulateValidation(result.Errors);
+                return View();
+            }
+
+            return Redirect("/User/Contact");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(AddContactCommand command)
+        {
+            var result = await _mediator.CommandAsync(command);
+
+            if (result.IsFailure)
+            {
+                ModelState.PopulateValidation(result.Errors);
+                return View(nameof(this.Index));
+            }
+
+            return Redirect("/User/Contact");
         }
     }
 }

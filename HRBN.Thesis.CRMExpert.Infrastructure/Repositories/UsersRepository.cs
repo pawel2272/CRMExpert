@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using HRBN.Thesis.CRMExpert.Domain;
+using HRBN.Thesis.CRMExpert.Domain.Core.Dto;
 using HRBN.Thesis.CRMExpert.Domain.Core.Entities;
 using HRBN.Thesis.CRMExpert.Domain.Core.Enums;
 using HRBN.Thesis.CRMExpert.Domain.Core.Pagination;
@@ -52,7 +53,7 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             string orderBy, SortDirection sortDirection)
         {
             string lowerCaseSearchPhrase = searchPhrase?.ToLower();
-            
+
             var baseQuery = _dbContext.Users
                 .Where(e => searchPhrase == null ||
                             (e.Id.ToString().Contains(lowerCaseSearchPhrase)
@@ -186,6 +187,14 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             CookieBuilder cookie = CreateAuthorizationCookie(-60);
             _contextAccessor.HttpContext.Response.Cookies.Append("Authorization", "",
                 cookie.Build(_contextAccessor.HttpContext));
+        }
+
+        public async Task<List<UserDataDto>> GetUserDataAsync()
+        {
+            return await Task.Factory.StartNew(() =>
+            {
+                return _dbContext.Users.Select(e => new UserDataDto() {Id = e.Id, Username = e.Username}).ToList();
+            });
         }
     }
 }

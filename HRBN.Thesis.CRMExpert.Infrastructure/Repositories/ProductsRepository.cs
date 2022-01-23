@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using HRBN.Thesis.CRMExpert.Domain;
+using HRBN.Thesis.CRMExpert.Domain.Core.Dto;
 using HRBN.Thesis.CRMExpert.Domain.Core.Entities;
 using HRBN.Thesis.CRMExpert.Domain.Core.Enums;
 using HRBN.Thesis.CRMExpert.Domain.Core.Pagination;
@@ -89,5 +90,14 @@ public class ProductsRepository : IProductsRepository
     public async Task UpdateAsync(Product entity)
     {
         await Task.Factory.StartNew(() => { _dbContext.Update(entity); });
+    }
+
+    public async Task<List<ProductDataDto>> GetProductDataAsync()
+    {
+        return await Task.Factory.StartNew(() =>
+        {
+            var results = _dbContext.Products.Select(e => new ProductDataDto() {Id = e.Id, Name = e.Name}).ToList();
+            return results;
+        });
     }
 }

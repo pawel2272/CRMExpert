@@ -1,3 +1,5 @@
+@model ContactDto
+
 <div class="modal fade" id="addContactModal" tabindex="-1" aria-labelledby="addContactModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -10,49 +12,49 @@
                     <div class="row mb-3">
                         <label for="firstName" class="col-sm-3 col-form-label">First name</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="firstName">
+                            <input type="text" class="form-control" id="firstName" asp-for="FirstName">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="lastName" class="col-sm-3 col-form-label">Last name</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="lastName">
+                            <input type="text" class="form-control" id="lastName" asp-for="LastName">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="phone" class="col-sm-3 col-form-label">Phone</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="phone">
+                            <input type="text" class="form-control" id="phone" asp-for="Phone">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="email" class="col-sm-3 col-form-label">Email</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="email">
+                            <input type="text" class="form-control" id="email" asp-for="Email">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="street" class="col-sm-3 col-form-label">Street</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="street">
+                            <input type="text" class="form-control" id="street" asp-for="Street">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="postalCode" class="col-sm-3 col-form-label">Postal code</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="postalCode">
+                            <input type="text" class="form-control" id="postalCode" asp-for="PostalCode">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="city" class="col-sm-3 col-form-label">City</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="city">
+                            <input type="text" class="form-control" id="city" asp-for="City">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="contactComment" class="col-sm-3 col-form-label">Comment</label>
                         <div class="col-sm-9">
-                            <textarea class="form-control" id="contactComment" rows="3"></textarea>
+                            <textarea class="form-control" id="contactComment" rows="3" asp-for="ContactComment"></textarea>
                         </div>
                     </div>
                     <div class="row mb-3">

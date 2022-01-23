@@ -20,14 +20,14 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Custome
 
         public async Task<CustomerDto> HandleAsync(GetCustomerQuery query)
         {
-            var contact = await _unitOfWork.ContactsRepository.GetAsync(query.Id);
+            var customer = await _unitOfWork.CustomersRepository.GetAsync(query.Id);
 
-            if (contact == null)
+            if (customer == null)
             {
                 throw new NullReferenceException("Customer does not exist!");
             }
 
-            return _mapper.Map<CustomerDto>(contact);
+            return _mapper.Map<CustomerDto>(customer);
         }
     }
 }
