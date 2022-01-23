@@ -17,7 +17,11 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
         {
             _context = context;
             ContactsRepository = new ContactsRepository(context);
+            CustomersRepository = new CustomersRepository(context);
+            DiscountsRepository = new DiscountsRepository(context);
             OrdersRepository = new OrdersRepository(context);
+            PermissionsRepository = new PermissionsRepository(context);
+            ProductsRepository = new ProductsRepository(context);
             RolesRepository = new RolesRepository(context);
             TodosRepository = new TodosRepository(context);
             TokenRepository = new TokenRepository(contextAccessor, jwtOptions, distributedCache);

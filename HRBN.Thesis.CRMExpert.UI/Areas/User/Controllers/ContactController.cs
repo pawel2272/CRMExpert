@@ -6,7 +6,10 @@ using HRBN.Thesis.CRMExpert.Application;
 using HRBN.Thesis.CRMExpert.Application.Core.Mediator;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Contact;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Contact;
+using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Customer;
+using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.User;
 using HRBN.Thesis.CRMExpert.UI.Filters;
+using HRBN.Thesis.CRMExpert.UI.ViewModels.Administrator.Contact;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +25,12 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
         public ContactController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        private Guid GetCurrentUserId()
+        {
+            return Guid.Parse(HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)
+                .Value);
         }
 
         public async Task<IActionResult> Index(SearchContactsQuery query)
@@ -42,8 +51,7 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
 
             if (queryToBeProcessed.UserId.Equals(Guid.Empty))
             {
-                var userId = Guid.Parse(HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)
-                    .Value);
+                var userId = GetCurrentUserId();
                 queryToBeProcessed.UserId = userId;
             }
 
@@ -60,7 +68,12 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
 
             var result = await _mediator.QueryAsync(query);
 
-            return View(result);
+            var userData = await _mediator.QueryAsync(new GetUserDataQuery());
+            var customerData = await _mediator.QueryAsync(new GetCustomerDataQuery());
+
+            var model = new ContactViewModel(result, userData, customerData);
+
+            return View(model);
         }
 
         [HttpPost]

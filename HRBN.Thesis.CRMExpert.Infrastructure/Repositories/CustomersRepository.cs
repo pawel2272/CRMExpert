@@ -98,10 +98,10 @@ public class CustomersRepository : ICustomersRepository
 
     public async Task<List<CustomerDataDto>> GetCustomerDataAsync()
     {
-        return await Task.Factory.StartNew(() =>
-        {
-            var results = _dbContext.Customers.Select(e => new CustomerDataDto() {Id = e.Id, Name = e.Name}).ToList();
-            return results;
-        });
+        var results = await _dbContext
+            .Customers
+            .Select(e => new CustomerDataDto() {Id = e.Id, Name = e.Name})
+            .ToListAsync();
+        return results;
     }
 }

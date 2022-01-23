@@ -1,4 +1,4 @@
-@model ContactDto
+@model ContactViewModel
 
 <div class="container my-2">
     <div class="row">
@@ -14,66 +14,70 @@
                             <div class="row mb-3">
                                 <label for="firstName" class="col-sm-3 col-form-label">First name</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="firstName" asp-for="FirstName">
+                                    <input type="text" class="form-control" id="firstName" asp-for="Contact.FirstName">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="lastName" class="col-sm-3 col-form-label">Last name</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="lastName" asp-for="LastName">
+                                    <input type="text" class="form-control" id="lastName" asp-for="Contact.LastName">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="phone" class="col-sm-3 col-form-label">Phone</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="phone" asp-for="Phone">
+                                    <input type="text" class="form-control" id="phone" asp-for="Contact.Phone">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="email" class="col-sm-3 col-form-label">Email</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="email" asp-for="Email">
+                                    <input type="text" class="form-control" id="email" asp-for="Contact.Email">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="street" class="col-sm-3 col-form-label">Street</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="street" asp-for="Street">
+                                    <input type="text" class="form-control" id="street" asp-for="Contact.Street">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="postalCode" class="col-sm-3 col-form-label">Postal code</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="postalCode" asp-for="PostalCode">
+                                    <input type="text" class="form-control" id="postalCode" asp-for="Contact.PostalCode">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="city" class="col-sm-3 col-form-label">City</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="city" asp-for="City">
+                                    <input type="text" class="form-control" id="city" asp-for="Contact.City">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="contactComment" class="col-sm-3 col-form-label">Comment</label>
                                 <div class="col-sm-9">
-                                    <textarea class="form-control" id="contactComment" rows="3" asp-for="ContactComment"></textarea>
+                                    <textarea class="form-control" id="contactComment" rows="3" asp-for="Contact.ContactComment"></textarea>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="user" class="col-sm-3 col-form-label">User</label>
                                 <div class="col-sm-9">
-                                    <select id="user" class="form-select">
-                                        <option value="Electronics" selected>Admin</option>
-                                        <option value="Services">Admin1</option>
+                                    <select id="user" class="form-select" asp-for="Contact.UserId">
+                                        @foreach (var entity in Model.UserData)
+                                        {
+                                            <option value="@entity.Id" selected>@entity.Username</option>
+                                        }
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="customer" class="col-sm-3 col-form-label">Customer</label>
                                 <div class="col-sm-9">
-                                    <select id="customer" class="form-select">
-                                        <option value="Electronics" selected>Customer</option>
-                                        <option value="Services">Customer1</option>
+                                    <select id="customer" class="form-select" asp-for="Contact.CustomerId">
+                                        @foreach (var entity in Model.CustomerData)
+                                        {
+                                            <option value="@entity.Id">@entity.Name</option>
+                                        }
                                     </select>
                                 </div>
                             </div>
