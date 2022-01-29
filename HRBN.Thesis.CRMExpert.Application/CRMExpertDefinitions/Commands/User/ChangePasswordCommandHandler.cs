@@ -33,7 +33,7 @@ public sealed class ChangePasswordCommandHandler : CommandHandlerBase<ChangePass
 
         user.Password = command.NewPassword;
 
-        await _unitOfWork.UsersRepository.UpdateAsync(user);
+        await _unitOfWork.UsersRepository.UpdateAndHashAsync(user);
         user.ModDate = DateTime.Now;
         await _unitOfWork.CommitAsync();
 

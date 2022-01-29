@@ -12,5 +12,6 @@ namespace HRBN.Thesis.CRMExpert.Domain.Core.Repositories
         Task LogoutAsync();
         Task<List<UserDataDto>> GetUserDataAsync();
         Task<bool> IsPasswordValid(Guid id, string givenPassword);
+        Task UpdateAndHashAsync(User entity);
     }
 }

@@ -27,9 +27,22 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.User
                 return Result.Fail("User does not exist.");
             }
 
-            _mapper.Map(command, user);
+            if (string.IsNullOrEmpty(command.Password))
+            {
+                command.Password = user.Password;
+            }
 
-            await _unitOfWork.UsersRepository.UpdateAsync(user);
+            if (command.Password.Equals(user.Password))
+            {
+                _mapper.Map(command, user);
+                await _unitOfWork.UsersRepository.UpdateAsync(user);
+            }
+            else
+            {
+                _mapper.Map(command, user);
+                await _unitOfWork.UsersRepository.UpdateAndHashAsync(user);
+            }
+            
             user.ModDate = DateTime.Now;
             await _unitOfWork.CommitAsync();
 
