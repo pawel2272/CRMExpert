@@ -8,9 +8,9 @@
 
                 </div>
                 <div class="col-xs-2 col-xl-2 col-md-2 col-sm-2 d-grid gap-2">
-                    <button type="button" class="btn btn-primary my-2" data-bs-toggle="modal" data-bs-target="#addContactModal">
+                    <a asp-area="User" asp-controller="Contact" asp-action="Add" class="btn btn-primary my-2">
                         Add
-                    </button>
+                    </a>
                 </div>
                 <div class="col-xs-2 col-xl-2 col-md-2 col-sm-2 d-grid gap-2">
                     <button type="button" class="btn btn-primary my-2" data-bs-toggle="collapse" data-bs-target="#filterForm">
@@ -19,17 +19,18 @@
                 </div>
             </div>
         </div>
-        <form class="collapse border" id="filterForm">
+        <form method="get" asp-area="User" asp-controller="Contact" asp-action="Index" class="collapse border" id="filterForm">
             <div class="col-12">
                 <div class="row">
                     <div class="col-xl-3">
                         <div class="form-group row srch-frm">
+                            @Html.Hidden("pageNumber", 1)
                             <label for="orderBy" class="col-sm-4 col-form-label">
                                 Order by
                             </label
                             >
                             <div class="col-sm-8">
-                                <select id="orderBy" class="form-select">
+                                <select id="orderBy" name="orderBy" class="form-select">
                                     <option value="FirstName" selected>First name</option>
                                     <option value="LastName">Last name</option>
                                     <option value="Phone">Phone</option>
@@ -38,14 +39,13 @@
                                     <option value="PostalCode">Postal code</option>
                                     <option value="City">City</option>
                                     <option value="CreationDate">Creation date</option>
-                                    <option value="ModificationDane">
+                                    <option value="ModificationDate">
                                         Modification date
                                     </option>
                                 </select>
                             </div>
                         </div>
                     </div>
-
                     <div class="col-xl-3">
                         <div class="form-group row srch-frm">
                             <label for="sortDirection" class="col-sm-4 col-form-label">
@@ -53,7 +53,7 @@
                             </label
                             >
                             <div class="col-sm-8">
-                                <select id="sortDirection" class="form-select">
+                                <select id="sortDirection" name="sortDirection" class="form-select">
                                     <option value="ASC" selected>Ascending</option>
                                     <option value="DESC">Descending</option>
                                 </select>
@@ -69,6 +69,8 @@
                             <div class="col-sm-8">
                                 <input
                                     id="searchPhrase"
+                                    type="text"
+                                    name="searchPhrase"
                                     placeholder="Phrase..."
                                     class="form-control"/>
                             </div>
@@ -81,7 +83,7 @@
                             </label
                             >
                             <div class="col-sm-8">
-                                <select id="pageSize" class="form-select">
+                                <select id="pageSize" name="pageSize" class="form-select">
                                     <option value="5">5</option>
                                     <option value="10" selected>10</option>
                                     <option value="25">25</option>
@@ -199,6 +201,3 @@
         </div>
     </div>
 </div>
-@{
-    await Html.RenderPartialAsync("_AddContactModal");
-}
