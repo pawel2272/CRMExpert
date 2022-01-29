@@ -1,3 +1,5 @@
+@model OrderViewModel
+
 <div class="container my-2">
     <div class="row">
         <div class="col-lg-2"></div>
@@ -7,41 +9,65 @@
                     Edit order
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form method="post" asp-area="User" asp-controller="Order" asp-action="Edit">
+                        @Html.HiddenFor(m => m.Order.Id)
                         <div class="row mb-3">
                             <label for="title" class="col-sm-3 col-form-label">Title</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="title">
+                                <input type="text" class="form-control" id="title" asp-for="Order.Title">
+                                <span asp-validation-for="Order.Title" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="content" class="col-sm-3 col-form-label">Content</label>
                             <div class="col-sm-9">
-                                <textarea class="form-control" id="content" rows="3"></textarea>
+                                <textarea class="form-control" id="content" rows="3" asp-for="Order.Content"></textarea>
+                                <span asp-validation-for="Order.Content" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="price" class="col-sm-3 col-form-label">Price</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="price">
+                                <input type="text" class="form-control" id="price" asp-for="Order.Price">
+                                <span asp-validation-for="Order.Price" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="contact" class="col-sm-3 col-form-label">Contact</label>
                             <div class="col-sm-9">
-                                <select id="contact" class="form-select">
-                                    <option value="Electronics" selected>Jan</option>
-                                    <option value="Services">Grzegorz</option>
+                                <select id="contact" class="form-select" asp-for="Order.ContactId">
+                                    @foreach (var contact in Model.ContactData)
+                                    {
+                                        if (contact.Id.Equals(Model.Order.ContactId))
+                                        {
+                                            <option value="@contact.Id" selected>@contact.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@contact.Id">@contact.Name</option>
+                                        }
+                                    }
                                 </select>
+                                <span asp-validation-for="Order.ContactId" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="product" class="col-sm-3 col-form-label">Product</label>
                             <div class="col-sm-9">
-                                <select id="product" class="form-select">
-                                    <option value="Electronics" selected>Szafa</option>
-                                    <option value="Services">Pralka</option>
+                                <select id="product" class="form-select" asp-for="Order.ProductId">
+                                    @foreach (var product in Model.ProductData)
+                                    {
+                                        if (product.Id.Equals(Model.Order.ProductId))
+                                        {
+                                            <option value="@product.Id" selected>@product.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@product.Id">@product.Name</option>
+                                        }
+                                    }
                                 </select>
+                                <span asp-validation-for="Order.ProductId" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="card-footer">

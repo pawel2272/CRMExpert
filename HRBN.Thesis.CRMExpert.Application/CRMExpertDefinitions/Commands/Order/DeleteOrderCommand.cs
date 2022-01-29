@@ -10,13 +10,11 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Order
             
         }
 
-        public DeleteOrderCommand(Guid id, Guid contactId)
+        public DeleteOrderCommand(Guid id)
         {
-            ContactId = contactId;
             Id = id;
         }
-
-        public Guid ContactId { get; set; }
+        
         public Guid Id { get; set; }
     }
 }
