@@ -101,7 +101,7 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
                 .Take(pageSize)
                 .ToListAsync();
 
-            return new PageResult<User>(entities, baseQuery.Count(), pageSize, pageNumber);
+            return new PageResult<User>(entities, baseQuery.Count(), pageSize, pageNumber, searchPhrase, sortDirection, orderBy);
         }
 
         public async Task AddAsync(User entity)

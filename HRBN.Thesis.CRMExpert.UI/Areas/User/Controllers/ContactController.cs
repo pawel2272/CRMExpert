@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using HRBN.Thesis.CRMExpert.Application;
 using HRBN.Thesis.CRMExpert.Application.Core.Mediator;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Contact;
+using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Dto;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Contact;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Customer;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.User;
@@ -61,33 +62,55 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
             return View(contacts);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Edit(Guid id)
+        public async Task<ContactViewModel> GetContactViewModelAsync(Guid? contactId)
         {
-            var query = new GetContactQuery(id);
-
-            var result = await _mediator.QueryAsync(query);
+            GetContactQuery query = null;
+            ContactDto result = null;
+            
+            if (contactId.HasValue)
+            {
+                query = new GetContactQuery(contactId.Value);
+                result = await _mediator.QueryAsync(query);
+            }
+            else
+            {
+                result = new ContactDto();
+            }
 
             var userData = await _mediator.QueryAsync(new GetUserDataQuery());
             var customerData = await _mediator.QueryAsync(new GetCustomerDataQuery());
 
-            var model = new ContactViewModel(result, userData, customerData);
+            return new ContactViewModel(result, userData, customerData);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var model = await GetContactViewModelAsync(id);
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(EditContactCommand command)
+        public async Task<IActionResult> Edit([FromForm(Name = "Contact")] EditContactCommand command)
         {
             var result = await _mediator.CommandAsync(command);
 
             if (result.IsFailure)
             {
-                ModelState.PopulateValidation(result.Errors);
-                return View();
+                ModelState.PopulateViewModelValidation(result.Errors, "Contact");
+                return View(await GetContactViewModelAsync(command.Id));
             }
 
             return Redirect("/User/Contact");
+        }
+        
+        [HttpGet]
+        public async Task<IActionResult> Add()
+        {
+            var model = await GetContactViewModelAsync(null);
+
+            return View(model);
         }
 
         [HttpPost]
@@ -97,9 +120,20 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
 
             if (result.IsFailure)
             {
-                ModelState.PopulateValidation(result.Errors);
-                return View(nameof(this.Index));
+                ModelState.PopulateViewModelValidation(result.Errors, "Contact");
+                return View(await GetContactViewModelAsync(null));
             }
+
+            return Redirect("/User/Contact");
+        }
+        
+        
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var command = new DeleteContactCommand(id);
+
+            var result = await _mediator.CommandAsync(command);
 
             return Redirect("/User/Contact");
         }

@@ -39,7 +39,8 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
         }
 
         private async Task<IPageResult<Order>> ProcessSearchQueryAsync(IQueryable<Order> baseQuery, int pageNumber,
-            int pageSize, string orderBy, SortDirection sortDirection)
+            int pageSize, string orderBy, SortDirection sortDirection,
+            string searchPhrase)
         {
             if (!string.IsNullOrEmpty(orderBy))
             {
@@ -61,7 +62,7 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             var entities = await baseQuery.Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
                 .ToListAsync();
-            return new PageResult<Order>(entities, baseQuery.Count(), pageSize, pageNumber);
+            return new PageResult<Order>(entities, baseQuery.Count(), pageSize, pageNumber, searchPhrase, sortDirection, orderBy);
         }
 
         public async Task<IPageResult<Order>> SearchAsync(Guid contactId, string searchPhrase, int pageNumber,
@@ -79,10 +80,11 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
                                 || e.ProductId.ToString().ToLower().Contains(lowerCaseSearchPhrase)
                             ));
 
-            return await ProcessSearchQueryAsync(baseQuery, pageNumber, pageSize, orderBy, sortDirection);
+            return await ProcessSearchQueryAsync(baseQuery, pageNumber, pageSize, orderBy, sortDirection, searchPhrase);
         }
 
-        public async Task<IPageResult<Order>> SearchAsync(string searchPhrase, int pageNumber, int pageSize, string orderBy,
+        public async Task<IPageResult<Order>> SearchAsync(string searchPhrase, int pageNumber, int pageSize,
+            string orderBy,
             SortDirection sortDirection)
         {
             string lowerCaseSearchPhrase = searchPhrase?.ToLower();
@@ -96,7 +98,7 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
                             || e.ProductId.ToString().ToLower().Contains(lowerCaseSearchPhrase)
                 );
 
-            return await ProcessSearchQueryAsync(baseQuery, pageNumber, pageSize, orderBy, sortDirection);
+            return await ProcessSearchQueryAsync(baseQuery, pageNumber, pageSize, orderBy, sortDirection, searchPhrase);
         }
 
         public async Task UpdateAsync(Order entity)

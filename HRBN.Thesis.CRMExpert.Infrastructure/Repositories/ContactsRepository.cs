@@ -42,7 +42,8 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
         private async Task<IPageResult<Contact>> ProcessSearchQueryAsync(IQueryable<Contact> baseQuery, int pageNumber,
             int pageSize,
             string orderBy,
-            SortDirection sortDirection)
+            SortDirection sortDirection,
+            string searchPhrase)
         {
             if (!string.IsNullOrEmpty(orderBy))
             {
@@ -80,7 +81,7 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
                 .Take(pageSize)
                 .ToListAsync();
 
-            return new PageResult<Contact>(entities, baseQuery.Count(), pageSize, pageNumber);
+            return new PageResult<Contact>(entities, baseQuery.Count(), pageSize, pageNumber, searchPhrase, sortDirection, orderBy);
         }
 
         public async Task<IPageResult<Contact>> SearchAsync(string searchPhrase, int pageNumber, int pageSize,
@@ -104,7 +105,7 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
                              || e.UserId.ToString().ToLower().Contains(lowerCaseSearchPhrase)
                     ));
 
-            return await ProcessSearchQueryAsync(baseQuery, pageNumber, pageSize, orderBy, sortDirection);
+            return await ProcessSearchQueryAsync(baseQuery, pageNumber, pageSize, orderBy, sortDirection, searchPhrase);
         }
 
         public async Task<IPageResult<Contact>> SearchAsync(Guid userId, string searchPhrase, int pageNumber,
@@ -127,7 +128,7 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
                               || e.CustomerId.ToString().ToLower().Contains(lowerCaseSearchPhrase)
                              )) && e.UserId == userId);
 
-            return await ProcessSearchQueryAsync(baseQuery, pageNumber, pageSize, orderBy, sortDirection);
+            return await ProcessSearchQueryAsync(baseQuery, pageNumber, pageSize, orderBy, sortDirection, searchPhrase);
         }
 
         public async Task<List<ContactDataDto>> GetContactDataAsync()

@@ -6,10 +6,10 @@
         <div class="col-lg-8">
             <div class="card">
                 <div class="card-header">
-                    Edit contact
+                    Add contact
                 </div>
                 <div class="card-body">
-                    <form method="post" asp-area="User" asp-controller="Contact" asp-action="Edit">
+                    <form method="post" asp-area="User" asp-controller="Contact" asp-action="Add">
                         @Html.HiddenFor(m => m.Contact.Id)
                         <div class="row mb-3">
                             <label for="firstName" class="col-sm-3 col-form-label">First name</label>

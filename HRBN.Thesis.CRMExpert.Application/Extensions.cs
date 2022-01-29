@@ -13,5 +13,13 @@ namespace HRBN.Thesis.CRMExpert.Application
                 modelState.AddModelError(error.PropertyName, error.Message);
             }
         }   
+        
+        public static void PopulateViewModelValidation(this ModelStateDictionary modelState, IEnumerable<Result.Error> errors, string prefix)
+        {
+            foreach (var error in errors)
+            {
+                modelState.AddModelError($"{prefix}.{error.PropertyName}", error.Message);
+            }
+        }  
     }
 }

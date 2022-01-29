@@ -38,7 +38,7 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Permiss
             );
 
             return new PageResult<PermissionDto>(_mapper.Map<List<PermissionDto>>(result.Items), result.TotalItemsCount,
-                query.PageSize, query.PageNumber);
+                query.PageSize, query.PageNumber, query.SearchPhrase, query.SortDirection, query.OrderBy);
         }
     }
 }

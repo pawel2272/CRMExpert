@@ -38,7 +38,8 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Order
                 query.SortDirection
             );
 
-            return new PageResult<OrderDto>(_mapper.Map<List<OrderDto>>(result.Items), result.TotalItemsCount, query.PageSize, query.PageNumber);
+            return new PageResult<OrderDto>(_mapper.Map<List<OrderDto>>(result.Items), result.TotalItemsCount,
+                query.PageSize, query.PageNumber, query.SearchPhrase, query.SortDirection, query.OrderBy);
         }
     }
 }

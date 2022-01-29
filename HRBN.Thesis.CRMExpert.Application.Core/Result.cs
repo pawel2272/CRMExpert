@@ -57,8 +57,8 @@ namespace HRBN.Thesis.CRMExpert.Application.Core
                 Message = message;
             }
 
-            public string PropertyName { get; }
-            public string Message { get; }
+            public string PropertyName { get; set; }
+            public string Message { get; set; }
         }
     }
 }

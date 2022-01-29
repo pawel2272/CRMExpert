@@ -79,7 +79,7 @@ public class ProductsRepository : IProductsRepository
             .Take(pageSize)
             .ToListAsync();
 
-        return new PageResult<Product>(entities, baseQuery.Count(), pageSize, pageNumber);
+        return new PageResult<Product>(entities, baseQuery.Count(), pageSize, pageNumber, searchPhrase, sortDirection, orderBy);
     }
 
     public async Task AddAsync(Product entity)

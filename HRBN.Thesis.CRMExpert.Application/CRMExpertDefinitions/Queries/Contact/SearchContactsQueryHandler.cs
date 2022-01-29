@@ -38,7 +38,8 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Contact
                 query.SortDirection
             );
 
-            return new PageResult<ContactDto>(_mapper.Map<List<ContactDto>>(result.Items), result.TotalItemsCount, query.PageSize, query.PageNumber);
+            return new PageResult<ContactDto>(_mapper.Map<List<ContactDto>>(result.Items), result.TotalItemsCount,
+                query.PageSize, query.PageNumber, query.SearchPhrase, query.SortDirection, query.OrderBy);
         }
     }
 }

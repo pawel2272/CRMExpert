@@ -70,7 +70,7 @@ public class PermissionsRepository : IPermissionsRepository
             .Take(pageSize)
             .ToListAsync();
 
-        return new PageResult<Permission>(entities, baseQuery.Count(), pageSize, pageNumber);
+        return new PageResult<Permission>(entities, baseQuery.Count(), pageSize, pageNumber, searchPhrase, sortDirection, orderBy);
     }
 
     public async Task AddAsync(Permission entity)

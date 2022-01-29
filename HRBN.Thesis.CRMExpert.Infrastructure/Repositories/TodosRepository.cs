@@ -39,7 +39,8 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
         }
 
         private async Task<IPageResult<Todo>> ProcessSearchQueryAsync(IQueryable<Todo> baseQuery, int pageNumber,
-            int pageSize, string orderBy, SortDirection sortDirection)
+            int pageSize, string orderBy, SortDirection sortDirection,
+            string searchPhrase)
         {
             if (!string.IsNullOrEmpty(orderBy))
             {
@@ -62,10 +63,11 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
                 .Take(pageSize)
                 .ToListAsync();
 
-            return new PageResult<Todo>(entities, baseQuery.Count(), pageSize, pageNumber);
+            return new PageResult<Todo>(entities, baseQuery.Count(), pageSize, pageNumber, searchPhrase, sortDirection, orderBy);
         }
 
-        public async Task<IPageResult<Todo>> SearchAsync(string searchPhrase, int pageNumber, int pageSize, string orderBy,
+        public async Task<IPageResult<Todo>> SearchAsync(string searchPhrase, int pageNumber, int pageSize,
+            string orderBy,
             SortDirection sortDirection)
         {
             string lowerCaseSearchPhrase = searchPhrase?.ToLower();
@@ -79,7 +81,7 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
                              || e.UserId.ToString().ToLower().Contains(lowerCaseSearchPhrase)
                             ));
 
-            return await ProcessSearchQueryAsync(baseQuery, pageNumber, pageSize, orderBy, sortDirection);
+            return await ProcessSearchQueryAsync(baseQuery, pageNumber, pageSize, orderBy, sortDirection, searchPhrase);
         }
 
         public async Task<IPageResult<Todo>> SearchAsync(Guid contactId, string searchPhrase, int pageNumber,
@@ -97,7 +99,7 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
                               || e.UserId.ToString().ToLower().Contains(lowerCaseSearchPhrase)
                              )));
 
-            return await ProcessSearchQueryAsync(baseQuery, pageNumber, pageSize, orderBy, sortDirection);
+            return await ProcessSearchQueryAsync(baseQuery, pageNumber, pageSize, orderBy, sortDirection, searchPhrase);
         }
 
         public async Task UpdateAsync(Todo entity)

@@ -74,7 +74,7 @@ public class DiscountsRepository : IDiscountsRepository
             .Take(pageSize)
             .ToListAsync();
 
-        return new PageResult<Discount>(entities, baseQuery.Count(), pageSize, pageNumber);
+        return new PageResult<Discount>(entities, baseQuery.Count(), pageSize, pageNumber, searchPhrase, sortDirection, orderBy);
     }
 
     public async Task AddAsync(Discount entity)

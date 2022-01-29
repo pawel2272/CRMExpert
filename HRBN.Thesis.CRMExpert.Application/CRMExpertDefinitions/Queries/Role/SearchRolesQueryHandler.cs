@@ -37,7 +37,8 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Role
                 query.SortDirection
             );
 
-            return new PageResult<RoleDto>(_mapper.Map<List<RoleDto>>(result.Items), result.TotalItemsCount, query.PageSize, query.PageNumber);
+            return new PageResult<RoleDto>(_mapper.Map<List<RoleDto>>(result.Items), result.TotalItemsCount,
+                query.PageSize, query.PageNumber, query.SearchPhrase, query.SortDirection, query.OrderBy);
         }
     }
 }

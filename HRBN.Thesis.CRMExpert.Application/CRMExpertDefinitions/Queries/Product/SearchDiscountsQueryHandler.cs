@@ -38,7 +38,7 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Product
             );
 
             return new PageResult<ProductDto>(_mapper.Map<List<ProductDto>>(result.Items), result.TotalItemsCount,
-                query.PageSize, query.PageNumber);
+                query.PageSize, query.PageNumber, query.SearchPhrase, query.SortDirection, query.OrderBy);
         }
     }
 }

@@ -9,5 +9,7 @@ namespace HRBN.Thesis.CRMExpert.Domain.Core.Pagination
         int ItemsFrom { get; }
         int ItemsTo { get; }
         int TotalItemsCount { get; }
+        public int PageNumber { get; }
+        public string SearchPhrase { get; }
     }
 }
