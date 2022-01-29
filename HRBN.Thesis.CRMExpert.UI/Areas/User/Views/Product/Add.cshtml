@@ -6,11 +6,10 @@
         <div class="col-lg-8">
             <div class="card">
                 <div class="card-header">
-                    Edit product
+                    Add product
                 </div>
                 <div class="card-body">
-                    <form method="post" asp-area="User" asp-controller="Product" asp-action="Edit">
-                        @Html.HiddenFor(m => m.Product.Id)
+                    <form method="post" asp-area="User" asp-controller="Product" asp-action="Add">
                         <div class="modal-body">
                             <div class="row mb-3">
                                 <label for="name" class="col-md-3 col-form-label">Name</label>

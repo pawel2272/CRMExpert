@@ -32,12 +32,14 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
 
         public async Task<IActionResult> Index(SearchOrdersQuery query)
         {
+            var contactData = await _mediator.QueryAsync(new GetContactDataQuery());
+            
             var queryToBeProcessed = query;
             if (queryToBeProcessed.PageNumber <= 0 || queryToBeProcessed.PageSize <= 0)
             {
                 queryToBeProcessed = new SearchOrdersQuery()
                 {
-                    ContactId = query.ContactId,
+                    ContactId = contactData.FirstOrDefault(e => e.Id != null).Id,
                     SearchPhrase = query.SearchPhrase,
                     PageNumber = 1,
                     PageSize = 10,

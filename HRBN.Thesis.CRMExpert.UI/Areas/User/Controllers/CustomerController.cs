@@ -4,7 +4,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using HRBN.Thesis.CRMExpert.Application;
 using HRBN.Thesis.CRMExpert.Application.Core.Mediator;
-using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Contact;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Customer;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Dto;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Customer;
@@ -46,8 +45,8 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
             
             ViewBag.PageNumber = queryToBeProcessed.PageNumber;
 
-            var contacts = await _mediator.QueryAsync(queryToBeProcessed);
-            return View(contacts);
+            var entities = await _mediator.QueryAsync(queryToBeProcessed);
+            return View(entities);
         }
 
         public async Task<CustomerViewModel> GetCustomerViewModelAsync(Guid? customerId)
@@ -105,7 +104,7 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
 
             if (result.IsFailure)
             {
-                ModelState.PopulateViewModelValidation(result.Errors, "Contact");
+                ModelState.PopulateViewModelValidation(result.Errors, "Customer");
                 return View(await GetCustomerViewModelAsync(null));
             }
 
@@ -116,7 +115,7 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var command = new DeleteContactCommand(id);
+            var command = new DeleteCustomerCommand(id);
 
             var result = await _mediator.CommandAsync(command);
 

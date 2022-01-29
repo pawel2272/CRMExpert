@@ -8,9 +8,9 @@
 
                 </div>
                 <div class="col-xs-2 col-xl-2 col-md-2 col-sm-2 d-grid gap-2">
-                    <button asp-area="User" asp-controller="Product" asp-action="Add" type="button" class="btn btn-primary my-2">
+                    <a asp-area="User" asp-controller="Product" asp-action="Add" type="button" class="btn btn-primary my-2">
                         Add
-                    </button>
+                    </a>
                 </div>
                 <div class="col-xs-2 col-xl-2 col-md-2 col-sm-2 d-grid gap-2">
                     <button type="button" class="btn btn-primary my-2" data-bs-toggle="collapse" data-bs-target="#filterForm">
@@ -19,7 +19,7 @@
                 </div>
             </div>
         </div>
-        <form class="collapse border" id="filterForm">
+        <form method="get" asp-area="User" asp-controller="Product" asp-action="Index" class="collapse border" id="filterForm">
             <div class="col-12">
                 <div class="row">
                     <div class="col-xl-3">
@@ -27,7 +27,7 @@
                             @Html.Hidden("pageNumber", 1)
                             <label for="orderBy" class="col-sm-4 col-form-label">Order by</label>
                             <div class="col-sm-8">
-                                <select id="orderBy" class="form-select">
+                                <select id="orderBy" name="orderBy" class="form-select">
                                     <option value="Name" selected>Name</option>
                                     <option value="Price">Price</option>
                                     <option value="Description">Description</option>
@@ -44,7 +44,7 @@
                         <div class="form-group row srch-frm">
                             <label for="sortDirection" class="col-sm-4 col-form-label">Direction</label>
                             <div class="col-sm-8">
-                                <select id="sortDirection" class="form-select">
+                                <select id="sortDirection" name="sortDirection" class="form-select">
                                     <option value="ASC" selected>Ascending</option>
                                     <option value="DESC">Descending</option>
                                 </select>
@@ -55,7 +55,7 @@
                         <div class="form-group row srch-frm">
                             <label for="searchPhrase" class="col-sm-4 col-form-label">Phrase</label>
                             <div class="col-sm-8">
-                                <input id="searchPhrase" placeholder="Phrase..." class="form-control"/>
+                                <input type="text" id="searchPhrase" name="searchPhrase" placeholder="Phrase..." class="form-control"/>
                             </div>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                         <div class="form-group row srch-frm">
                             <label for="pageSize" class="col-sm-4 col-form-label">Size</label>
                             <div class="col-sm-8">
-                                <select id="pageSize" class="form-select">
+                                <select id="pageSize" name="pageSize" class="form-select">
                                     <option value="5">5</option>
                                     <option value="10" selected>10</option>
                                     <option value="25">25</option>
@@ -93,24 +93,27 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row" class="d-none">1</th>
-                    <td>Computer</td>
-                    <td>21.37 PLN</td>
-                    <td class="d-none d-md-table-cell">The best computer on the world!</td>
-                    <td class="d-none d-md-table-cell">Electronics</td>
-                    <td>2137</td>
-                    <td>
-                        <a asp-area="User" asp-controller="Product" asp-action="Edit" class="btn btn-primary">
-                            Edit
-                        </a>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            Delete
-                        </button>
-                    </td>
-                </tr>
+                @foreach (var product in Model.Items)
+                {
+                    <tr>
+                        <th scope="row" class="d-none">@product.Id</th>
+                        <td>@product.Name</td>
+                        <td>@product.Price PLN</td>
+                        <td class="d-none d-md-table-cell">@product.Description</td>
+                        <td class="d-none d-md-table-cell">@product.Type</td>
+                        <td>@product.Count</td>
+                        <td>
+                            <a asp-area="User" asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-primary">
+                                Edit
+                            </a>
+                        </td>
+                        <td>
+                            <a asp-area="User" asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id"type="button" class="btn btn-primary">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
                 </tbody>
             </table>
         </div>
@@ -174,6 +177,3 @@
         </div>
     </div>
 </div>
-@{
-    await Html.RenderPartialAsync("_AddProductModal");
-}
