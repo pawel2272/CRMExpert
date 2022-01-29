@@ -196,5 +196,22 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
                 return _dbContext.Users.Select(e => new UserDataDto() {Id = e.Id, Username = e.Username}).ToList();
             });
         }
+
+        public async Task<bool> IsPasswordValid(Guid id, string givenPassword)
+        {
+            var userToBeVerified = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id.Equals(id));
+            if (userToBeVerified == null)
+            {
+                return false;
+            }
+
+            var result = _hasher.VerifyHashedPassword(userToBeVerified, userToBeVerified.Password, givenPassword);
+            if (result == PasswordVerificationResult.Failed)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

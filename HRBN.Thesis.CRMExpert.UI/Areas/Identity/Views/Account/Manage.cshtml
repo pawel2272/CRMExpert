@@ -1,3 +1,5 @@
+@model UserDto
+
 <div class="container my-2">
     <div class="row">
         <div class="col-12">
@@ -10,39 +12,39 @@
                 <form class="row g-3">
                     <div class="col-lg-4">
                         <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" value="pharbuz" readonly>
+                        <input type="text" class="form-control" id="username" value="@Model.Username" readonly>
                     </div>
                     <div class="col-lg-2">
                         <label for="gender" class="form-label">Gender</label>
-                        <input type="text" class="form-control" id="gender" value="M" readonly>
+                        <input type="text" class="form-control" id="gender" value="@Model.Gender" readonly>
                     </div>
                     <div class="col-lg-6">
                         <label for="firstName" class="form-label">First name</label>
-                        <input type="text" class="form-control" id="firstName" value="Paweł" readonly>
+                        <input type="text" class="form-control" id="firstName" value="@Model.FirstName" readonly>
                     </div>
                     <div class="col-lg-6">
                         <label for="lastName" class="form-label">Last name</label>
-                        <input type="text" class="form-control" id="lastName" value="Harbuz" readonly>
+                        <input type="text" class="form-control" id="lastName" value="@Model.LastName" readonly>
                     </div>
                     <div class="col-lg-4">
                         <label for="phone" class="form-label">Phone</label>
-                        <input type="text" class="form-control" id="phone" value="+48 793 154 795" readonly>
+                        <input type="text" class="form-control" id="phone" value="@Model.Phone" readonly>
                     </div>
                     <div class="col-lg-2">
                         <label for="postalCode" class="form-label">Postal code</label>
-                        <input type="text" class="form-control" id="postalCode" value="22-600" readonly>
+                        <input type="text" class="form-control" id="postalCode" value="@Model.PostalCode" readonly>
                     </div>
                     <div class="col-lg-6">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" value="w60050@student.wsiz.rzeszow.pl" readonly>
+                        <input type="email" class="form-control" id="email" value="@Model.Email" readonly>
                     </div>
                     <div class="col-lg-6">
                         <label for="street" class="form-label">Street</label>
-                        <input type="text" class="form-control" id="street" value="Zacisze 3" readonly>
+                        <input type="text" class="form-control" id="street" value="@Model.Street" readonly>
                     </div>
                     <div class="col-lg-12">
                         <label for="city" class="form-label">City</label>
-                        <input type="text" class="form-control" id="city" value="Tomaszów Lubelski" readonly>
+                        <input type="text" class="form-control" id="city" value="@Model.City" readonly>
                     </div>
                 </form>
             </div>
@@ -54,24 +56,20 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <label for="creDate" class="form-label">Registration date</label>
-                        <input type="date" class="form-control" id="creDate" value="1998-05-28" readonly>
+                        <input type="date" class="form-control" id="creDate" value="@Model.CreDate.ToString("yyyy-MM-dd")" readonly>
                     </div>
                     <div class="col-lg-6">
                         <label for="modDate" class="form-label">Modification date</label>
-                        <input type="date" class="form-control" id="modDate" value="1998-05-28" readonly>
+                        <input type="date" class="form-control" id="modDate" value="@Model.ModDate.ToString("yyyy-MM-dd")" readonly>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-6 my-2 text-center d-grid gap-2">
-                        <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Change password</button>
+                        <a asp-area="Identity" asp-controller="Account" asp-action="ChangePassword" type="submit" class="btn btn-primary">Change password</a>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-6 my-2 text-center d-grid gap-2">
-                        <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modifyAddressModal">Change address</button>
+                        <a asp-area="Identity" asp-controller="Account" asp-action="ModifyAddress" type="submit" class="btn btn-primary">Change address</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-@{
-    await Html.RenderPartialAsync("_ChangePasswordModal");
-    await Html.RenderPartialAsync("_ModifyAddressModal");
-}

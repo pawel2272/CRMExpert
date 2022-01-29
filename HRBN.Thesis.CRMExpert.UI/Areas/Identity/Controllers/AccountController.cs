@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using HRBN.Thesis.CRMExpert.Application;
 using HRBN.Thesis.CRMExpert.Application.Core.Mediator;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.User;
-using HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers;
+using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.User;
 using HRBN.Thesis.CRMExpert.UI.Filters;
 using Microsoft.AspNetCore.Mvc;
 
@@ -48,10 +48,64 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.Identity.Controllers
             return Redirect("/User/Home");
         }
         
-        // GET
-        public IActionResult Manage()
+        [HttpGet]
+        public async Task<IActionResult> Manage()
         {
-            return View();
+            var currentUserId = GetCurrentUserId();
+
+            var query = new GetUserQuery(currentUserId);
+
+            var result = await _mediator.QueryAsync(query);
+            
+            return View(result);
+        }
+        
+        [HttpGet]
+        public async Task<IActionResult> ChangePassword()
+        {
+            return View(new ChangePasswordCommand());
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordCommand command)
+        {
+            command.Id = GetCurrentUserId();
+            
+            var result = await _mediator.CommandAsync(command);
+            
+            if (result.IsFailure)
+            {
+                ModelState.PopulateValidation(result.Errors);
+                return View();
+            }
+
+            return Redirect("/Identity/Account/Manage");
+        }
+        
+        [HttpGet]
+        public async Task<IActionResult> ModifyAddress()
+        {
+            var query = new GetUserQuery(GetCurrentUserId());
+
+            var result = await _mediator.QueryAsync(query);
+            
+            return View(result);
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> ModifyAddress(ChangeAddressCommand command)
+        {
+            command.Id = GetCurrentUserId();
+            
+            var result = await _mediator.CommandAsync(command);
+            
+            if (result.IsFailure)
+            {
+                ModelState.PopulateValidation(result.Errors);
+                return View();
+            }
+
+            return Redirect("/Identity/Account/Manage");
         }
     }
 }
