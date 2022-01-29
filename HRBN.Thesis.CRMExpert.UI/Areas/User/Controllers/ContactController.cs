@@ -10,7 +10,7 @@ using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Contact;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Customer;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.User;
 using HRBN.Thesis.CRMExpert.UI.Filters;
-using HRBN.Thesis.CRMExpert.UI.ViewModels.Administrator.Contact;
+using HRBN.Thesis.CRMExpert.UI.ViewModels.User.Contact;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -114,7 +114,7 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(AddContactCommand command)
+        public async Task<IActionResult> Add([FromForm(Name = "Contact")] AddContactCommand command)
         {
             var result = await _mediator.CommandAsync(command);
 

@@ -1,3 +1,5 @@
+@model PageResult<OrderDto>
+
 <div class="container my-2">
     <div class="row">
         <div class="col-12">
@@ -6,9 +8,9 @@
 
                 </div>
                 <div class="col-xs-2 col-xl-2 col-md-2 col-sm-2 d-grid gap-2">
-                    <button type="button" class="btn btn-primary my-2" data-bs-toggle="modal" data-bs-target="#addOrderModal">
+                    <a asp-area="User" asp-controller="Order" asp-action="Add" type="button" class="btn btn-primary my-2">
                         Add
-                    </button>
+                    </a>
                 </div>
                 <div class="col-xs-2 col-xl-2 col-md-2 col-sm-2 d-grid gap-2">
                     <button type="button" class="btn btn-primary my-2" data-bs-toggle="collapse" data-bs-target="#filterForm">
@@ -22,6 +24,7 @@
                 <div class="row">
                     <div class="col-xl-3">
                         <div class="form-group row srch-frm">
+                            @Html.Hidden("pageNumber", 1)
                             <label for="orderBy" class="col-sm-4 col-form-label">Order by</label>
                             <div class="col-sm-8">
                                 <select id="orderBy" class="form-select">
@@ -108,23 +111,57 @@
 
         <div class="col-12">
             <nav>
-                <ul class="pagination justify-content-center">
+                @if (Model.PageNumber > 1)
+                {
                     <li class="page-item">
-                        <a class="page-link" href="#">Previous</a>
+                        <a asp-area="User" asp-controller="Order" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">Previous</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                }
+                <li class="page-item">
+                    <a asp-area="User" asp-controller="Order" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="1" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">First</a>
+                </li>
+                @if (Model.TotalPages > 3 && Model.PageNumber - 2 >= 1)
+                {
+                    <li class="page-item">
+                        <a asp-area="User" asp-controller="Order" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber - 2)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">@(Model.PageNumber - 2)</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="#">1</a>
+                        <a asp-area="User" asp-controller="Order" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">@(Model.PageNumber - 1)</a>
+                    </li>
+                }
+                <li class="page-item active">
+                    <a asp-area="User" asp-controller="Order" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@Model.PageNumber" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">@Model.PageNumber</a>
+                </li>
+                @if (Model.TotalPages > 3 && Model.PageNumber + 3 <= Model.TotalPages)
+                {
+                    <li class="page-item">
+                        <a asp-area="User" asp-controller="Order" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">@(Model.PageNumber + 1)</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="#">2</a>
+                        <a asp-area="User" asp-controller="Order" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber + 2)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">@(Model.PageNumber + 2)</a>
                     </li>
+                }
+                <li class="page-item">
+                    <a asp-area="User" asp-controller="Order" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@Model.TotalPages" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">Last</a>
+                </li>
+                @if (Model.TotalPages > 1 && Model.PageNumber < Model.TotalPages)
+                {
                     <li class="page-item">
-                        <a class="page-link" href="#">3</a>
+                        <a asp-area="User" asp-controller="Order" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">Next</a>
                     </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
+                }
+                else
+                {
+                    <li class="page-item disabled">
+                        <a class="page-link">Next</a>
                     </li>
-                </ul>
+                }
             </nav>
         </div>
     </div>

@@ -1,0 +1,66 @@
+<div class="container my-2">
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    Edit order
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="row mb-3">
+                            <label for="title" class="col-sm-3 col-form-label">Title</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="title">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="content" class="col-sm-3 col-form-label">Content</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" id="content" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="price" class="col-sm-3 col-form-label">Price</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="price">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="contact" class="col-sm-3 col-form-label">Contact</label>
+                            <div class="col-sm-9">
+                                <select id="contact" class="form-select">
+                                    <option value="Electronics" selected>Jan</option>
+                                    <option value="Services">Grzegorz</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="product" class="col-sm-3 col-form-label">Product</label>
+                            <div class="col-sm-9">
+                                <select id="product" class="form-select">
+                                    <option value="Electronics" selected>Szafa</option>
+                                    <option value="Services">Pralka</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="product" class="col-sm-3 col-form-label">Product</label>
+                            <div class="col-sm-9">
+                                <select id="product" class="form-select">
+                                    <option value="Electronics" selected>Szafa</option>
+                                    <option value="Services">Pralka</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a asp-area="User" asp-controller="Order" asp-action="Index" class="btn btn-secondary">Back</a>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+</div>
