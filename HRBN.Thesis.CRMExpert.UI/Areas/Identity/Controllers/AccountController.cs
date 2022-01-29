@@ -1,3 +1,6 @@
+using System;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using HRBN.Thesis.CRMExpert.Application;
 using HRBN.Thesis.CRMExpert.Application.Core.Mediator;
@@ -9,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HRBN.Thesis.CRMExpert.UI.Areas.Identity.Controllers
 {
     [Area("Identity")]
+    [ServiceFilter(typeof(JwtAuthFilter))]
     public class AccountController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly IMediator _mediator;
@@ -18,8 +22,13 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.Identity.Controllers
             _mediator = mediator;
         }
         
+        private Guid GetCurrentUserId()
+        {
+            return Guid.Parse(HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)
+                .Value);
+        }
+        
         [HttpGet]
-        [ServiceFilter(typeof(JwtAuthFilter))]
         public IActionResult Login()
         {
             return View();

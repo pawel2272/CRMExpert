@@ -7,12 +7,16 @@ using HRBN.Thesis.CRMExpert.Application.Core.Mediator;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Product;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Dto;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Product;
+using HRBN.Thesis.CRMExpert.UI.Filters;
 using HRBN.Thesis.CRMExpert.UI.ViewModels.User.Product;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
 {
     [Area("User")]
+    [ServiceFilter(typeof(JwtAuthFilter))]
+    [Authorize]
     public class ProductController : Controller
     {
         private readonly IMediator _mediator;

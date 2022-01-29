@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using HRBN.Thesis.CRMExpert.UI.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using HRBN.Thesis.CRMExpert.UI.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
 {
@@ -19,6 +21,8 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
             _logger = logger;
         }
 
+        [ServiceFilter(typeof(JwtAuthFilter))]
+        [Authorize]
         public IActionResult Index()
         {
             return View();

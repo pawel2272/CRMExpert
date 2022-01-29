@@ -9,12 +9,16 @@ using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Dto;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Contact;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Order;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Product;
+using HRBN.Thesis.CRMExpert.UI.Filters;
 using HRBN.Thesis.CRMExpert.UI.ViewModels.User.Order;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
 {
     [Area("User")]
+    [ServiceFilter(typeof(JwtAuthFilter))]
+    [Authorize]
     public class OrderController : Controller
     {
         private readonly IMediator _mediator;
