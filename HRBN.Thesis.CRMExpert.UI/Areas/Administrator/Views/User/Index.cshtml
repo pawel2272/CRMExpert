@@ -131,14 +131,14 @@
                         <td class="d-none d-lg-table-cell">@user.Street, @user.PostalCode @user.City</td>
                         <td class="d-none d-lg-table-cell">@user.Gender</td>
                         <td>
-                            <a asp-area="Administrator" asp-controller="User" asp-action="Edit" type="button" class="btn btn-primary">
+                            <a asp-area="Administrator" asp-controller="User" asp-action="Edit" asp-route-id="@user.Id" type="button" class="btn btn-primary">
                                 Edit
                             </a>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-primary">
+                            <a asp-area="Administrator" asp-controller="User" asp-action="Edit" asp-route-id="@user.Id" type="button" class="btn btn-primary">
                                 Delete
-                            </button>
+                            </a>
                         </td>
                     </tr>
                 }

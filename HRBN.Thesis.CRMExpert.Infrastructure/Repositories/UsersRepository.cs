@@ -215,9 +215,11 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
 
         public async Task UpdateAndHashAsync(User entity)
         {
+            User user = await GetAsync(entity.Id);
+            
             await Task.Factory.StartNew(() =>
             {
-                entity.Password = _hasher.HashPassword(entity, entity.Password);
+                entity.Password = _hasher.HashPassword(user, entity.Password);
                 _dbContext.Users.Update(entity);
             });
         }

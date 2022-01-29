@@ -18,9 +18,7 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.User
                 .NotEmpty()
                 .MaximumLength(1);
             RuleFor(x => x.Password)
-                .NotNull()
-                .NotEmpty()
-                .MinimumLength(8)
+                // todo .MinimumLength(8)
                 .MaximumLength(48);
             RuleFor(x => x.FirstName)
                 .NotNull()
