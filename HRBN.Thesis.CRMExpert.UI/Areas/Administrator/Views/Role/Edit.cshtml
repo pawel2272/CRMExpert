@@ -10,11 +10,12 @@
                 </div>
                 <div class="card-body">
                     <form method="post" asp-area="Administrator" asp-controller="Role" asp-action="Edit">
+                        @Html.HiddenFor(e => e.Role.Id)
                         <div class="modal-body">
                             <div class="row mb-3">
                                 <label for="name" class="col-sm-3 col-form-label">Name</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="name">
+                                    <input type="text" class="form-control" id="name" asp-for="Role.Name">
                                     <span asp-validation-for="Role.Name" class="text-danger"></span>
                                 </div>
                             </div>

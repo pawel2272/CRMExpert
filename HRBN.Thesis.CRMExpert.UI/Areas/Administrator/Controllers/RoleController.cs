@@ -51,14 +51,14 @@ public class RoleController : Controller
             return View(entities);
         }
 
-        public async Task<RoleViewModel> GetRoleViewModelAsync(Guid? RoleId)
+        public async Task<RoleViewModel> GetRoleViewModelAsync(Guid? roleId)
         {
             GetRoleQuery query = null;
             RoleDto result = null;
             
-            if (RoleId.HasValue)
+            if (roleId.HasValue)
             {
-                query = new GetRoleQuery(RoleId.Value);
+                query = new GetRoleQuery(roleId.Value);
                 result = await _mediator.QueryAsync(query);
             }
             else
