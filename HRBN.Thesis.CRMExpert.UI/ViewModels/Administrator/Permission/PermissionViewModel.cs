@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Dto;
 using HRBN.Thesis.CRMExpert.Domain.Core.Dto;
 
-namespace HRBN.Thesis.CRMExpert.UI.ViewModels.Identity;
+namespace HRBN.Thesis.CRMExpert.UI.ViewModels.Administrator.Permission;
 
 public class PermissionViewModel
 {

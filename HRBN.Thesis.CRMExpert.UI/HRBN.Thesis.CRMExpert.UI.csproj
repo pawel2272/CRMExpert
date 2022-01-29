@@ -21,6 +21,6 @@
     <_ContentIncludedByDefault Remove="wwwroot\lib\bootlint\bootlint.min.js.map" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewModels\Administrator" />
+    <Folder Include="ViewModels\Identity" />
   </ItemGroup>
 </Project>
