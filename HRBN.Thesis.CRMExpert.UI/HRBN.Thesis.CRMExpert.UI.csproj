@@ -22,6 +22,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\Administrator" />
-    <Folder Include="ViewModels\Identity" />
   </ItemGroup>
 </Project>

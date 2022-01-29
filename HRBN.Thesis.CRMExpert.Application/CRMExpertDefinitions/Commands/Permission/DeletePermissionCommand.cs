@@ -5,13 +5,11 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Permis
 {
     public class DeletePermissionCommand : BaseCommand
     {
-        public DeletePermissionCommand(Guid id, Guid contactId)
+        public DeletePermissionCommand(Guid id)
         {
-            ContactId = contactId;
             Id = id;
         }
-
-        public Guid ContactId { get; set; }
+        
         public Guid Id { get; set; }
     }
 }

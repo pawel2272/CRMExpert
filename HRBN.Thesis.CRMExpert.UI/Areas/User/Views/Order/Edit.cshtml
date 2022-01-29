@@ -57,14 +57,7 @@
                                 <select id="product" class="form-select" asp-for="Order.ProductId">
                                     @foreach (var product in Model.ProductData)
                                     {
-                                        if (product.Id.Equals(Model.Order.ProductId))
-                                        {
-                                            <option value="@product.Id" selected>@product.Name</option>
-                                        }
-                                        else
-                                        {
-                                            <option value="@product.Id">@product.Name</option>
-                                        }
+                                        <option value="@product.Id">@product.Name</option>
                                     }
                                 </select>
                                 <span asp-validation-for="Order.ProductId" class="text-danger"></span>

@@ -73,7 +73,7 @@
                                 <select id="userId" class="form-select" asp-for="Contact.UserId">
                                     @foreach (var entity in Model.UserData)
                                     {
-                                        <option value="@entity.Id" selected>@entity.Username</option>
+                                        <option value="@entity.Id">@entity.Username</option>
                                     }
                                 </select>
                                 <span asp-validation-for="Contact.UserId" class="text-danger"></span>
@@ -85,14 +85,7 @@
                                 <select id="customerId" class="form-select" asp-for="Contact.CustomerId">
                                     @foreach (var entity in Model.CustomerData)
                                     {
-                                        if (entity.Id.Equals(Model.Contact.Id))
-                                        {
-                                            <option value="@entity.Id" selected>@entity.Name</option>
-                                        }
-                                        else
-                                        {
-                                            <option value="@entity.Id">@entity.Name</option>
-                                        }
+                                        <option value="@entity.Id">@entity.Name</option>
                                     }
                                 </select>
                                 <span asp-validation-for="Contact.CustomerId" class="text-danger"></span>

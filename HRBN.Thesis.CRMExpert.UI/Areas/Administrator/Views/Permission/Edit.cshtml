@@ -1,3 +1,5 @@
+@model PermissionViewModel
+
 <div class="container my-2">
     <div class="row">
         <div class="col-lg-2"></div>
@@ -7,22 +9,41 @@
                     Edit permission
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form method="post" asp-area="Administrator" asp-controller="Permission" asp-action="Edit">
+                        @Html.HiddenFor(e => e.Permission.Id)
                         <div class="row mb-3">
                             <label for="user" class="col-sm-3 col-form-label">User</label>
                             <div class="col-sm-9">
-                                <select id="user" class="form-select">
-                                    <option value="Electronics" selected>Admin</option>
-                                    <option value="Services">Admin1</option>
+                                <select id="user" name="userId" class="form-select">
+                                    @foreach (var user in Model.UserData)
+                                    {
+                                        if (user.Id.Equals(Model.Permission.UserId))
+                                        {
+                                            <option value="@user.Id" selected>@user.Username</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@user.Id">@user.Username</option>
+                                        }
+                                    }
                                 </select>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="role" class="col-sm-3 col-form-label">Role</label>
                             <div class="col-sm-9">
-                                <select id="role" class="form-select">
-                                    <option value="Mod" selected>Mod</option>
-                                    <option value="Adm">Adm</option>
+                                <select id="role" name="roleId" class="form-select">
+                                    @foreach (var role in Model.RoleData)
+                                    {
+                                        if (role.Id.Equals(Model.Permission.RoleId))
+                                        {
+                                            <option value="@role.Id" selected>@role.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@role.Id">@role.Name</option>
+                                        }
+                                    }
                                 </select>
                             </div>
                         </div>
