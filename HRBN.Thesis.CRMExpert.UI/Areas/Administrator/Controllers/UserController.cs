@@ -16,7 +16,7 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.Administrator.Controllers;
 
 [Area("Administrator")]
 [ServiceFilter(typeof(JwtAuthFilter))]
-[Authorize]
+[Authorize(Roles = "Admin")]
 public class UserController : Controller
 {
     private readonly IMediator _mediator;

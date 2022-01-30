@@ -1,5 +1,7 @@
-﻿@{
+﻿@using System.Security.Claims
+@{
     ViewData["Title"] = "Home Page";
+    var role = User.Claims.FirstOrDefault(r => r.Type == ClaimTypes.Role);
 }
 
 <div class="container my-2">
@@ -34,35 +36,61 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 my-2">
-            <div class="card">
-                <img src="~/img/contacts-image.svg" class="card-img-top" alt="contacts-image">
-                <div class="card-body">
-                    <h5 class="card-title">Contacts</h5>
-                    <p class="card-text">Contact management.</p>
-                    <a asp-area="User" asp-controller="Contact" asp-action="Index" class="btn btn-primary">View</a>
+        @if (role != null && role.Value.Equals("Admin"))
+        {
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 my-2">
+                <div class="card">
+                    <img src="~/img/contacts-image.svg" class="card-img-top" alt="contacts-image">
+                    <div class="card-body">
+                        <h5 class="card-title">Contacts</h5>
+                        <p class="card-text">Contact management.</p>
+                        <a asp-area="User" asp-controller="Contact" asp-action="Index" class="btn btn-primary">View</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 my-2">
-            <div class="card">
-                <img src="~/img/reports-image.svg" class="card-img-top" alt="reports-image">
-                <div class="card-body">
-                    <h5 class="card-title">Reports</h5>
-                    <p class="card-text">Report generation.</p>
-                    <a asp-area="User" asp-controller="Report" asp-action="Index" class="btn btn-primary">View</a>
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 my-2">
+                <div class="card">
+                    <img src="~/img/reports-image.svg" class="card-img-top" alt="reports-image">
+                    <div class="card-body">
+                        <h5 class="card-title">Reports</h5>
+                        <p class="card-text">Report generation.</p>
+                        <a asp-area="User" asp-controller="Report" asp-action="Index" class="btn btn-primary">View</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 my-2">
-            <div class="card">
-                <img src="~/img/administration-image.svg" class="card-img-top" alt="administration-image">
-                <div class="card-body">
-                    <h5 class="card-title">Administration</h5>
-                    <p class="card-text">Application administration.</p>
-                    <a asp-area="Administrator" asp-controller="Management" asp-action="Index" class="btn btn-primary">View</a>
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 my-2">
+                <div class="card">
+                    <img src="~/img/administration-image.svg" class="card-img-top" alt="administration-image">
+                    <div class="card-body">
+                        <h5 class="card-title">Administration</h5>
+                        <p class="card-text">Application administration.</p>
+                        <a asp-area="Administrator" asp-controller="Management" asp-action="Index" class="btn btn-primary">View</a>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 my-2">
+                <div class="card">
+                    <img src="~/img/contacts-image.svg" class="card-img-top" alt="contacts-image">
+                    <div class="card-body">
+                        <h5 class="card-title">Contacts</h5>
+                        <p class="card-text">Contact management.</p>
+                        <a asp-area="User" asp-controller="Contact" asp-action="Index" class="btn btn-primary">View</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 my-2">
+                <div class="card">
+                    <img src="~/img/reports-image.svg" class="card-img-top" alt="reports-image">
+                    <div class="card-body">
+                        <h5 class="card-title">Reports</h5>
+                        <p class="card-text">Report generation.</p>
+                        <a asp-area="User" asp-controller="Report" asp-action="Index" class="btn btn-primary">View</a>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
 </div>

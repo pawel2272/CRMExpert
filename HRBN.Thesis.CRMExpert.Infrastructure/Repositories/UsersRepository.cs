@@ -101,7 +101,8 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
                 .Take(pageSize)
                 .ToListAsync();
 
-            return new PageResult<User>(entities, baseQuery.Count(), pageSize, pageNumber, searchPhrase, sortDirection, orderBy);
+            return new PageResult<User>(entities, baseQuery.Count(), pageSize, pageNumber, searchPhrase, sortDirection,
+                orderBy);
         }
 
         public async Task AddAsync(User entity)
@@ -112,10 +113,7 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
 
         public async Task UpdateAsync(User entity)
         {
-            await Task.Factory.StartNew(() =>
-            {
-                _dbContext.Users.Update(entity);
-            });
+            await Task.Factory.StartNew(() => { _dbContext.Users.Update(entity); });
         }
 
         private CookieBuilder CreateAuthorizationCookie(double time)
@@ -129,13 +127,14 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             return cookie;
         }
 
-        private JsonWebToken CreateToken(User entity)
+        private JsonWebToken CreateToken(User entity, string role)
         {
             List<Claim> claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Name, entity.Username),
                 new Claim(ClaimTypes.Email, entity.Email),
-                new Claim(ClaimTypes.NameIdentifier, entity.Id.ToString())
+                new Claim(ClaimTypes.NameIdentifier, entity.Id.ToString()),
+                new Claim(ClaimTypes.Role, role),
             };
             SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.JwtKey));
             SigningCredentials signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -158,7 +157,8 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
 
         public async Task<string> LoginAsync(string username, string password, bool rememberMe)
         {
-            var userToBeVerified = await _dbContext.Users.FirstOrDefaultAsync(u => u.Username.Equals(username));
+            var userToBeVerified = await _dbContext.Users
+                .FirstOrDefaultAsync(u => u.Username.Equals(username));
             if (userToBeVerified == null)
             {
                 return null;
@@ -173,7 +173,13 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             var cookie = rememberMe
                 ? CreateAuthorizationCookie(_jwtOptions.JwtExpireMinutes * 10)
                 : CreateAuthorizationCookie(_jwtOptions.JwtExpireMinutes);
-            var token = CreateToken(userToBeVerified);
+
+            var permission =
+                await _dbContext.Permissions
+                    .Include(e => e.Role)
+                    .FirstOrDefaultAsync(e => e.UserId.Equals(userToBeVerified.Id));
+            
+            var token = CreateToken(userToBeVerified, permission == null ? "none" : permission.Role.Name);
             _contextAccessor.HttpContext.Response.Cookies.Append("Authorization", token.AccessToken,
                 cookie.Build(_contextAccessor.HttpContext));
             return token.AccessToken;
@@ -219,7 +225,7 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
         public async Task UpdateAndHashAsync(User entity)
         {
             User user = await GetAsync(entity.Id);
-            
+
             await Task.Factory.StartNew(() =>
             {
                 entity.Password = _hasher.HashPassword(user, entity.Password);

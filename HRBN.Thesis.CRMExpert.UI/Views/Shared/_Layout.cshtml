@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+@{
+    var role = User.Claims.FirstOrDefault(r => r.Type == ClaimTypes.Role);
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -36,7 +40,7 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-target="#customerDropdown" role="button" aria-expanded="false" aria-controls="customerDropdown" aria-label="Customer menu toggler" id="customerSubmenu" aria-haspopup="true"> Customers </a>
-                        
+
                         <div class="dropdown-menu" id="customerDropdown" aria-labelledby="customerSubmenu">
                             <a class="dropdown-item" asp-area="User" asp-controller="Customer" asp-action="Index"> Customer list </a>
                             <a class="dropdown-item" asp-area="User" asp-controller="Order" asp-action="Select"> Orders </a>
@@ -47,9 +51,13 @@
                     <li class="nav-item">
                         <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Manage"> Your account </a>
                     </li>
+                    @if (role != null && role.Value.Equals("Admin"))
+                    {
                     <li class="nav-item">
                         <a class="nav-link" asp-area="Administrator" asp-controller="Management" asp-action="Index"> Admin </a>
                     </li>
+                    }
+
                 </ul>
                 <div class="d-flex ms-auto">
                     <a asp-area="Identity" asp-controller="Account" asp-action="Logout" class="btn btn-light">Logout</a>
