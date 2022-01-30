@@ -7,6 +7,5 @@ namespace HRBN.Thesis.CRMExpert.Application.Core.Command
     /// </summary>
     public interface ICommand
     {
-        Guid CommandKey { get; }
     }
 }

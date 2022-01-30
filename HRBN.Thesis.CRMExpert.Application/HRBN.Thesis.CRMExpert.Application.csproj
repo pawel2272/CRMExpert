@@ -6,10 +6,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Exceptions" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\HRBN.Thesis.CRMExpert.Application.Core\HRBN.Thesis.CRMExpert.Application.Core.csproj" />
     </ItemGroup>
 

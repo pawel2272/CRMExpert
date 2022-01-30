@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using HRBN.Thesis.CRMExpert.Application.Core.Command;
-using HRBN.Thesis.CRMExpert.Application.Core.Event;
 using HRBN.Thesis.CRMExpert.Application.Core.Query;
 
 namespace HRBN.Thesis.CRMExpert.Application.Core.Mediator
@@ -48,11 +47,6 @@ namespace HRBN.Thesis.CRMExpert.Application.Core.Mediator
             }
 
             return await handler.HandleAsync(query);
-        }
-
-        public void Publish<TEvent>(TEvent @event) where TEvent : IEvent
-        {
-            throw new System.NotImplementedException();
         }
     }
 }
