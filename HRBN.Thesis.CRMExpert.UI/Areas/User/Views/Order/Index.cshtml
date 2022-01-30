@@ -1,5 +1,9 @@
 @model PageResult<OrderDto>
 
+@{
+    ViewData["Title"] = "Order list";
+}
+
 <div class="container my-2">
     <div class="row">
         <div class="col-12">
@@ -97,14 +101,14 @@
                         <td>@order.Content</td>
                         <td>@order.Price PLN</td>
                         <td>
-                            <a asp-area="User" asp-controller="Order" asp-action="Edit" asp-route-id="@order.Id" type="button" class="btn btn-primary">
+                            <a asp-area="User" asp-controller="Order" asp-action="Edit" asp-route-id="@order.Id" class="btn btn-primary">
                                 Edit
                             </a>
                         </td>
                         <td>
-                            <button asp-area="User" asp-controller="Order" asp-action="Delete" asp-route-id="@order.Id" type="button">
+                            <a asp-area="User" asp-controller="Order" asp-action="Delete" asp-route-id="@order.Id" class="btn btn-primary">
                                 Delete
-                            </button>
+                            </a>
                         </td>
                     </tr>
                 }

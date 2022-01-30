@@ -7,6 +7,7 @@ using HRBN.Thesis.CRMExpert.Application.Core.Mediator;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.User;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.User;
 using HRBN.Thesis.CRMExpert.UI.Filters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HRBN.Thesis.CRMExpert.UI.Areas.Identity.Controllers
@@ -49,6 +50,15 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.Identity.Controllers
         }
         
         [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            var result = await _mediator.CommandAsync(new LogoutCommand());
+            
+            return Redirect("/Identity/Account/Login");
+        }
+        
+        [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Manage()
         {
             var currentUserId = GetCurrentUserId();
@@ -61,12 +71,14 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.Identity.Controllers
         }
         
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> ChangePassword()
         {
             return View(new ChangePasswordCommand());
         }
         
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> ChangePassword(ChangePasswordCommand command)
         {
             command.Id = GetCurrentUserId();
@@ -83,6 +95,7 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.Identity.Controllers
         }
         
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> ModifyAddress()
         {
             var query = new GetUserQuery(GetCurrentUserId());
@@ -93,6 +106,7 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.Identity.Controllers
         }
         
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> ModifyAddress(ChangeAddressCommand command)
         {
             command.Id = GetCurrentUserId();

@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
-    <title>@ViewData["Title"] - HRBN.Thesis.CRMExpert.UI</title>
+    <title>CRMExpert - @ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css"/>
     <link rel="stylesheet" href="~/css/style.css"/>
@@ -54,10 +54,9 @@
                         <a class="nav-link" asp-area="Administrator" asp-controller="Management" asp-action="Index"> Admin </a>
                     </li>
                 </ul>
-                <form class="d-flex ms-auto">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-light" type="submit">Search</button>
-                </form>
+                <div class="d-flex ms-auto">
+                    <a asp-area="Identity" asp-controller="Account" asp-action="Logout" class="btn btn-light">Logout</a>
+                </div>
             </div>
         </div>
 
@@ -71,12 +70,11 @@
 
 <footer class="border-top footer text-muted">
     <div class="container">
-        &copy; 2021 - HRBN.Thesis.CRMExpert.UI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        &copy; 2021 - CRMExpert
     </div>
 </footer>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
