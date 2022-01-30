@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Reflection;
+using AutoMapper;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Contact;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Customer;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Discount;
@@ -25,7 +26,7 @@ namespace HRBN.Thesis.CRMExpert.Application.Mappers.Profiles
             CreateMap<Contact, EditContactCommand>().ReverseMap();
             CreateMap<ContactDto, EditContactCommand>().ReverseMap();
         }
-        
+
         public void CreateMapForCustomer()
         {
             CreateMap<Customer, CustomerDto>().ReverseMap();
@@ -36,7 +37,7 @@ namespace HRBN.Thesis.CRMExpert.Application.Mappers.Profiles
             CreateMap<Customer, EditCustomerCommand>().ReverseMap();
             CreateMap<CustomerDto, EditCustomerCommand>().ReverseMap();
         }
-        
+
         public void CreateMapForDiscount()
         {
             CreateMap<Discount, DiscountDto>().ReverseMap();
@@ -58,10 +59,13 @@ namespace HRBN.Thesis.CRMExpert.Application.Mappers.Profiles
             CreateMap<Order, EditOrderCommand>().ReverseMap();
             CreateMap<OrderDto, EditOrderCommand>().ReverseMap();
         }
-        
+
         public void CreateMapForPermission()
         {
-            CreateMap<Permission, PermissionDto>().ReverseMap();
+            CreateMap<Permission, PermissionDto>()
+                .ForMember(p => p.Username, c => c.MapFrom(s => s.User.Username))
+                .ForMember(p => p.RoleName, c => c.MapFrom(s => s.Role.Name))
+                .ReverseMap();
 
             CreateMap<Permission, AddPermissionCommand>().ReverseMap();
             CreateMap<PermissionDto, AddPermissionCommand>().ReverseMap();
@@ -69,7 +73,7 @@ namespace HRBN.Thesis.CRMExpert.Application.Mappers.Profiles
             CreateMap<Permission, EditPermissionCommand>().ReverseMap();
             CreateMap<PermissionDto, EditPermissionCommand>().ReverseMap();
         }
-        
+
         public void CreateMapForProduct()
         {
             CreateMap<Product, ProductDto>().ReverseMap();

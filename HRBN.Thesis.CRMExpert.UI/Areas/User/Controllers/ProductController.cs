@@ -115,8 +115,7 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
             return Redirect("/User/Product");
         }
 
-
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
             var command = new DeleteProductCommand(id);

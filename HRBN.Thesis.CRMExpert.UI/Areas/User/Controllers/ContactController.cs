@@ -128,7 +128,7 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
         }
         
         
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
             var command = new DeleteContactCommand(id);

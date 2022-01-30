@@ -114,7 +114,7 @@ public class UserController : Controller
     }
 
 
-    [HttpPost]
+    [HttpGet]
     public async Task<IActionResult> Delete(Guid id)
     {
         var command = new DeleteUserCommand(id);

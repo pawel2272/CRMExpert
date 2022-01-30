@@ -20,14 +20,14 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Permiss
 
         public async Task<PermissionDto> HandleAsync(GetPermissionQuery query)
         {
-            var contact = await _unitOfWork.ContactsRepository.GetAsync(query.Id);
+            var entity = await _unitOfWork.PermissionsRepository.GetAsync(query.Id);
 
-            if (contact == null)
+            if (entity == null)
             {
                 throw new NullReferenceException("Permission does not exist!");
             }
 
-            return _mapper.Map<PermissionDto>(contact);
+            return _mapper.Map<PermissionDto>(entity);
         }
     }
 }

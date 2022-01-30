@@ -41,13 +41,17 @@ public class PermissionsRepository : IPermissionsRepository
             .Where(e => (searchPhrase == null ||
                          (e.Id.ToString().ToLower().Contains(lowerCaseSearchPhrase)
                           || e.UserId.ToString().ToLower().Contains(lowerCaseSearchPhrase)
-                          || e.RoleId.ToString().ToLower().Contains(lowerCaseSearchPhrase))));
+                          || e.RoleId.ToString().ToLower().Contains(lowerCaseSearchPhrase)
+                          || e.User.Username.ToLower().Contains(lowerCaseSearchPhrase)
+                          || e.Role.Name.ToLower().Contains(lowerCaseSearchPhrase))));
         if (!string.IsNullOrEmpty(orderBy))
         {
             var columnSelectors = new Dictionary<string, Expression<Func<Permission, object>>>()
             {
                 {nameof(Permission.CreDate), e => e.CreDate},
-                {nameof(Permission.ModDate), e => e.ModDate}
+                {nameof(Permission.ModDate), e => e.ModDate},
+                {nameof(User.Username), e => e.User.Username},
+                {nameof(Role.Name), e => e.Role.Name}
             };
 
             Expression<Func<Permission, object>> selectedColumn;
@@ -68,6 +72,8 @@ public class PermissionsRepository : IPermissionsRepository
 
         var entities = await baseQuery.Skip(pageSize * (pageNumber - 1))
             .Take(pageSize)
+            .Include(e => e.User)
+            .Include(e => e.Role)
             .ToListAsync();
 
         return new PageResult<Permission>(entities, baseQuery.Count(), pageSize, pageNumber, searchPhrase, sortDirection, orderBy);
