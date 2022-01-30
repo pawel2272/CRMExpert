@@ -43,7 +43,7 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
             {
                 queryToBeProcessed = new SearchOrdersQuery()
                 {
-                    ContactId = contactData.FirstOrDefault(e => e.Id != null).Id,
+                    ContactId = query.ContactId,
                     SearchPhrase = query.SearchPhrase,
                     PageNumber = 1,
                     PageSize = 10,
@@ -55,6 +55,7 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
             ViewBag.PageNumber = queryToBeProcessed.PageNumber;
 
             var entities = await _mediator.QueryAsync(queryToBeProcessed);
+            entities.ContactId = query.ContactId;
             return View(entities);
         }
 
@@ -98,7 +99,7 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
                 return View(await GetContactViewModelAsync(command.Id));
             }
 
-            return Redirect("/User/Order");
+            return RedirectToAction("Index", new {contactId = command.ContactId});
         }
 
         [HttpGet]
@@ -120,18 +121,33 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
                 return View(await GetContactViewModelAsync(null));
             }
 
-            return Redirect("/User/Order");
+            return RedirectToAction("Index", new {contactId = command.ContactId});
         }
 
 
         [HttpGet]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id, Guid contact)
         {
             var command = new DeleteOrderCommand(id);
 
             var result = await _mediator.CommandAsync(command);
 
-            return Redirect("/User/Order");
+            return RedirectToAction("Index", new {contactId = contact});
+        }
+        
+        [HttpGet]
+        public async Task<IActionResult> Select()
+        {
+            var query = new GetContactDataQuery();
+
+            var result = await _mediator.QueryAsync(query);
+            return View(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Select(Guid id)
+        {
+            return RedirectToAction("Index", new {contactId = id});
         }
     }
 }

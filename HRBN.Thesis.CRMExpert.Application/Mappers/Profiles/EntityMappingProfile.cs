@@ -98,7 +98,9 @@ namespace HRBN.Thesis.CRMExpert.Application.Mappers.Profiles
 
         public void CreateMapForTodo()
         {
-            CreateMap<Todo, TodoDto>().ReverseMap();
+            CreateMap<Todo, TodoDto>()
+                .ForMember(p => p.CustomerName, c => c.MapFrom(s => s.Contact.FirstName + " " + s.Contact.LastName))
+                .ReverseMap();
 
             CreateMap<Todo, AddTodoCommand>().ReverseMap();
             CreateMap<TodoDto, AddTodoCommand>().ReverseMap();

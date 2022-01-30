@@ -17,6 +17,7 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Dto
         public int PageSize { get; }
         public SortDirection SortDirection { get; }
         public string OrderBy { get; }
+        public Guid ContactId { get; set; }
 
         public PageResult(List<T> items, int totalCount, int pageSize, int pageNumber, string searchPhrase,
             SortDirection sortDirection, string orderBy)

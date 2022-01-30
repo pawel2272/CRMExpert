@@ -134,6 +134,6 @@ public class PermissionController : Controller
 
             var result = await _mediator.CommandAsync(command);
 
-            return Redirect("/User/Permission");
+            return Redirect("/Administrator/Permission");
         }
 }

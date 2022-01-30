@@ -100,6 +100,7 @@ public class CustomersRepository : ICustomersRepository
     {
         var results = await _dbContext
             .Customers
+            .OrderBy(e => e.Name)
             .Select(e => new CustomerDataDto() {Id = e.Id, Name = e.Name})
             .ToListAsync();
         return results;

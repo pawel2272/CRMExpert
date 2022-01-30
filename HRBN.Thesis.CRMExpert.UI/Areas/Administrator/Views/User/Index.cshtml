@@ -5,207 +5,217 @@
 }
 
 <div class="container my-2">
+<div class="row">
+<div class="col-12">
     <div class="row">
-        <div class="col-12">
-            <div class="row">
-                <div class="col-xl-8 col-sm-8 col-md-8 col-xs-8 d-grid gap-2">
+        <div class="col-xl-8 col-sm-8 col-md-8 col-xs-8 d-grid gap-2">
 
-                </div>
-                <div class="col-xs-2 col-xl-2 col-md-2 col-sm-2 d-grid gap-2">
-                    <a asp-area="Administrator" asp-controller="User" asp-action="Add" type="button" class="btn btn-primary my-2">
-                        Add
-                    </a>
-                </div>
-                <div class="col-xs-2 col-xl-2 col-md-2 col-sm-2 d-grid gap-2">
-                    <button type="button" class="btn btn-primary my-2" data-bs-toggle="collapse" data-bs-target="#filterForm">
-                        Filter
-                    </button>
-                </div>
-            </div>
         </div>
-        <form asp-area="Administrator" asp-controller="User" asp-action="Index" class="collapse border" id="filterForm">
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-xl-3">
-                        <div class="form-group row srch-frm">
-                            @Html.Hidden("pageNumber", 1)
-                            <label for="orderBy" class="col-sm-4 col-form-label">
-                                Order by
-                            </label
-                            >
-                            <div class="col-sm-8">
-                                <select id="orderBy" name="orderBy" class="form-select">
-                                    <option value="FirstName" selected>Username</option>
-                                    <option value="FirstName" selected>First name</option>
-                                    <option value="LastName">Last name</option>
-                                    <option value="Phone">Phone</option>
-                                    <option value="Email">Email</option>
-                                    <option value="Street">Street</option>
-                                    <option value="PostalCode">Postal code</option>
-                                    <option value="City">City</option>
-                                    <option value="CreationDate">Creation date</option>
-                                    <option value="ModificationDane">
-                                        Modification date
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-3">
-                        <div class="form-group row srch-frm">
-                            <label for="sortDirection" class="col-sm-4 col-form-label">
-                                Direction
-                            </label
-                            >
-                            <div class="col-sm-8">
-                                <select id="sortDirection" name="sortDirection" class="form-select">
-                                    <option value="ASC" selected>Ascending</option>
-                                    <option value="DESC">Descending</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3">
-                        <div class="form-group row srch-frm">
-                            <label for="searchPhrase" class="col-sm-4 col-form-label">
-                                Phrase
-                            </label
-                            >
-                            <div class="col-sm-8">
-                                <input
-                                    type="text"
-                                    id="searchPhrase"
-                                    name="searchPhrase"
-                                    placeholder="Phrase..."
-                                    class="form-control"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-2">
-                        <div class="form-group row srch-frm">
-                            <label for="pageSize" class="col-sm-4 col-form-label">
-                                Size
-                            </label
-                            >
-                            <div class="col-sm-8">
-                                <select id="pageSize" name="pageSize" class="form-select">
-                                    <option value="5">5</option>
-                                    <option value="10" selected>10</option>
-                                    <option value="25">25</option>
-                                    <option value="50">50</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-1">
-                        <input
-                            id="searchFormButton"
-                            type="submit"
-                            value="Search"
-                            class="btn btn-primary"/>
-                    </div>
-                </div>
-            </div>
-        </form>
-        <div class="col-12">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th scope="col" class="d-none">Id</th>
-                    <th scope="col">Username</th>
-                    <th scope="col" class="d-none d-lg-table-cell">Name</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col" class="d-none d-lg-table-cell">Email</th>
-                    <th scope="col" class="d-none d-lg-table-cell">Address</th>
-                    <th scope="col" class="d-none d-lg-table-cell">Gender</th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach (var user in Model.Items)
-                {
-                    <tr>
-                        <th scope="row" class="d-none">@user.Id</th>
-                        <td>@user.Username</td>
-                        <td class="d-none d-lg-table-cell">@user.FirstName @user.LastName</td>
-                        <td>@user.Phone</td>
-                        <td class="d-none d-lg-table-cell">@user.Email</td>
-                        <td class="d-none d-lg-table-cell">@user.Street, @user.PostalCode @user.City</td>
-                        <td class="d-none d-lg-table-cell">@user.Gender</td>
-                        <td>
-                            <a asp-area="Administrator" asp-controller="User" asp-action="Edit" asp-route-id="@user.Id" type="button" class="btn btn-primary">
-                                Edit
-                            </a>
-                        </td>
-                        <td>
-                            <a asp-area="Administrator" asp-controller="User" asp-action="Edit" asp-route-id="@user.Id" type="button" class="btn btn-primary">
-                                Delete
-                            </a>
-                        </td>
-                    </tr>
-                }
-                </tbody>
-            </table>
+        <div class="col-xs-2 col-xl-2 col-md-2 col-sm-2 d-grid gap-2">
+            <a asp-area="Administrator" asp-controller="User" asp-action="Add" type="button" class="btn btn-primary my-2">
+                Add
+            </a>
         </div>
-
-        <div class="col-12">
-            <nav>
-                <ul class="pagination justify-content-center">
-                    @if (Model.PageNumber > 1)
-                    {
-                        <li class="page-item">
-                            <a asp-area="Administrator" asp-controller="User" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">Previous</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li class="page-item disabled">
-                            <a class="page-link">Previous</a>
-                        </li>
-                    }
-                    <li class="page-item">
-                        <a asp-area="Administrator" asp-controller="User" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="1" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">First</a>
-                    </li>
-                    @if (Model.TotalPages > 3 && Model.PageNumber - 2 >= 1)
-                    {
-                        <li class="page-item">
-                            <a asp-area="Administrator" asp-controller="User" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber - 2)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">@(Model.PageNumber - 2)</a>
-                        </li>
-                        <li class="page-item">
-                            <a asp-area="Administrator" asp-controller="User" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">@(Model.PageNumber - 1)</a>
-                        </li>
-                    }
-                    <li class="page-item active">
-                        <a asp-area="Administrator" asp-controller="User" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@Model.PageNumber" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">@Model.PageNumber</a>
-                    </li>
-                    @if (Model.TotalPages > 3 && Model.PageNumber + 3 <= Model.TotalPages)
-                    {
-                        <li class="page-item">
-                            <a asp-area="Administrator" asp-controller="User" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">@(Model.PageNumber + 1)</a>
-                        </li>
-                        <li class="page-item">
-                            <a asp-area="Administrator" asp-controller="User" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber + 2)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">@(Model.PageNumber + 2)</a>
-                        </li>
-                    }
-                    <li class="page-item">
-                        <a asp-area="Administrator" asp-controller="User" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@Model.TotalPages" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">Last</a>
-                    </li>
-                    @if (Model.TotalPages > 1 && Model.PageNumber < Model.TotalPages)
-                    {
-                        <li class="page-item">
-                            <a asp-area="Administrator" asp-controller="User" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">Next</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li class="page-item disabled">
-                            <a class="page-link">Next</a>
-                        </li>
-                    }
-                </ul>
-            </nav>
+        <div class="col-xs-2 col-xl-2 col-md-2 col-sm-2 d-grid gap-2">
+            <button type="button" class="btn btn-primary my-2" data-bs-toggle="collapse" data-bs-target="#filterForm">
+                Filter
+            </button>
         </div>
     </div>
+</div>
+<form asp-area="Administrator" asp-controller="User" asp-action="Index" class="collapse border" id="filterForm">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-xl-3">
+                <div class="form-group row srch-frm">
+                    @Html.Hidden("pageNumber", 1)
+                    <label for="orderBy" class="col-sm-4 col-form-label">
+                        Order by
+                    </label
+                    >
+                    <div class="col-sm-8">
+                        <select id="orderBy" name="orderBy" class="form-select">
+                            <option value="FirstName" selected>Username</option>
+                            <option value="FirstName" selected>First name</option>
+                            <option value="LastName">Last name</option>
+                            <option value="Phone">Phone</option>
+                            <option value="Email">Email</option>
+                            <option value="Street">Street</option>
+                            <option value="PostalCode">Postal code</option>
+                            <option value="City">City</option>
+                            <option value="CreationDate">Creation date</option>
+                            <option value="ModificationDane">
+                                Modification date
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3">
+                <div class="form-group row srch-frm">
+                    <label for="sortDirection" class="col-sm-4 col-form-label">
+                        Direction
+                    </label
+                    >
+                    <div class="col-sm-8">
+                        <select id="sortDirection" name="sortDirection" class="form-select">
+                            <option value="ASC" selected>Ascending</option>
+                            <option value="DESC">Descending</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3">
+                <div class="form-group row srch-frm">
+                    <label for="searchPhrase" class="col-sm-4 col-form-label">
+                        Phrase
+                    </label
+                    >
+                    <div class="col-sm-8">
+                        <input
+                            type="text"
+                            id="searchPhrase"
+                            name="searchPhrase"
+                            placeholder="Phrase..."
+                            class="form-control"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-2">
+                <div class="form-group row srch-frm">
+                    <label for="pageSize" class="col-sm-4 col-form-label">
+                        Size
+                    </label
+                    >
+                    <div class="col-sm-8">
+                        <select id="pageSize" name="pageSize" class="form-select">
+                            <option value="5">5</option>
+                            <option value="10" selected>10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-1">
+                <input
+                    id="searchFormButton"
+                    type="submit"
+                    value="Search"
+                    class="btn btn-primary"/>
+            </div>
+        </div>
+    </div>
+</form>
+@if (Model.Items.Count == 0)
+{
+    <div class="container my-2">
+        <p class="fw-lighter h1 text-center">No content to display.</p>
+    </div>
+}
+else
+{
+    <div class="col-12">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col" class="d-none">Id</th>
+                <th scope="col">Username</th>
+                <th scope="col" class="d-none d-lg-table-cell">Name</th>
+                <th scope="col">Phone</th>
+                <th scope="col" class="d-none d-lg-table-cell">Email</th>
+                <th scope="col" class="d-none d-lg-table-cell">Address</th>
+                <th scope="col" class="d-none d-lg-table-cell">Gender</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var user in Model.Items)
+            {
+                <tr>
+                    <th scope="row" class="d-none">@user.Id</th>
+                    <td>@user.Username</td>
+                    <td class="d-none d-lg-table-cell">@user.FirstName @user.LastName</td>
+                    <td>@user.Phone</td>
+                    <td class="d-none d-lg-table-cell">@user.Email</td>
+                    <td class="d-none d-lg-table-cell">@user.Street, @user.PostalCode @user.City</td>
+                    <td class="d-none d-lg-table-cell">@user.Gender</td>
+                    <td>
+                        <a asp-area="Administrator" asp-controller="User" asp-action="Edit" asp-route-id="@user.Id" type="button" class="btn btn-primary">
+                            Edit
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-area="Administrator" asp-controller="User" asp-action="Edit" asp-route-id="@user.Id" type="button" class="btn btn-primary">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-12">
+        <nav>
+            <ul class="pagination justify-content-center">
+                @if (Model.PageNumber > 1)
+                {
+                    <li class="page-item">
+                        <a asp-area="Administrator" asp-controller="User" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">Previous</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                }
+                <li class="page-item">
+                    <a asp-area="Administrator" asp-controller="User" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="1" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">First</a>
+                </li>
+                @if (Model.TotalPages > 3 && Model.PageNumber - 2 >= 1)
+                {
+                    <li class="page-item">
+                        <a asp-area="Administrator" asp-controller="User" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber - 2)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">@(Model.PageNumber - 2)</a>
+                    </li>
+                    <li class="page-item">
+                        <a asp-area="Administrator" asp-controller="User" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">@(Model.PageNumber - 1)</a>
+                    </li>
+                }
+                <li class="page-item active">
+                    <a asp-area="Administrator" asp-controller="User" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@Model.PageNumber" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">@Model.PageNumber</a>
+                </li>
+                @if (Model.TotalPages > 3 && Model.PageNumber + 3 <= Model.TotalPages)
+                {
+                    <li class="page-item">
+                        <a asp-area="Administrator" asp-controller="User" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">@(Model.PageNumber + 1)</a>
+                    </li>
+                    <li class="page-item">
+                        <a asp-area="Administrator" asp-controller="User" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber + 2)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">@(Model.PageNumber + 2)</a>
+                    </li>
+                }
+                <li class="page-item">
+                    <a asp-area="Administrator" asp-controller="User" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@Model.TotalPages" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">Last</a>
+                </li>
+                @if (Model.TotalPages > 1 && Model.PageNumber < Model.TotalPages)
+                {
+                    <li class="page-item">
+                        <a asp-area="Administrator" asp-controller="User" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">Next</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item disabled">
+                        <a class="page-link">Next</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+}
+
+</div>
 </div>

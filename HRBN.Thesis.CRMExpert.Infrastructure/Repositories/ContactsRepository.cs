@@ -157,7 +157,9 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
         {
             return await Task.Factory.StartNew(() =>
             {
-                var results = _dbContext.Contacts.Where(e => e.UserId == userId).Select(e =>
+                var results = _dbContext.Contacts.Where(e => e.UserId == userId)
+                    .OrderBy(e => e.FirstName)
+                    .Select(e =>
                         new ContactDataDto() {Id = e.Id, Name = $"{e.FirstName} {e.LastName}"})
                     .ToList();
                 return results;

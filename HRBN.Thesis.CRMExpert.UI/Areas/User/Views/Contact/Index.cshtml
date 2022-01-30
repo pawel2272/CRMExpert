@@ -106,102 +106,112 @@
                 </div>
             </div>
         </form>
-        <div class="col-12">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th scope="col" class="d-none">Id</th>
-                    <th scope="col">Name</th>
-                    <th scope="col" class="d-none d-md-table-cell">Phone</th>
-                    <th scope="col">Email</th>
-                    <th scope="col" class="d-none d-md-table-cell">Address</th>
-                    <th scope="col" class="d-none d-md-table-cell">Comment</th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach (var contact in Model.Items)
-                {
+        @if (Model.Items.Count == 0)
+        {
+            <div class="container my-2">
+                <p class="fw-lighter h1 text-center">No content to display.</p>
+            </div>
+        }
+        else
+        {
+            <div class="col-12">
+                <table class="table table-striped">
+                    <thead>
                     <tr>
-                        <th scope="row" class="d-none">@contact.Id</th>
-                        <td>@contact.FirstName @contact.LastName</td>
-                        <td>@contact.Phone</td>
-                        <td class="d-none d-md-table-cell">@contact.Email</td>
-                        <td class="d-none d-md-table-cell">@contact.Street, @contact.PostalCode @contact.City</td>
-                        <td class="d-none d-md-table-cell">@contact.ContactComment</td>
-                        <td>
-                            <a asp-area="User" asp-controller="Contact" asp-action="Edit" asp-route-id="@contact.Id" type="button" class="btn btn-primary">
-                                Edit
-                            </a>
-                        </td>
-                        <td>
-                            <a asp-area="User" asp-controller="Contact" asp-action="Delete" asp-route-id="@contact.Id" type="button" class="btn btn-primary">
-                                Delete
-                            </a>
-                        </td>
+                        <th scope="col" class="d-none">Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col" class="d-none d-md-table-cell">Phone</th>
+                        <th scope="col">Email</th>
+                        <th scope="col" class="d-none d-md-table-cell">Address</th>
+                        <th scope="col" class="d-none d-md-table-cell">Comment</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
-                }
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                    @foreach (var contact in Model.Items)
+                    {
+                        <tr>
+                            <th scope="row" class="d-none">@contact.Id</th>
+                            <td>@contact.FirstName @contact.LastName</td>
+                            <td>@contact.Phone</td>
+                            <td class="d-none d-md-table-cell">@contact.Email</td>
+                            <td class="d-none d-md-table-cell">@contact.Street, @contact.PostalCode @contact.City</td>
+                            <td class="d-none d-md-table-cell">@contact.ContactComment</td>
+                            <td>
+                                <a asp-area="User" asp-controller="Contact" asp-action="Edit" asp-route-id="@contact.Id" type="button" class="btn btn-primary">
+                                    Edit
+                                </a>
+                            </td>
+                            <td>
+                                <a asp-area="User" asp-controller="Contact" asp-action="Delete" asp-route-id="@contact.Id" type="button" class="btn btn-primary">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
 
-        <div class="col-12">
-            <nav>
-                <ul class="pagination justify-content-center">
-                    @if (Model.PageNumber > 1)
-                    {
+            <div class="col-12">
+                <nav>
+                    <ul class="pagination justify-content-center">
+                        @if (Model.PageNumber > 1)
+                        {
+                            <li class="page-item">
+                                <a asp-area="User" asp-controller="Contact" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">Previous</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item disabled">
+                                <a class="page-link">Previous</a>
+                            </li>
+                        }
                         <li class="page-item">
-                            <a asp-area="User" asp-controller="Contact" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">Previous</a>
+                            <a asp-area="User" asp-controller="Contact" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="1" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">First</a>
                         </li>
-                    }
-                    else
-                    {
-                        <li class="page-item disabled">
-                            <a class="page-link">Previous</a>
+                        @if (Model.TotalPages > 3 && Model.PageNumber - 2 >= 1)
+                        {
+                            <li class="page-item">
+                                <a asp-area="User" asp-controller="Contact" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber - 2)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">@(Model.PageNumber - 2)</a>
+                            </li>
+                            <li class="page-item">
+                                <a asp-area="User" asp-controller="Contact" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">@(Model.PageNumber - 1)</a>
+                            </li>
+                        }
+                        <li class="page-item active">
+                            <a asp-area="User" asp-controller="Contact" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@Model.PageNumber" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">@Model.PageNumber</a>
                         </li>
-                    }
-                    <li class="page-item">
-                        <a asp-area="User" asp-controller="Contact" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="1" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">First</a>
-                    </li>
-                    @if (Model.TotalPages > 3 && Model.PageNumber - 2 >= 1)
-                    {
+                        @if (Model.TotalPages > 3 && Model.PageNumber + 3 <= Model.TotalPages)
+                        {
+                            <li class="page-item">
+                                <a asp-area="User" asp-controller="Contact" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">@(Model.PageNumber + 1)</a>
+                            </li>
+                            <li class="page-item">
+                                <a asp-area="User" asp-controller="Contact" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber + 2)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">@(Model.PageNumber + 2)</a>
+                            </li>
+                        }
                         <li class="page-item">
-                            <a asp-area="User" asp-controller="Contact" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber - 2)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">@(Model.PageNumber - 2)</a>
+                            <a asp-area="User" asp-controller="Contact" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@Model.TotalPages" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">Last</a>
                         </li>
-                        <li class="page-item">
-                            <a asp-area="User" asp-controller="Contact" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">@(Model.PageNumber - 1)</a>
-                        </li>
-                    }
-                    <li class="page-item active">
-                        <a asp-area="User" asp-controller="Contact" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@Model.PageNumber" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">@Model.PageNumber</a>
-                    </li>
-                    @if (Model.TotalPages > 3 && Model.PageNumber + 3 <= Model.TotalPages)
-                    {
-                        <li class="page-item">
-                            <a asp-area="User" asp-controller="Contact" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">@(Model.PageNumber + 1)</a>
-                        </li>
-                        <li class="page-item">
-                            <a asp-area="User" asp-controller="Contact" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber + 2)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">@(Model.PageNumber + 2)</a>
-                        </li>
-                    }
-                    <li class="page-item">
-                        <a asp-area="User" asp-controller="Contact" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@Model.TotalPages" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">Last</a>
-                    </li>
-                    @if (Model.TotalPages > 1 && Model.PageNumber < Model.TotalPages)
-                    {
-                        <li class="page-item">
-                            <a asp-area="User" asp-controller="Contact" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">Next</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li class="page-item disabled">
-                            <a class="page-link">Next</a>
-                        </li>
-                    }
-                </ul>
-            </nav>
-        </div>
+                        @if (Model.TotalPages > 1 && Model.PageNumber < Model.TotalPages)
+                        {
+                            <li class="page-item">
+                                <a asp-area="User" asp-controller="Contact" asp-action="Index" asp-route-searchPhrase="@Model.SearchPhrase" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-pageSize="@Model.PageSize" asp-route-orderBy="@Model.OrderBy" asp-route-sortDirection="@Model.SortDirection" class="page-link">Next</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item disabled">
+                                <a class="page-link">Next</a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            </div>
+        }
+
     </div>
 </div>

@@ -61,6 +61,7 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
 
             var entities = await baseQuery.Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
+                .Include(e => e.Contact)
                 .ToListAsync();
 
             return new PageResult<Todo>(entities, baseQuery.Count(), pageSize, pageNumber, searchPhrase, sortDirection, orderBy);
@@ -84,13 +85,13 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             return await ProcessSearchQueryAsync(baseQuery, pageNumber, pageSize, orderBy, sortDirection, searchPhrase);
         }
 
-        public async Task<IPageResult<Todo>> SearchAsync(Guid contactId, string searchPhrase, int pageNumber,
+        public async Task<IPageResult<Todo>> SearchAsync(Guid contactId, Guid userId, string searchPhrase, int pageNumber,
             int pageSize, string orderBy, SortDirection sortDirection)
         {
             string lowerCaseSearchPhrase = searchPhrase?.ToLower();
 
             var baseQuery = _dbContext.Todos
-                .Where(e => e.ContactId == contactId &&
+                .Where(e => e.ContactId == contactId && e.UserId == userId &&
                             (searchPhrase == null ||
                              (e.Id.ToString().ToLower().Contains(lowerCaseSearchPhrase)
                               || e.Title.ToLower().Contains(lowerCaseSearchPhrase)

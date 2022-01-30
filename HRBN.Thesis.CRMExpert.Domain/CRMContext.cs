@@ -81,13 +81,13 @@ namespace HRBN.Thesis.CRMExpert.Domain
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Contacts)
                     .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Contacts_Users");
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Contacts)
                     .HasForeignKey(d => d.CustomerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Contacts_Customers");
             });
 
@@ -137,13 +137,13 @@ namespace HRBN.Thesis.CRMExpert.Domain
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.Discounts)
                     .HasForeignKey(d => d.ProductId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Discounts_Products");
                 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Discounts)
                     .HasForeignKey(d => d.CustomerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Discounts_Customers");
             });
 
@@ -166,13 +166,13 @@ namespace HRBN.Thesis.CRMExpert.Domain
                 entity.HasOne(d => d.Contact)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.ContactId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Orders_Contacts");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.ProductId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Orders_Products");
             });
 
@@ -187,13 +187,13 @@ namespace HRBN.Thesis.CRMExpert.Domain
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Permissions)
                     .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Permissions_Users");
                 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.Permissions)
                     .HasForeignKey(d => d.RoleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Permissions_Roles");
             });
 
@@ -246,13 +246,13 @@ namespace HRBN.Thesis.CRMExpert.Domain
                 entity.HasOne(d => d.Contact)
                     .WithMany(p => p.Todos)
                     .HasForeignKey(d => d.ContactId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Todos_Contacts");
                 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Todos)
                     .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Todos_Users");
             });
 

@@ -9,6 +9,7 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Todo
     public sealed class SearchTodosQuery : IQuery<PageResult<TodoDto>>
     {
         public Guid ContactId { get; set; }
+        public Guid UserId { get; set; }
         public string SearchPhrase { get; set; }
         public int PageNumber { get; set; }
         public int PageSize { get; set; }

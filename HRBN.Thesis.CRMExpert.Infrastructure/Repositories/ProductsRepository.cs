@@ -96,7 +96,10 @@ public class ProductsRepository : IProductsRepository
     {
         return await Task.Factory.StartNew(() =>
         {
-            var results = _dbContext.Products.Select(e => new ProductDataDto() {Id = e.Id, Name = e.Name}).ToList();
+            var results = _dbContext.Products
+                .OrderBy(e => e.Name)
+                .Select(e => new ProductDataDto() {Id = e.Id, Name = e.Name})
+                .ToList();
             return results;
         });
     }

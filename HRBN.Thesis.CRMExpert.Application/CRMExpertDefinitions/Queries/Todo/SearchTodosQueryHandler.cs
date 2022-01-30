@@ -31,6 +31,7 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Todo
 
             var result = await _unitOfWork.TodosRepository.SearchAsync(
                 query.ContactId,
+                query.UserId,
                 query.SearchPhrase,
                 query.PageNumber,
                 query.PageSize,

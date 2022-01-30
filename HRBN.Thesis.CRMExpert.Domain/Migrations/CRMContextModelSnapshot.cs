@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
+#nullable disable
+
 namespace HRBN.Thesis.CRMExpert.Domain.Migrations
 {
     [DbContext(typeof(CRMContext))]
@@ -15,10 +17,11 @@ namespace HRBN.Thesis.CRMExpert.Domain.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.11")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .UseCollation("SQL_Latin1_General_CP1_CI_AS")
+                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("HRBN.Thesis.CRMExpert.Domain.Core.Entities.Contact", b =>
                 {
@@ -389,11 +392,13 @@ namespace HRBN.Thesis.CRMExpert.Domain.Migrations
                     b.HasOne("HRBN.Thesis.CRMExpert.Domain.Core.Entities.Customer", "Customer")
                         .WithMany("Contacts")
                         .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("FK_Contacts_Customers");
 
                     b.HasOne("HRBN.Thesis.CRMExpert.Domain.Core.Entities.User", "User")
                         .WithMany("Contacts")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("FK_Contacts_Users");
 
                     b.Navigation("Customer");
@@ -406,14 +411,16 @@ namespace HRBN.Thesis.CRMExpert.Domain.Migrations
                     b.HasOne("HRBN.Thesis.CRMExpert.Domain.Core.Entities.Customer", "Customer")
                         .WithMany("Discounts")
                         .HasForeignKey("CustomerId")
-                        .HasConstraintName("FK_Discounts_Customers")
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_Discounts_Customers");
 
                     b.HasOne("HRBN.Thesis.CRMExpert.Domain.Core.Entities.Product", "Product")
                         .WithMany("Discounts")
                         .HasForeignKey("ProductId")
-                        .HasConstraintName("FK_Discounts_Products")
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_Discounts_Products");
 
                     b.Navigation("Customer");
 
@@ -425,14 +432,16 @@ namespace HRBN.Thesis.CRMExpert.Domain.Migrations
                     b.HasOne("HRBN.Thesis.CRMExpert.Domain.Core.Entities.Contact", "Contact")
                         .WithMany("Orders")
                         .HasForeignKey("ContactId")
-                        .HasConstraintName("FK_Orders_Contacts")
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_Orders_Contacts");
 
                     b.HasOne("HRBN.Thesis.CRMExpert.Domain.Core.Entities.Product", "Product")
                         .WithMany("Orders")
                         .HasForeignKey("ProductId")
-                        .HasConstraintName("FK_Orders_Products")
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_Orders_Products");
 
                     b.Navigation("Contact");
 
@@ -444,14 +453,16 @@ namespace HRBN.Thesis.CRMExpert.Domain.Migrations
                     b.HasOne("HRBN.Thesis.CRMExpert.Domain.Core.Entities.Role", "Role")
                         .WithMany("Permissions")
                         .HasForeignKey("RoleId")
-                        .HasConstraintName("FK_Permissions_Roles")
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_Permissions_Roles");
 
                     b.HasOne("HRBN.Thesis.CRMExpert.Domain.Core.Entities.User", "User")
                         .WithMany("Permissions")
                         .HasForeignKey("UserId")
-                        .HasConstraintName("FK_Permissions_Users")
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_Permissions_Users");
 
                     b.Navigation("Role");
 
@@ -463,11 +474,13 @@ namespace HRBN.Thesis.CRMExpert.Domain.Migrations
                     b.HasOne("HRBN.Thesis.CRMExpert.Domain.Core.Entities.Contact", "Contact")
                         .WithMany("Todos")
                         .HasForeignKey("ContactId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("FK_Todos_Contacts");
 
                     b.HasOne("HRBN.Thesis.CRMExpert.Domain.Core.Entities.User", "User")
                         .WithMany("Todos")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("FK_Todos_Users");
 
                     b.Navigation("Contact");

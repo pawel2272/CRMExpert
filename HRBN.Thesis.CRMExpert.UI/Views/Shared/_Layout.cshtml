@@ -39,13 +39,10 @@
                         
                         <div class="dropdown-menu" id="customerDropdown" aria-labelledby="customerSubmenu">
                             <a class="dropdown-item" asp-area="User" asp-controller="Customer" asp-action="Index"> Customer list </a>
-                            <a class="dropdown-item" asp-area="User" asp-controller="Order" asp-action="Index"> Orders </a>
+                            <a class="dropdown-item" asp-area="User" asp-controller="Order" asp-action="Select"> Orders </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" asp-area="User" asp-controller="Task" asp-action="Index"> Tasks </a>
+                            <a class="dropdown-item" asp-area="User" asp-controller="Task" asp-action="Select"> Tasks </a>
                         </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="User" asp-controller="Task" asp-action="Index"> Tasks </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Manage"> Your account </a>
