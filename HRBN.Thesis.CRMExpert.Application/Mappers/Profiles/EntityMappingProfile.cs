@@ -125,7 +125,7 @@ namespace HRBN.Thesis.CRMExpert.Application.Mappers.Profiles
             CreateMap<Order, LastOrdersDto>()
                 .ForMember(p => p.ProductName, c => c.MapFrom(s => s.Product.Name))
                 .ForMember(p => p.Count, c => c.MapFrom(s => s.Count))
-                .ForMember(p => p.Count, c => c.MapFrom(s => s.Price))
+                .ForMember(p => p.Amount, c => c.MapFrom(s => s.Price))
                 .ForMember(p => p.ContactName, c => c.MapFrom(s => $"{s.Contact.FirstName} {s.Contact.LastName}"))
                 .ReverseMap();
 

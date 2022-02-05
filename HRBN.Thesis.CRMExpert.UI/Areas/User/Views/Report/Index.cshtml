@@ -12,7 +12,7 @@
             <div class="card-body">
                 <h5 class="card-title">Most often ordered products</h5>
                 <p class="card-text">Generate a csv file that contains list of most often ordered products.</p>
-                <a href="#" class="btn btn-primary">Download</a>
+                <a asp-area="User" asp-controller="Report" asp-action="OftenOrderedProducts" class="btn btn-primary">Download</a>
             </div>
             <div class="card-footer text-muted">
                 Always newest
@@ -25,7 +25,7 @@
             <div class="card-body">
                 <h5 class="card-title">Last month orders</h5>
                 <p class="card-text">Generate a csv file that contains list of orders made last month.</p>
-                <a href="#" class="btn btn-primary">Download</a>
+                <a asp-area="User" asp-controller="Report" asp-action="LastMonthOrders" class="btn btn-primary">Download</a>
             </div>
             <div class="card-footer text-muted">
                 Always newest
@@ -38,7 +38,7 @@
             <div class="card-body">
                 <h5 class="card-title">List of my contacts</h5>
                 <p class="card-text">Generate a csv file that contains list of your contacts.</p>
-                <a href="#" class="btn btn-primary">Download</a>
+                <a asp-area="User" asp-controller="Report" asp-action="ListOfMyContacts" class="btn btn-primary">Download</a>
             </div>
             <div class="card-footer text-muted">
                 Always newest
@@ -51,7 +51,7 @@
             <div class="card-body">
                 <h5 class="card-title">Orders from yesterday</h5>
                 <p class="card-text">Generate a csv file that contains list of orders from yesterday.</p>
-                <a href="#" class="btn btn-primary">Download</a>
+                <a asp-area="User" asp-controller="Report" asp-action="YesterdayOrders" class="btn btn-primary">Download</a>
             </div>
             <div class="card-footer text-muted">
                 Always newest
