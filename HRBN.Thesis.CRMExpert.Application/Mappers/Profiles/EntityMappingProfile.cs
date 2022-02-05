@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+﻿using System.Linq;
 using AutoMapper;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Contact;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Customer;
@@ -120,6 +120,23 @@ namespace HRBN.Thesis.CRMExpert.Application.Mappers.Profiles
             CreateMap<UserDto, EditUserCommand>().ReverseMap();
         }
 
+        public void CreateMapForReport()
+        {
+            CreateMap<Order, LastOrdersDto>()
+                .ForMember(p => p.ProductName, c => c.MapFrom(s => s.Product.Name))
+                .ForMember(p => p.Count, c => c.MapFrom(s => s.Count))
+                .ForMember(p => p.Count, c => c.MapFrom(s => s.Price))
+                .ForMember(p => p.ContactName, c => c.MapFrom(s => $"{s.Contact.FirstName} {s.Contact.LastName}"))
+                .ReverseMap();
+
+            CreateMap<Contact, MyContactsDto>()
+                .ReverseMap();
+
+            CreateMap<Product, OftenOrderedProductsDto>()
+                .ForMember(p => p.Count, c => c.MapFrom(s => s.Orders.Sum(e => e.Count)))
+                .ReverseMap();
+        }
+
         public EntityMappingProfile()
         {
             CreateMapForContact();
@@ -131,6 +148,7 @@ namespace HRBN.Thesis.CRMExpert.Application.Mappers.Profiles
             CreateMapForRole();
             CreateMapForTodo();
             CreateMapForUser();
+            CreateMapForReport();
         }
     }
 }

@@ -166,6 +166,15 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             });
         }
 
+        public async Task<List<Contact>> GetContactByUserAsync(Guid userId)
+        {
+            var result = await _dbContext.Contacts
+                .Where(e => e.UserId.Equals(userId))
+                .ToListAsync();
+
+            return result;
+        }
+
         public async Task UpdateAsync(Contact entity)
         {
             await Task.Factory.StartNew(() => { _dbContext.Contacts.Update(entity); });

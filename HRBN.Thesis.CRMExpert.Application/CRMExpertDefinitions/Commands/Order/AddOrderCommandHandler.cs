@@ -27,6 +27,18 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Order
             order.ModDate = DateTime.Now;
             order.CreDate = DateTime.Now;
             await _unitOfWork.OrdersRepository.AddAsync(order);
+
+            var product = await _unitOfWork.ProductsRepository.GetAsync(order.ProductId);
+
+            if (product.Count - order.Count < 0)
+            {
+                return Result.Fail($"Order count must be lower than or equal to count of product ({product.Count})!",
+                    "Count");
+            }
+
+            product.Count -= order.Count;
+            await _unitOfWork.ProductsRepository.UpdateAsync(product);
+            
             await _unitOfWork.CommitAsync();
 
             return Result.Ok();

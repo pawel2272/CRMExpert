@@ -37,6 +37,13 @@
                             </div>
                         </div>
                         <div class="row mb-3">
+                            <label for="count" class="col-sm-3 col-form-label">Count</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="count" asp-for="Order.Count">
+                                <span asp-validation-for="Order.Count" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
                             <label for="contact" class="col-sm-3 col-form-label">Contact</label>
                             <div class="col-sm-9">
                                 <select id="contact" class="form-select" asp-for="Order.ContactId">

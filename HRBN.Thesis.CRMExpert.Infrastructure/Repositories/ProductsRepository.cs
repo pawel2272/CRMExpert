@@ -103,4 +103,15 @@ public class ProductsRepository : IProductsRepository
             return results;
         });
     }
+
+    public async Task<List<Product>> GetOftenOrderedProducts()
+    {
+        var entities = await _dbContext.Products
+            .Where(e => e.Orders.Sum(e => e.Count) > 0)
+            .OrderByDescending(e => e.Orders.Sum(e => e.Count))
+            .Include(e => e.Orders)
+            .ToListAsync();
+
+        return entities;
+    }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using HRBN.Thesis.CRMExpert.Domain.Core.Entities;
 using HRBN.Thesis.CRMExpert.Domain.Core.Enums;
@@ -10,5 +11,7 @@ namespace HRBN.Thesis.CRMExpert.Domain.Core.Repositories
     {
         Task<IPageResult<Order>> SearchAsync(Guid contactId, string searchPhrase, int pageNumber, int pageSize,
             string orderBy, SortDirection sortDirection);
+
+        Task<List<Order>> GetLastOrders(int daysFromToday);
     }
 }

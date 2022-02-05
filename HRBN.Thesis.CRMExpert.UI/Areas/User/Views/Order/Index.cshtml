@@ -97,6 +97,7 @@
                         <th scope="col">Title</th>
                         <th scope="col">Content</th>
                         <th scope="col">Price</th>
+                        <th scope="col">Count</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
                     </tr>
@@ -108,7 +109,8 @@
                             <th scope="row" class="d-none">@order.Id</th>
                             <td>@order.Title</td>
                             <td>@order.Content</td>
-                            <td>@order.Price PLN</td>
+                            <td>@order.Price.ToString("F") PLN</td>
+                            <td>@order.Count.ToString("F")</td>
                             <td>
                                 <a asp-area="User" asp-controller="Order" asp-action="Edit" asp-route-id="@order.Id" class="btn btn-primary">
                                     Edit

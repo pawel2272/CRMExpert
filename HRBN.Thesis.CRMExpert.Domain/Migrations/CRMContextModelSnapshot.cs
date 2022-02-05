@@ -174,6 +174,9 @@ namespace HRBN.Thesis.CRMExpert.Domain.Migrations
                         .HasMaxLength(2048)
                         .HasColumnType("nvarchar(2048)");
 
+                    b.Property<decimal>("Count")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<DateTime>("CreDate")
                         .HasColumnType("datetime");
 

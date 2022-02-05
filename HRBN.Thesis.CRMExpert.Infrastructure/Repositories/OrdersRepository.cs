@@ -83,6 +83,18 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             return await ProcessSearchQueryAsync(baseQuery, pageNumber, pageSize, orderBy, sortDirection, searchPhrase);
         }
 
+        public async Task<List<Order>> GetLastOrders(int daysFromToday)
+        {
+
+            var orders = await _dbContext.Orders
+                .Where(o => o.CreDate.CompareTo(DateTime.Now.AddDays(-daysFromToday)) > 0)
+                .Include(e => e.Contact)
+                .Include(e => e.Product)
+                .ToListAsync();
+
+            return orders;
+        }
+
         public async Task<IPageResult<Order>> SearchAsync(string searchPhrase, int pageNumber, int pageSize,
             string orderBy,
             SortDirection sortDirection)

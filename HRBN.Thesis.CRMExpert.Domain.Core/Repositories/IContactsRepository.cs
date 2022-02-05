@@ -15,5 +15,6 @@ namespace HRBN.Thesis.CRMExpert.Domain.Core.Repositories
         Task<List<ContactDataDto>> GetContactDataAsync();
         Task<List<ContactDataDto>> GetContactDataAsyncByCustomer(Guid customerId);
         Task<List<ContactDataDto>> GetContactDataAsyncByUser(Guid userId);
+        Task<List<Contact>> GetContactByUserAsync(Guid userId);
     }
 }
