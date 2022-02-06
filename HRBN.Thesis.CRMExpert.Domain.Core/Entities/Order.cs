@@ -12,8 +12,8 @@ namespace HRBN.Thesis.CRMExpert.Domain.Core.Entities
         public string Content { get; set; }
         public decimal Price { get; set; }
         public decimal Count { get; set; }
-        public Guid ContactId { get; set; }
-        public Guid ProductId { get; set; }
+        public Guid? ContactId { get; set; }
+        public Guid? ProductId { get; set; }
         public DateTime CreDate { get; set; }
         public DateTime ModDate { get; set; }
 

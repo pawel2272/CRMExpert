@@ -141,7 +141,7 @@ namespace HRBN.Thesis.CRMExpert.Domain.Migrations
                     b.Property<DateTime>("CreDate")
                         .HasColumnType("datetime");
 
-                    b.Property<Guid>("CustomerId")
+                    b.Property<Guid?>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("DiscountVaule")
@@ -150,7 +150,7 @@ namespace HRBN.Thesis.CRMExpert.Domain.Migrations
                     b.Property<DateTime>("ModDate")
                         .HasColumnType("datetime");
 
-                    b.Property<Guid>("ProductId")
+                    b.Property<Guid?>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -167,7 +167,7 @@ namespace HRBN.Thesis.CRMExpert.Domain.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ContactId")
+                    b.Property<Guid?>("ContactId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
@@ -186,7 +186,7 @@ namespace HRBN.Thesis.CRMExpert.Domain.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("money");
 
-                    b.Property<Guid>("ProductId")
+                    b.Property<Guid?>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
@@ -214,10 +214,10 @@ namespace HRBN.Thesis.CRMExpert.Domain.Migrations
                     b.Property<DateTime>("ModDate")
                         .HasColumnType("datetime");
 
-                    b.Property<Guid>("RoleId")
+                    b.Property<Guid?>("RoleId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -415,14 +415,12 @@ namespace HRBN.Thesis.CRMExpert.Domain.Migrations
                         .WithMany("Discounts")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
                         .HasConstraintName("FK_Discounts_Customers");
 
                     b.HasOne("HRBN.Thesis.CRMExpert.Domain.Core.Entities.Product", "Product")
                         .WithMany("Discounts")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
                         .HasConstraintName("FK_Discounts_Products");
 
                     b.Navigation("Customer");
@@ -436,14 +434,12 @@ namespace HRBN.Thesis.CRMExpert.Domain.Migrations
                         .WithMany("Orders")
                         .HasForeignKey("ContactId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
                         .HasConstraintName("FK_Orders_Contacts");
 
                     b.HasOne("HRBN.Thesis.CRMExpert.Domain.Core.Entities.Product", "Product")
                         .WithMany("Orders")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
                         .HasConstraintName("FK_Orders_Products");
 
                     b.Navigation("Contact");
@@ -457,14 +453,12 @@ namespace HRBN.Thesis.CRMExpert.Domain.Migrations
                         .WithMany("Permissions")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
                         .HasConstraintName("FK_Permissions_Roles");
 
                     b.HasOne("HRBN.Thesis.CRMExpert.Domain.Core.Entities.User", "User")
                         .WithMany("Permissions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
                         .HasConstraintName("FK_Permissions_Users");
 
                     b.Navigation("Role");
