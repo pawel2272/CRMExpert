@@ -8,7 +8,7 @@ using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Role;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Dto;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Role;
 using HRBN.Thesis.CRMExpert.UI.Filters;
-using HRBN.Thesis.CRMExpert.UI.ViewModels.Administrator.Role;
+using HRBN.Thesis.CRMExpert.UI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

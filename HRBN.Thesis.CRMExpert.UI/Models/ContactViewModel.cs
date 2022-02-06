@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Dto;
 using HRBN.Thesis.CRMExpert.Domain.Core.Dto;
 
-namespace HRBN.Thesis.CRMExpert.UI.ViewModels.User.Contact;
+namespace HRBN.Thesis.CRMExpert.UI.Models;
 
 public class ContactViewModel
 {

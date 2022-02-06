@@ -1,6 +1,6 @@
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Dto;
 
-namespace HRBN.Thesis.CRMExpert.UI.ViewModels.User.Customer;
+namespace HRBN.Thesis.CRMExpert.UI.Models;
 
 public class CustomerViewModel
 {

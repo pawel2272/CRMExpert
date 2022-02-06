@@ -20,14 +20,14 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Discoun
 
         public async Task<DiscountDto> HandleAsync(GetDiscountQuery query)
         {
-            var contact = await _unitOfWork.ContactsRepository.GetAsync(query.Id);
+            var entity = await _unitOfWork.DiscountsRepository.GetAsync(query.Id);
 
-            if (contact == null)
+            if (entity == null)
             {
                 throw new NullReferenceException("Discount does not exist!");
             }
 
-            return _mapper.Map<DiscountDto>(contact);
+            return _mapper.Map<DiscountDto>(entity);
         }
     }
 }

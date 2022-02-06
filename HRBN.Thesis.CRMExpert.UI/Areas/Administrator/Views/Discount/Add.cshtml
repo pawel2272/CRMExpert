@@ -1,0 +1,56 @@
+@model DiscountViewModel
+
+@{
+    ViewData["Title"] = "Add discount";
+}
+
+<div class="container my-2">
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    Add discount
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-area="Administrator" asp-controller="Discount" asp-action="Add">
+                        <div class="row mb-3">
+                            <label for="discountValue" class="col-md-3 col-form-label">Discount value</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="discountValue" asp-for="Discount.DiscountVaule">
+                                <span asp-validation-for="Discount.DiscountVaule" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="product" class="col-sm-3 col-form-label">Product</label>
+                            <div class="col-sm-9">
+                                <select id="product" asp-for="Discount.ProductId" class="form-select">
+                                    @foreach (var product in Model.ProductData)
+                                    {
+                                        <option value="@product.Id">@product.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="customer" class="col-sm-3 col-form-label">Customer</label>
+                            <div class="col-sm-9">
+                                <select id="customer" asp-for="Discount.CustomerId" class="form-select">
+                                    @foreach (var customer in Model.CustomerData)
+                                    {
+                                        <option value="@customer.Id">@customer.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a asp-area="Administrator" asp-controller="Discount" asp-action="Index" class="btn btn-secondary">Back</a>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+</div>

@@ -110,10 +110,10 @@
                         <tr>
                             <th scope="row" class="d-none">@product.Id</th>
                             <td>@product.Name</td>
-                            <td>@product.Price PLN</td>
+                            <td>@product.Price.ToString("C") PLN</td>
                             <td class="d-none d-md-table-cell">@product.Description</td>
                             <td class="d-none d-md-table-cell">@product.Type</td>
-                            <td>@product.Count</td>
+                            <td>@product.Count.ToString("F")</td>
                             <td>
                                 <a asp-area="User" asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-primary">
                                     Edit

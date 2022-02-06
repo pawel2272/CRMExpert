@@ -9,7 +9,7 @@ using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Contact;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Todo;
 using HRBN.Thesis.CRMExpert.Domain.Core.Enums;
 using HRBN.Thesis.CRMExpert.UI.Filters;
-using HRBN.Thesis.CRMExpert.UI.ViewModels.User.Task;
+using HRBN.Thesis.CRMExpert.UI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

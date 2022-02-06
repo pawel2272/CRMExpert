@@ -3,7 +3,7 @@
 }
 
 <div class="container my-2">
-    <div class="row">
+    <div class="row justify-content-center">
         <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 my-2">
             <div class="card">
                 <img src="~/img/permissions-image.svg" class="card-img-top" alt="products-image">
@@ -31,6 +31,16 @@
                     <h5 class="card-title">Users</h5>
                     <p class="card-text">Register, edit or delete users.</p>
                     <a asp-area="Administrator" asp-controller="User" asp-action="Index" class="btn btn-primary">View</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 my-2">
+            <div class="card">
+                <img src="~/img/discounts-image.svg" class="card-img-top" alt="discounts-image">
+                <div class="card-body">
+                    <h5 class="card-title">Discounts</h5>
+                    <p class="card-text">Add, edit or delete discounts.</p>
+                    <a asp-area="Administrator" asp-controller="Discount" asp-action="Index" class="btn btn-primary">View</a>
                 </div>
             </div>
         </div>

@@ -11,7 +11,7 @@ using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Role;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.User;
 using HRBN.Thesis.CRMExpert.Domain.Core.Enums;
 using HRBN.Thesis.CRMExpert.UI.Filters;
-using HRBN.Thesis.CRMExpert.UI.ViewModels.Administrator.Permission;
+using HRBN.Thesis.CRMExpert.UI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

@@ -5,7 +5,7 @@ using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Dto;
 using HRBN.Thesis.CRMExpert.Domain.Core.Dto;
 using HRBN.Thesis.CRMExpert.Infrastructure.Dto;
 
-namespace HRBN.Thesis.CRMExpert.UI.ViewModels.User.Task;
+namespace HRBN.Thesis.CRMExpert.UI.Models;
 
 public class TaskViewModel
 {

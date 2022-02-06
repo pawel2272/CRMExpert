@@ -10,7 +10,7 @@ using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Contact;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Order;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Product;
 using HRBN.Thesis.CRMExpert.UI.Filters;
-using HRBN.Thesis.CRMExpert.UI.ViewModels.User.Order;
+using HRBN.Thesis.CRMExpert.UI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

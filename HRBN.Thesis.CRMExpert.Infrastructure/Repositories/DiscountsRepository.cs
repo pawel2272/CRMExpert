@@ -72,9 +72,12 @@ public class DiscountsRepository : IDiscountsRepository
 
         var entities = await baseQuery.Skip(pageSize * (pageNumber - 1))
             .Take(pageSize)
+            .Include(e => e.Product)
+            .Include(e => e.Customer)
             .ToListAsync();
 
-        return new PageResult<Discount>(entities, baseQuery.Count(), pageSize, pageNumber, searchPhrase, sortDirection, orderBy);
+        return new PageResult<Discount>(entities, baseQuery.Count(), pageSize, pageNumber, searchPhrase, sortDirection,
+            orderBy);
     }
 
     public async Task AddAsync(Discount entity)
@@ -85,5 +88,12 @@ public class DiscountsRepository : IDiscountsRepository
     public async Task UpdateAsync(Discount entity)
     {
         await Task.Factory.StartNew(() => { _dbContext.Discounts.Update(entity); });
+    }
+
+    public async Task<Discount> GetProductDiscountAsync(Guid productId, Guid customerId)
+    {
+        var result = await _dbContext.Discounts.FirstOrDefaultAsync(e =>
+            e.ProductId == productId && e.CustomerId == customerId);
+        return result;
     }
 }

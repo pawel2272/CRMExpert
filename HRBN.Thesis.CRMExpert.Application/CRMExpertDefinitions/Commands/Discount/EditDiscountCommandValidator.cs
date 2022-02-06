@@ -12,6 +12,8 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Discou
                 .NotEmpty()
                 .NotEqual(Guid.Empty);
             RuleFor(x => x.DiscountVaule)
+                .GreaterThan(0m)
+                .LessThanOrEqualTo(0.50m)
                 .NotNull()
                 .NotEmpty();
             RuleFor(x => x.ProductId)

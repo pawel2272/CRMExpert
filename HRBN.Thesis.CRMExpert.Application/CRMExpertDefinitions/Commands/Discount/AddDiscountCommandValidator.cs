@@ -8,6 +8,8 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Discou
         public AddDiscountCommandValidator()
         {
             RuleFor(x => x.DiscountVaule)
+                .GreaterThan(0m)
+                .LessThanOrEqualTo(0.50m)
                 .NotNull()
                 .NotEmpty();
             RuleFor(x => x.ProductId)

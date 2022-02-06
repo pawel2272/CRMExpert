@@ -37,6 +37,15 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Order
             }
 
             product.Count -= order.Count;
+
+            var customer = await _unitOfWork.CustomersRepository.GetCustomerByContactIdAsync(command.ContactId);
+            var discount = await _unitOfWork.DiscountsRepository.GetProductDiscountAsync(command.ProductId, customer.Id);
+
+            if (discount != null)
+            {
+                product.Price -= (product.Price * discount.DiscountVaule);
+            }
+            
             await _unitOfWork.ProductsRepository.UpdateAsync(product);
             
             await _unitOfWork.CommitAsync();

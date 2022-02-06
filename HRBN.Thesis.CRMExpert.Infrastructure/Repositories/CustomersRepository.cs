@@ -83,7 +83,8 @@ public class CustomersRepository : ICustomersRepository
             .Take(pageSize)
             .ToListAsync();
 
-        return new PageResult<Customer>(entities, baseQuery.Count(), pageSize, pageNumber, searchPhrase, sortDirection, orderBy);
+        return new PageResult<Customer>(entities, baseQuery.Count(), pageSize, pageNumber, searchPhrase, sortDirection,
+            orderBy);
     }
 
     public async Task AddAsync(Customer entity)
@@ -104,5 +105,14 @@ public class CustomersRepository : ICustomersRepository
             .Select(e => new CustomerDataDto() {Id = e.Id, Name = e.Name})
             .ToListAsync();
         return results;
+    }
+
+    public async Task<Customer> GetCustomerByContactIdAsync(Guid contactId)
+    {
+        var result = await _dbContext.Contacts
+            .Include(e => e.Customer)
+            .FirstOrDefaultAsync(e => e.Id == contactId);
+
+        return result?.Customer;
     }
 }

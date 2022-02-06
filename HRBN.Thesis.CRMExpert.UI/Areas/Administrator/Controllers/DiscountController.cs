@@ -4,8 +4,11 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using HRBN.Thesis.CRMExpert.Application;
 using HRBN.Thesis.CRMExpert.Application.Core.Mediator;
-using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.User;
+using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Discount;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Dto;
+using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Customer;
+using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Discount;
+using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Product;
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.User;
 using HRBN.Thesis.CRMExpert.UI.Filters;
 using HRBN.Thesis.CRMExpert.UI.Models;
@@ -17,11 +20,11 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.Administrator.Controllers;
 [Area("Administrator")]
 [ServiceFilter(typeof(JwtAuthFilter))]
 [Authorize(Roles = "Admin")]
-public class UserController : Controller
+public class DiscountController : Controller
 {
     private readonly IMediator _mediator;
 
-    public UserController(IMediator mediator)
+    public DiscountController(IMediator mediator)
     {
         _mediator = mediator;
     }
@@ -32,12 +35,12 @@ public class UserController : Controller
             .Value);
     }
 
-    public async Task<IActionResult> Index(SearchUsersQuery query)
+    public async Task<IActionResult> Index(SearchDiscountsQuery query)
     {
         var queryToBeProcessed = query;
         if (queryToBeProcessed.PageNumber <= 0 || queryToBeProcessed.PageSize <= 0)
         {
-            queryToBeProcessed = new SearchUsersQuery()
+            queryToBeProcessed = new SearchDiscountsQuery()
             {
                 SearchPhrase = query.SearchPhrase,
                 PageNumber = 1,
@@ -47,80 +50,85 @@ public class UserController : Controller
             };
         }
 
+        ViewBag.PageNumber = queryToBeProcessed.PageNumber;
+
         var entities = await _mediator.QueryAsync(queryToBeProcessed);
         return View(entities);
     }
 
-    public async Task<UserViewModel> GetUserViewModelAsync(Guid? userId)
+    public async Task<DiscountViewModel> GetDiscountViewModelAsync(Guid? discountId)
     {
-        GetUserQuery query = null;
-        UserDto result = null;
+        GetDiscountQuery query = null;
+        DiscountDto result = null;
 
-        if (userId.HasValue)
+        if (discountId.HasValue)
         {
-            query = new GetUserQuery(userId.Value);
+            query = new GetDiscountQuery(discountId.Value);
             result = await _mediator.QueryAsync(query);
         }
         else
         {
-            result = new UserDto();
+            result = new DiscountDto();
         }
 
-        return new UserViewModel(result);
+        var productData = await _mediator.QueryAsync(new GetProductDataQuery());
+        var customerData = await _mediator.QueryAsync(new GetCustomerDataQuery());
+
+        return new DiscountViewModel(result, productData, customerData);
     }
 
     [HttpGet]
     public async Task<IActionResult> Edit(Guid id)
     {
-        var model = await GetUserViewModelAsync(id);
+        var model = await GetDiscountViewModelAsync(id);
 
         return View(model);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Edit([FromForm(Name = "User")] EditUserCommand command)
+    public async Task<IActionResult> Edit([FromForm(Name = "Discount")] EditDiscountCommand command)
     {
         var result = await _mediator.CommandAsync(command);
 
         if (result.IsFailure)
         {
-            ModelState.PopulateViewModelValidation(result.Errors, "User");
-            return View(await GetUserViewModelAsync(command.Id));
+            ModelState.PopulateViewModelValidation(result.Errors, "Discount");
+            return View(await GetDiscountViewModelAsync(command.Id));
         }
 
-        return Redirect("/Administrator/User");
+        return Redirect("/Administrator/Discount");
     }
 
     [HttpGet]
     public async Task<IActionResult> Add()
     {
-        var model = await GetUserViewModelAsync(null);
+        var model = await GetDiscountViewModelAsync(null);
 
         return View(model);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Add([FromForm(Name = "User")] AddUserCommand command)
+    public async Task<IActionResult> Add([FromForm(Name = "Discount")] AddDiscountCommand command)
     {
         var result = await _mediator.CommandAsync(command);
 
         if (result.IsFailure)
         {
-            ModelState.PopulateViewModelValidation(result.Errors, "User");
-            return View(await GetUserViewModelAsync(null));
+            ModelState.PopulateViewModelValidation(result.Errors, "Discount");
+            return View(await GetDiscountViewModelAsync(null));
         }
 
-        return Redirect("/Administrator/User");
+        return Redirect("/Administrator/Discount");
     }
 
 
     [HttpGet]
     public async Task<IActionResult> Delete(Guid id)
     {
-        var command = new DeleteUserCommand(id);
+        var command = new DeleteDiscountCommand(id);
 
         var result = await _mediator.CommandAsync(command);
 
-        return Redirect("/User/User");
+        return Redirect("/Administrator/Discount");
     }
 }

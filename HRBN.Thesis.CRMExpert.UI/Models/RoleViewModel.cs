@@ -1,6 +1,6 @@
 using HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Dto;
 
-namespace HRBN.Thesis.CRMExpert.UI.ViewModels.Administrator.Role;
+namespace HRBN.Thesis.CRMExpert.UI.Models;
 
 public class RoleViewModel
 {

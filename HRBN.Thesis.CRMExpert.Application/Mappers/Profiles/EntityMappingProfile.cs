@@ -40,7 +40,10 @@ namespace HRBN.Thesis.CRMExpert.Application.Mappers.Profiles
 
         public void CreateMapForDiscount()
         {
-            CreateMap<Discount, DiscountDto>().ReverseMap();
+            CreateMap<Discount, DiscountDto>()
+                .ForMember(p => p.CustomerName, c => c.MapFrom(s => s.Customer.Name))
+                .ForMember(p => p.ProductName, c => c.MapFrom(s => s.Product.Name))
+                .ReverseMap();
 
             CreateMap<Discount, AddDiscountCommand>().ReverseMap();
             CreateMap<DiscountDto, AddDiscountCommand>().ReverseMap();
