@@ -20,7 +20,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Tests\Discount" />
       <Folder Include="Tests\Permission" />
       <Folder Include="Tests\Product" />
     </ItemGroup>

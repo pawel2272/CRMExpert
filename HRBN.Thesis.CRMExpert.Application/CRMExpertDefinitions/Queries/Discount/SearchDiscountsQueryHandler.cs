@@ -9,12 +9,12 @@ using HRBN.Thesis.CRMExpert.Infrastructure.Dto;
 
 namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Discount
 {
-    public sealed class SearchPermissionQueryHandler : IQueryHandler<SearchDiscountsQuery, PageResult<DiscountDto>>
+    public sealed class SearchDiscountsQueryHandler : IQueryHandler<SearchDiscountsQuery, PageResult<DiscountDto>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public SearchPermissionQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public SearchDiscountsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
