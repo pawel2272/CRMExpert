@@ -9,12 +9,12 @@ using HRBN.Thesis.CRMExpert.Infrastructure.Dto;
 
 namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Permission
 {
-    public sealed class SearchPermissionQueryHandler : IQueryHandler<SearchPermissionsQuery, PageResult<PermissionDto>>
+    public sealed class SearchPermissionsQueryHandler : IQueryHandler<SearchPermissionsQuery, PageResult<PermissionDto>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public SearchPermissionQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public SearchPermissionsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
