@@ -147,7 +147,10 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.User.Controllers
         [HttpPost]
         public async Task<IActionResult> Select(Guid id)
         {
-            return RedirectToAction("Index", new {contactId = id});
+            return await Task.Factory.StartNew(() =>
+            {
+                return RedirectToAction("Index", new {contactId = id});
+            });
         }
     }
 }

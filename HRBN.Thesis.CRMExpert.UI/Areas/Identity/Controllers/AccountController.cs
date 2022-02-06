@@ -74,7 +74,10 @@ namespace HRBN.Thesis.CRMExpert.UI.Areas.Identity.Controllers
         [Authorize]
         public async Task<IActionResult> ChangePassword()
         {
-            return View(new ChangePasswordCommand());
+            return await Task.Factory.StartNew(() =>
+            {
+                return View(new ChangePasswordCommand());
+            });
         }
         
         [HttpPost]

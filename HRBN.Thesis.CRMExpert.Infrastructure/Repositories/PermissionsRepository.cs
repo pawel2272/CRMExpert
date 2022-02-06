@@ -38,6 +38,8 @@ public class PermissionsRepository : IPermissionsRepository
         string lowerCaseSearchPhrase = searchPhrase?.ToLower();
 
         var baseQuery = _dbContext.Permissions
+            .Include(e => e.User)
+            .Include(e => e.Role)
             .Where(e => (searchPhrase == null ||
                          (e.Id.ToString().ToLower().Contains(lowerCaseSearchPhrase)
                           || e.UserId.ToString().ToLower().Contains(lowerCaseSearchPhrase)
@@ -72,11 +74,10 @@ public class PermissionsRepository : IPermissionsRepository
 
         var entities = await baseQuery.Skip(pageSize * (pageNumber - 1))
             .Take(pageSize)
-            .Include(e => e.User)
-            .Include(e => e.Role)
             .ToListAsync();
 
-        return new PageResult<Permission>(entities, baseQuery.Count(), pageSize, pageNumber, searchPhrase, sortDirection, orderBy);
+        return new PageResult<Permission>(entities, baseQuery.Count(), pageSize, pageNumber, searchPhrase,
+            sortDirection, orderBy);
     }
 
     public async Task AddAsync(Permission entity)

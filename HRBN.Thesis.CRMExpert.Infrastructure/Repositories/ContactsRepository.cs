@@ -81,7 +81,8 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
                 .Take(pageSize)
                 .ToListAsync();
 
-            return new PageResult<Contact>(entities, baseQuery.Count(), pageSize, pageNumber, searchPhrase, sortDirection, orderBy);
+            return new PageResult<Contact>(entities, baseQuery.Count(), pageSize, pageNumber, searchPhrase,
+                sortDirection, orderBy);
         }
 
         public async Task<IPageResult<Contact>> SearchAsync(string searchPhrase, int pageNumber, int pageSize,
@@ -135,7 +136,9 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
         {
             return await Task.Factory.StartNew(() =>
             {
-                var results = _dbContext.Contacts.Select(e => new ContactDataDto()
+                var results = _dbContext.Contacts
+                    .OrderBy(e => e.FirstName)
+                    .Select(e => new ContactDataDto()
                         {Id = e.Id, Name = $"{e.FirstName} {e.LastName}"})
                     .ToList();
                 return results;
@@ -146,7 +149,9 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
         {
             return await Task.Factory.StartNew(() =>
             {
-                var results = _dbContext.Contacts.Where(e => e.CustomerId == customerId).Select(e =>
+                var results = _dbContext.Contacts.Where(e => e.CustomerId == customerId)
+                    .OrderBy(e => e.FirstName)
+                    .Select(e =>
                         new ContactDataDto() {Id = e.Id, Name = $"{e.FirstName} {e.LastName}"})
                     .ToList();
                 return results;

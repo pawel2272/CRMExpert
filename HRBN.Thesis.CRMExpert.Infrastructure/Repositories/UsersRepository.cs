@@ -199,8 +199,8 @@ namespace HRBN.Thesis.CRMExpert.Infrastructure.Repositories
             return await Task.Factory.StartNew(() =>
             {
                 return _dbContext.Users
-                    .OrderBy(e => e.Username)
                     .Select(e => new UserDataDto() {Id = e.Id, Username = e.Username})
+                    .OrderBy(e => e.Username)
                     .ToList();
             });
         }

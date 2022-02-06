@@ -103,7 +103,10 @@ public class TaskController : Controller
     [HttpPost]
     public async Task<IActionResult> Select(Guid id)
     {
-        return RedirectToAction("Index", new {contactId = id});
+        return await Task.Factory.StartNew(() =>
+        {
+            return RedirectToAction("Index", new {contactId = id});
+        });
     }
 
     [HttpGet]
