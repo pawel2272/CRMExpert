@@ -19,4 +19,10 @@
       <ProjectReference Include="..\HRBN.Thesis.CRMExpert.Application\HRBN.Thesis.CRMExpert.Application.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Tests\Discount" />
+      <Folder Include="Tests\Permission" />
+      <Folder Include="Tests\Product" />
+    </ItemGroup>
+
 </Project>

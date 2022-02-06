@@ -7,9 +7,9 @@ using HRBN.Thesis.CRMExpert.Domain.Core.Repositories;
 
 namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Customer
 {
-    public sealed class AddContactCommandHandler : CommandHandlerBase<AddCustomerCommand>
+    public sealed class AddCustomerCommandHandler : CommandHandlerBase<AddCustomerCommand>
     {
-        public AddContactCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+        public AddCustomerCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
         }
 

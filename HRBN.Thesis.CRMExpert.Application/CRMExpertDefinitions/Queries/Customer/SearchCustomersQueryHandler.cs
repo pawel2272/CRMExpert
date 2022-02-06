@@ -9,12 +9,12 @@ using HRBN.Thesis.CRMExpert.Infrastructure.Dto;
 
 namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Queries.Customer
 {
-    public sealed class SearchContactsQueryHandler : IQueryHandler<SearchCustomersQuery, PageResult<CustomerDto>>
+    public sealed class SearchCustomersQueryHandler : IQueryHandler<SearchCustomersQuery, PageResult<CustomerDto>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public SearchContactsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public SearchCustomersQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;

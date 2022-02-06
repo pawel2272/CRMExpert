@@ -32,7 +32,7 @@ namespace HRBN.Thesis.CRMExpert.Test.Unit.Tests.Order
 
                 unitOfWorkSubstitute.ProductsRepository.GetAsync(command.ProductId).Returns(new Product());
                 unitOfWorkSubstitute.CustomersRepository.GetCustomerByContactIdAsync(command.ContactId)
-                    .Returns(new Customer());
+                    .Returns(new Domain.Core.Entities.Customer());
 
                 var mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new EntityMappingProfile())));
 
