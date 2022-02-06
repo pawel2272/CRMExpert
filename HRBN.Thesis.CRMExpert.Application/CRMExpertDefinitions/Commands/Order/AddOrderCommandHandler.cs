@@ -28,7 +28,7 @@ namespace HRBN.Thesis.CRMExpert.Application.CRMExpertDefinitions.Commands.Order
             order.CreDate = DateTime.Now;
             await _unitOfWork.OrdersRepository.AddAsync(order);
 
-            var product = await _unitOfWork.ProductsRepository.GetAsync(order.ProductId);
+            var product = await _unitOfWork.ProductsRepository.GetAsync(order.ProductId.Value);
 
             if (product.Count - order.Count < 0)
             {

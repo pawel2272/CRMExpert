@@ -7,6 +7,7 @@ using HRBN.Thesis.CRMExpert.Application.Mappers.Profiles;
 using HRBN.Thesis.CRMExpert.Domain.Core.Enums;
 using HRBN.Thesis.CRMExpert.Domain.Core.Repositories;
 using HRBN.Thesis.CRMExpert.Infrastructure.Dto;
+using HRBN.Thesis.CRMExpert.Test.Unit.Models;
 using NSubstitute;
 using Xunit;
 
@@ -20,6 +21,7 @@ namespace HRBN.Thesis.CRMExpert.Test.Unit.Tests.Order
             using (var sut = new SystemUnderTest())
             {
                 var order = (Domain.Core.Entities.Order) sut.CreateOrder();
+                ((OrderProxy)order).AddContact(sut.CreateContact());
                 var orders = new List<Domain.Core.Entities.Order>() {order};
                 var pageResult =
                     new PageResult<Domain.Core.Entities.Order>(orders, 1, 10, 1, null, SortDirection.ASC, "Title");
@@ -27,7 +29,7 @@ namespace HRBN.Thesis.CRMExpert.Test.Unit.Tests.Order
 
                 var query = new SearchOrdersQuery()
                 {
-                    ContactId = order.ContactId,
+                    ContactId = order.ContactId.Value,
                     SearchPhrase = order.Title,
                     PageNumber = 1,
                     PageSize = 10,
