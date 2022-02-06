@@ -30,7 +30,7 @@ namespace HRBN.Thesis.CRMExpert.Test.Unit.Tests.Order
 
                 var unitOfWorkSubstitute = Substitute.For<IUnitOfWork>();
 
-                unitOfWorkSubstitute.ProductsRepository.GetAsync(command.ProductId).Returns(new Product());
+                unitOfWorkSubstitute.ProductsRepository.GetAsync(command.ProductId).Returns(new Domain.Core.Entities.Product());
                 unitOfWorkSubstitute.CustomersRepository.GetCustomerByContactIdAsync(command.ContactId)
                     .Returns(new Domain.Core.Entities.Customer());
 
