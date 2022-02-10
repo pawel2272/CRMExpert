@@ -13,7 +13,7 @@
                     Edit customer
                 </div>
                 <div class="card-body">
-                    <form method="post" asp-area="User" asp-controller="Customer" asp-action="Add">
+                    <form method="post" asp-area="User" asp-controller="Customer" asp-action="Edit">
                         @Html.HiddenFor(m => m.Customer.Id)
                         <div class="row mb-3">
                             <label for="name" class="col-sm-3 col-form-label">Name</label>
